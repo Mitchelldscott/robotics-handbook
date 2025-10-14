@@ -26,7 +26,6 @@ jobs:
           files: 'src/**/*.md'
       - uses: actions/checkout@v4
       - name: Run Markdown Linting
-        if: ${{ steps.changed-files.outputs.any_changed }} == 'true'
         uses: DavidAnson/markdownlint-cli2-action@v20
         with:
           fix: true
