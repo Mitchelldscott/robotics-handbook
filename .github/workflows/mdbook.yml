@@ -24,12 +24,14 @@ jobs:
         id: changed-files
         with:
           files: 'src/**/*.md'
+          separator: ","
       - uses: actions/checkout@v4
       - name: Run Markdown Linting
         uses: DavidAnson/markdownlint-cli2-action@v20
         with:
           fix: true
           globs: ${{ steps.changed-files.outputs.all_changed_files }}
+          separator: ","
 
   # Build job
   build:
