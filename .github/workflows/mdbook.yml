@@ -20,19 +20,12 @@ jobs:
     if: ${{ github.event.action }} != 'closed'
     runs-on: ubuntu-latest
     steps:
-      - uses: tj-actions/changed-files@v47
-        id: changed-files
-        with:
-          files: 'src/**/*.md'
-          separator: ","
       - uses: actions/checkout@v4
       - name: Run Markdown Linting
-        if: ${{ steps.changed-files.outputs.all_changed_files }} == 'true'
         uses: DavidAnson/markdownlint-cli2-action@v20
         with:
           fix: true
-          globs: ${{ steps.changed-files.outputs.all_changed_files }}
-          separator: ","
+          globs: 'src/**/*.md'
 
   # Build job
   build:
