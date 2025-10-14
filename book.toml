@@ -1,0 +1,24 @@
+[book]
+title = "Robotics Handbook: A Guide to Perception, Navigation, and Control"
+author = "Mitchell Scott"
+language = "en"
+multilingual = false
+text-direction = "ltr"
+src = "src"
+
+[build]
+build-dir = "build"
+create-missing = true
+use-default-preprocessors = true  # use the default preprocessors
+extra-watch-dirs = []
+
+[rust]
+edition = "2024"
+
+[output.html]
+default-theme = "light"
+preferred-dark-theme = "ayu"
+
+[preprocessor.index]
+
+[preprocessor.links]
