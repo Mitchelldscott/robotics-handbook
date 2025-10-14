@@ -1,4 +1,4 @@
-# RoboticsHandBook
+# Robotics Handbook
 
 ![Workflow Status](https://github.com/mitchelldscott/robotics-handbook/actions/workflows/mdbook.yml/badge.svg)
 
