@@ -19,6 +19,5 @@ edition = "2024"
 default-theme = "light"
 preferred-dark-theme = "ayu"
 
-[preprocessor.index]
-
-[preprocessor.links]
+[preprocessor.bib]
+bibliography = "src/bibliography.bib"
