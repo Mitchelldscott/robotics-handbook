@@ -27,7 +27,7 @@ jobs:
           separator: ","
       - uses: actions/checkout@v4
       - name: Run Markdown Linting
-        if: ${{ steps.changed-files.outputs.all_changed_files }} == 'true'
+        if: ${{ steps.changed-files.outputs.all_changed_files }} != ''
         uses: DavidAnson/markdownlint-cli2-action@v20
         with:
           fix: true
