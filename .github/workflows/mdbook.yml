@@ -8,8 +8,6 @@
 name: Deploy mdBook site to Pages
 
 on:
-  push:
-    branches: ['**']  # build on all branches
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches: ["master"]  # also build on PRs targeting main

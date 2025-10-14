@@ -1,4 +1,4 @@
-# Foundations and Algorithms for Autonomous Systems
+# Data-driven Design of Autonomous Systems
 
 ## Introduction
 
@@ -6,9 +6,7 @@ This book is a consolidation of foundations and algorithms for data-driven auton
 
 ### Learning Methodology
 
-This first part of the book provides an overview of probability, linear algebra and differential equations, to get a deeper understanding of these topics readers should use a more in-depth resource. The second part of this book is meant to be like [rust-by-example](https://doc.rust-lang.org/rust-by-example/) and provide hands on projects.
-
-**A core component of this text is the accompanying series of projects** developed during its creation. These implementations (often utilizing Julia, given its suitability for readability and visualization) demonstrate how the theoretical backbone translates into functional robotics and learning systems.
+This first part of the book provides an overview of probability, linear algebra and differential equations, to get a deeper understanding of these topics readers should use a more in-depth resource. The second part of this book is meant to be like [rust-by-example](https://doc.rust-lang.org/rust-by-example/) and provide hands on mini-projects.
 
 ## Book Organization
 
