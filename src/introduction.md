@@ -93,4 +93,5 @@ approximation to deal with large state spaces.
     * **Control Algorithms:** Details on algorithms like **Q-learning**
     (off-policy) and **SARSA** (on-policy).
     * **Advanced Concepts:** Including n-step methods, **Eligibility Traces**
-    (the $\lambda$-return and the equivalence between forward and backward views), and **Policy Gradient Methods**.
+    (the $\lambda$-return and the equivalence between forward and
+    backward views), and **Policy Gradient Methods**.
