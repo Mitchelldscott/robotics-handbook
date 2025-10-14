@@ -73,7 +73,9 @@ position estimation and map acquisition.
     Filter (EIF) SLAM, recognizing the sparse structure of information
     constraints between poses and features.
 
-#### B. Deep Learning and Reinforcement Learning @@citation Goodfellow2016DeepLearning Sutton2018ReinforcementLearning
+#### B. Deep Learning and Reinforcement Learning
+
+@@citation Goodfellow2016DeepLearning Sutton2018ReinforcementLearning
 
 This section covers modern learning paradigms that often rely on function
 approximation to deal with large state spaces.
