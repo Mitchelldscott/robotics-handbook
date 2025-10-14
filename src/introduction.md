@@ -48,7 +48,7 @@ This part focuses on applying the foundational math to complex robotics and AI
 problems, detailing algorithms used for estimation, mapping, control, and deep
 learning architectures.
 
-#### A. Probabilistic Robotics (Localization and Mapping)
+#### A. Probabilistic Robotics (Localization and Mapping) @@citation Thrun2005ProbabilisticRobotics
 
 This section focuses on algorithms, typically derived from Bayes filters, for
 position estimation and map acquisition.
@@ -73,7 +73,7 @@ position estimation and map acquisition.
     Filter (EIF) SLAM, recognizing the sparse structure of information
     constraints between poses and features.
 
-#### B. Deep Learning and Reinforcement Learning
+#### B. Deep Learning and Reinforcement Learning @@citation Goodfellow2016DeepLearning Sutton2018ReinforcementLearning
 
 This section covers modern learning paradigms that often rely on function
 approximation to deal with large state spaces.
