@@ -7,7 +7,7 @@ text-direction = "ltr"
 src = "src"
 
 [build]
-build-dir = "build"
+build-dir = "target/book"
 create-missing = true
 use-default-preprocessors = true  # use the default preprocessors
 extra-watch-dirs = []
