@@ -4,12 +4,10 @@
 #
 # Edited by scott.mitchell913@gmail.com to build on all push/PR but only deploy
 # from master after a PR merges with master.
-#
+# * 10/14/25 - Added linter job to make suggestions on PRs
 name: Deploy mdBook site to Pages
 
 on:
-  push:
-    branches: ['**']  # build on all branches
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches: ["master"]  # also build on PRs targeting main
@@ -17,6 +15,17 @@ on:
   workflow_dispatch:
 
 jobs:
+  # LINT job: Provides quick feedback on markdown formatting and style suggestions
+  lint:
+    if: ${{ github.event.action }} != 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Markdown Linting
+        uses: DavidAnson/markdownlint-cli2-action@v20
+        with:
+          globs: 'src/**/*.md'
+
   # Build job
   build:
     runs-on: ubuntu-latest
@@ -44,8 +53,6 @@ jobs:
 
   # Deployment job
   deploy:
-    # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-    # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
     concurrency:
       group: "pages"
     permissions:
