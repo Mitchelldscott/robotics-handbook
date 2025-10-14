@@ -20,4 +20,4 @@ default-theme = "light"
 preferred-dark-theme = "ayu"
 
 [preprocessor.bib]
-bibliography = "src/bibliography.bib"
+bibliography = "bibliography.bib"
