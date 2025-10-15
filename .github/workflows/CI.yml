@@ -5,21 +5,35 @@
 # Edited by scott.mitchell913@gmail.com to build on all push/PR but only deploy
 # from master after a PR merges with master.
 # * 10/14/25 - Added linter job to make suggestions on PRs
-# * 10/15/25 - moved deploy to seperate file
-name: Deploy
+# * 10/15/25 moved linter to pre-commit
+# * 10/15/25 removed artifacts and caching, just rerun the build
+name: CI
 
-# on:
-#   workflow_run:
-#     workflows: ["build"]          # name of the build workflow
-#     types:
-#       - completed
 on:
+  pull_request: 
+    branches: ["master"]
   push:
-    branches:
-      - master
+    branches: ["master"]
+  workflow_dispatch:
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      MDBOOK_VERSION: 0.4.48
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install mdBook
+        run: |
+          curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf -y | sh
+          rustup update
+          cargo install --version ${MDBOOK_VERSION} mdbook
+          cargo install mdbook-katex mdbook-bib
+      - name: Build with mdBook
+        run: mdbook build
   deploy:
+    needs: build
+    if: github.ref == 'refs/heads/master'
     concurrency:
       group: "pages"
     permissions:
@@ -32,12 +46,6 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-      # Download artifacts from build workflow
-      - name: Download Book Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: mdbook-artifact
-          path: ./target/book
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
