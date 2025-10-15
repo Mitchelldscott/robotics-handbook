@@ -15,23 +15,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  # LINT job: Provides quick feedback on markdown formatting and style suggestions
-  lint:
-    if: ${{ github.event.action }} != 'closed'
-    permissions:
-      contents: write
-      pages: write
-      id-token: write
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Run Markdown Linting
-        uses: DavidAnson/markdownlint-cli2-action@v20
-        with:
-          fix: true
-          globs: |
-            'src/**/*.md'
-
   # Build job
   build:
     runs-on: ubuntu-latest

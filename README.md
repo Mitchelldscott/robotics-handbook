@@ -15,3 +15,12 @@ cargo run
 ```rust
 mdbook build
 ```
+
+## Development
+
+### Dependencies
+
+* `cargo`
+* `npm`
+* `markdownlint-cli2`
+* `mdbook`, `mdbook-katex`, `mdbook-bib`

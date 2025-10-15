@@ -1,6 +1,10 @@
 # Control Theory Notation Reference
 
-This reference sheet provides an overview of common mathematical symbols, operators, and notational conventions used in control theory, systems engineering, and estimation. It is intended for graduate students and researchers as a quick reference during study and analysis. The notation is largely consistent with seminal texts in classical, modern, optimal, and robust control.
+This reference sheet provides an overview of common mathematical symbols, operators, and
+notational conventions used in control theory, systems engineering, and estimation. It is
+intended for graduate students and researchers as a quick reference during study and
+analysis. The notation is largely consistent with seminal texts in classical, modern,
+optimal, and robust control.
 
 ---
 
@@ -15,7 +19,8 @@ fn main() -> {
 
 ## Sets and Spaces
 
-This section covers the fundamental sets and function spaces used to define signals, systems, and their properties.
+This section covers the fundamental sets and function spaces used to define signals,
+systems, and their properties.
 
 | Symbol | Meaning / Description | Context / Example |
 | :--- | :--- | :--- |
@@ -74,7 +79,8 @@ These symbols describe the behavior of dynamical systems and the signals that th
 
 ## Optimization and Optimal Control
 
-This section covers notation common in optimization problems, particularly within optimal control frameworks like LQR and MPC.
+This section covers notation common in optimization problems, particularly within optimal
+control frameworks like LQR and MPC.
 
 | Symbol | Meaning / Description | Context / Example |
 | :--- | :--- | :--- |
