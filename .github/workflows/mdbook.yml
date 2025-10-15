@@ -5,7 +5,7 @@
 # Edited by scott.mitchell913@gmail.com to build on all push/PR but only deploy
 # from master after a PR merges with master.
 # * 10/14/25 - Added linter job to make suggestions on PRs
-name: Deploy mdBook site to Pages
+name: CI
 
 on:
   pull_request:
