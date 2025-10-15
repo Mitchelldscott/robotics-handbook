@@ -1,0 +1,53 @@
+/* Code Block Styling for mdBook */
+
+/* General code blocks */
+pre code {
+  display: block;
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  border-radius: 8px;
+  padding: 1em;
+  overflow-x: auto;
+  white-space: pre;
+  word-wrap: normal;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Inline code (inside text) */
+code {
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  background-color: var(--code-inline-bg, rgba(128, 128, 128, 0.15));
+  padding: 0.15em 0.3em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+/* Light theme adjustments */
+:root {
+  --code-bg: #f6f8fa;
+  --code-color: #24292e;
+  --code-inline-bg: #f1f1f1;
+}
+
+/* Dark theme overrides (Ayu-style) */
+:root[data-theme="ayu"], 
+:root[data-theme="dark"] {
+  --code-bg: #1f2430;
+  --code-color: #d5d8da;
+  --code-inline-bg: rgba(255, 255, 255, 0.08);
+}
+
+/* Apply theme colors */
+pre code {
+  background-color: var(--code-bg);
+  color: var(--code-color);
+}
+
+/* Syntax highlighting refinements (optional, lightweight overrides) */
+code .kw { color: #ffb454; }  /* keyword */
+code .dt { color: #59c2ff; }  /* data type */
+code .st { color: #aad94c; }  /* string */
+code .fu { color: #3358ff; }  /* function */
+code .co { color: #30722c; font-style: italic; } /* comment */
+code .bn, code .fl { color: #f07178; } /* numbers */
