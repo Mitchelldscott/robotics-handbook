@@ -31,6 +31,11 @@ jobs:
           cargo install mdbook-katex mdbook-bib
       - name: Build with mdBook
         run: mdbook build
+      - name: Upload site for deployment
+        uses: actions/upload-artifact@v4
+        with:
+            name: github-pages
+            path: ./target/book
   deploy:
     needs: build
     if: github.ref == 'refs/heads/master'
