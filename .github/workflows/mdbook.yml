@@ -29,7 +29,8 @@ jobs:
         uses: DavidAnson/markdownlint-cli2-action@v20
         with:
           fix: true
-          globs: 'src/**/*.md'
+          globs: |
+            'src/**/*.md'
 
   # Build job
   build:
