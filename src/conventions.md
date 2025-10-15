@@ -1,8 +1,17 @@
 # Control Theory Notation Reference
 
-This reference sheet provides a consolidated overview of common mathematical symbols, operators, and notational conventions used in control theory, systems engineering, and estimation. It is intended for graduate students and researchers as a quick reference during study and analysis. The notation is largely consistent with seminal texts in classical, modern, optimal, and robust control.
+This reference sheet provides an overview of common mathematical symbols, operators, and notational conventions used in control theory, systems engineering, and estimation. It is intended for graduate students and researchers as a quick reference during study and analysis. The notation is largely consistent with seminal texts in classical, modern, optimal, and robust control.
 
 ---
+
+```rust,editable
+fn adder<T: Add>(a: T, b: T) -> T { a + b }
+
+fn main() -> {
+    sum = adder(1, 2);
+    println!("{sum}")
+}
+```
 
 ## Sets and Spaces
 

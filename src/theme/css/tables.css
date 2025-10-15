@@ -1,0 +1,15 @@
+/* css/custom.css */
+.content {
+  max-width: 1000px;
+}
+
+table {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+  font-size: 0.9em;
+}
+
+th {
+  font-weight: 600;
+}
