@@ -22,6 +22,11 @@ preferred-dark-theme = "ayu"
 [output.html.playground]
 editable = true
 
+# [output.pandoc]
+# bib = ["bibliography.bib"]
+# csl = "ieee.csl"
+# citeproc = true
+
 [preprocessor.katex]
 after = ["links"]
 # KaTeX options.
@@ -43,4 +48,4 @@ pre-render = true
 
 [preprocessor.bib]
 bibliography = "bibliography.bib"
-
+csl = "ieee.csl"

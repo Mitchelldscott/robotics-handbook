@@ -9,10 +9,10 @@ optimal, and robust control.
 ---
 
 ```rust,editable
-fn adder<T: Add>(a: T, b: T) -> T { a + b }
+fn adder<T: core::ops::Add<Output = T>>(a: T, b: T) -> T { a + b }
 
-fn main() -> {
-    sum = adder(1, 2);
+fn main() {
+    let sum = adder(1, 2);
     println!("{sum}")
 }
 ```

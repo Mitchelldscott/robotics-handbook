@@ -3,17 +3,8 @@
 ## Introduction
 
 This book is a consolidation of foundations and algorithms for data-driven
-autonomous systems. The material is distilled from key reference texts in
-Machine Learning and Robotics. The goal is developing a model-based design
-workflow that makes building robots faster and safer.
-
-### Learning Methodology
-
-This first part provides an overview of probability, linear systems and
-machine learning, to get a deeper understanding of these topics
-readers should use a more in-depth resource. The second part of this book is
-meant to be like [rust-by-example](https://doc.rust-lang.org/rust-by-example/)
-and provide hands on mini-projects.
+autonomous system dseign. The material is distilled from key reference texts in
+Machine Learning and Robotics.
 
 ***
 
