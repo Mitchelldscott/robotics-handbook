@@ -2,36 +2,98 @@
 
 ## I. Foundations and Data Representation
 
-### 1. Vector Spaces & Data Representation
+### 1. Vectors & Matrices
 
-#### Vector spaces
+#### Vector space
 
 * $(V, +, \cdot)$ over a field $F$ is a set $V$ with operations
-  * addition $V + V \to V$
+  * **Addition** $V + V \to V$
     1. $a + b = b + a$ (commutative)
     2. $(a + b) + c = a + (b + c)$ (associative)
     3. $a + 0 = 0 + a = a$ (zero, identity)
-  * scalar multiplication $F \times V \to V$
+  * **Scalar Multiplication** $F \times V \to V$
     1. $(\beta \gamma) a = \beta (\gamma a)$ (associative)
     2. $(\beta + \gamma) a = \beta a + \gamma a$ (left distributive)
     3. $\beta (a + b) a = \beta a + \beta b$ (right distributive)
-  * inner-product $V \cdot V \to F$$
+  * **Inner-product** $V \cdot V \to F$
     1. $a^{T} b = b^{T} a$
     2. $(\gamma a)^{T} b = \gamma (a^{T} b)$
     3. $(a + b)^T c = a^T c + b^T c$
 
-* **Linear Map:** $T: V \to W$ s.t.
-$T(c\mathbf{v} + d\mathbf{w}) = cT(\mathbf{v}) + dT(\mathbf{w})$ for
-$c, d \in F$ and $\mathbf{v}, \mathbf{w} \in V$
-* **Operator:** A linear map $T: V \to V$
+#### Linear Functions (Inner Products)
+
+* Suppose $ f : \mathbb{R}^n \to \mathbb{R} $ is **linear**.  
+  Then it can be expressed as $$
+  f(x) = a^{\mathsf{T}} x$$
+  for some $ a \in \mathbb{R}^n $.
+
+* Specifically, the coefficients of $ a $ are given by: $$
+  a_i = f(e_i)$$
+  where $ e_i $ is the $ i $-th standard basis vector.
+
+* This follows from: $$
+  \begin{aligned}
+  f(x)
+  &= f(x_1 e_1 + x_2 e_2 + \cdots + x_n e_n) \\
+  &= x_1 f(e_1) + x_2 f(e_2) + \cdots + x_n f(e_n)
+  \end{aligned}$$
+
+#### Affine Functions
+
+* A function that is **linear plus a constant** is called **affine**.
+
+* General form:
+  $$f(x) = a^{\mathsf{T}} x + b$$
+  where $a$ is an $n$-vector and $b$ is a scalar.
+
+* $f : \mathbb{R}^n \to \mathbb{R}$ is **affine** if and only if
+  $$f(\alpha x + \beta y) = \alpha f(x) + \beta f(y)$$
+  holds for all $\alpha, \beta$ with $\alpha + \beta = 1$, and all $x, y \in \mathbb{R}^n$.
+
+* *(Sometimes people mistakenly refer to affine functions as linear.)*
+
+#### Norm
+
+A measure of the "size": $\|x\|_p$
+
+* $\|x\|_2 = \sqrt{x_1^2 + x_2^2 + ... + x_n^2} = \sqrt{x^{\mathsf{T}} x}$
+
+#### Matrices
+
+* A **matrix** is a rectangular array of numbers, e.g.:
+  $$\begin{bmatrix}
+    a_{11} & a_{12} & a_{13} & a_{14} \\
+    a_{21} & a_{22} & a_{23} & a_{24} \\
+    a_{31} & a_{32} & a_{33} & a_{34} \\
+  \end{bmatrix}$$
+
+* The **size** of a matrix is *(rows, columns)*.  
+  *Example: The matrix above is $3 \times 4$*
+
+* Two matrices are **equal** ($A = B$) if:
+  * They are the same size, and  
+  * All corresponding entries are equal.
+
+##### Matrix Types
+
+* An $m \times n$ matrix $A$ is:
+  * **Tall** if $m > n$
+  * **Wide** if $m < n$
+  * **Square** if $m = n$
+
+##### Special Cases
+
+* An $n \times 1$ matrix is an **$n$-vector** (column vector).  
+* A $1 \times 1$ matrix is a **scalar** (number).  
+* A $1 \times n$ matrix is a **row vector**, e.g.:
 
 ## II. System Solving and Fundamental Subspaces
 
 ### 2. Solving Linear Equations ($A\mathbf{x}=\mathbf{b}$)
 
-* Data problems $\implies$ **Linear Equations** $\implies A\mathbf{x}=\mathbf{b}$
-* Solve $A\mathbf{x} = \mathbf{b}$: find $x_i$ such that
-$\sum_{i=1}^{n} x_i \mathbf{a}_i = \mathbf{b}$, where $\mathbf{a}_i$ are columns of $A$
+* Solve $A\mathbf{x} = \mathbf{b}$
+  * find $x_i$ such that $\sum_{i=1}^{n} x_i \mathbf{a}_i = \mathbf{b}$, where
+  $\mathbf{a}_i$ are columns of $A$
 * **Gaussian Elimination:** $[A | \mathbf{b}] \to [U | \mathbf{c}]$ (Echelon)
 $\to [R | \mathbf{d}]$ (Reduced Row Echelon Form, $R = \text{rref}(A)$)
 
@@ -132,3 +194,7 @@ $\mathcal{U}, \mathcal{V}$ are orthogonal tensors, $\mathcal{S}$ is f-diagonal (
 slices are diagonal)
 * **Tensor LU:** $\mathcal{A} = \mathcal{L} * \mathcal{U}$. Solves multi-linear systems
 $\mathcal{A} * \mathcal{X} = \mathcal{B}$ via tensor forward/backward substitution
+
+## References
+
+@@Boyd2025_IALA
