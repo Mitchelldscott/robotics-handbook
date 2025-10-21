@@ -32,7 +32,8 @@ jobs:
       - name: Build with mdBook
         run: mdbook build
       - name: Upload docs artifact
-        id: deployment
+        if: github.ref == 'refs/heads/master'
+        id: upload
         uses: actions/upload-pages-artifact@v3
         with:
           path: target/book/
