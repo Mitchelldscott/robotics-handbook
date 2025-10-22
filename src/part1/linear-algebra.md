@@ -2,7 +2,7 @@
 
 ## I. Foundations and Data Representation
 
-### 1. Vectors & Matrices
+### 1. Vectors
 
 #### Vector space
 
@@ -15,50 +15,109 @@
     1. $(\beta \gamma) a = \beta (\gamma a)$ (associative)
     2. $(\beta + \gamma) a = \beta a + \gamma a$ (left distributive)
     3. $\beta (a + b) a = \beta a + \beta b$ (right distributive)
-  * **Inner-product** $V \cdot V \to F$
+  * **Inner product** $V \cdot V \to F$
     1. $a^{T} b = b^{T} a$
     2. $(\gamma a)^{T} b = \gamma (a^{T} b)$
     3. $(a + b)^T c = a^T c + b^T c$
 
-#### Linear Functions (Inner Products)
+#### Linear Functions
 
-* Suppose $ f : \mathbb{R}^n \to \mathbb{R} $ is **linear**.  
-  Then it can be expressed as $$
-  f(x) = a^{\mathsf{T}} x$$
-  for some $ a \in \mathbb{R}^n $.
+* **Inner Products**
+  * Suppose $f : \mathbb{R}^n \to \mathbb{R}$ is **linear**
+    Then it can be expressed as
+    $$f(x) = a^{\mathsf{T}} x$$
+    for some $a \in \mathbb{R}^n$.
 
-* Specifically, the coefficients of $ a $ are given by: $$
-  a_i = f(e_i)$$
-  where $ e_i $ is the $ i $-th standard basis vector.
+  * Specifically, the coefficients of $a$ are given by:
+    $$a_i = f(e_i)$$
+    where $e_i$ is the $i$-th standard basis vector
 
-* This follows from: $$
-  \begin{aligned}
-  f(x)
-  &= f(x_1 e_1 + x_2 e_2 + \cdots + x_n e_n) \\
-  &= x_1 f(e_1) + x_2 f(e_2) + \cdots + x_n f(e_n)
-  \end{aligned}$$
+  * This follows from:
+    $$\begin{aligned}
+        f(x)
+        &= f(x_1 e_1 + x_2 e_2 + \cdots + x_n e_n) \\
+        &= x_1 f(e_1) + x_2 f(e_2) + \cdots + x_n f(e_n)
+    \end{aligned}$$
 
-#### Affine Functions
+* **Superposition**
+  * $f(\alpha x + \beta y) = \alpha f(x) + \beta f(y)$
 
-* A function that is **linear plus a constant** is called **affine**.
-
-* General form:
+* **Affine Function**
+A function that is **linear plus a constant** is called **affine**
+  * General form:
   $$f(x) = a^{\mathsf{T}} x + b$$
-  where $a$ is an $n$-vector and $b$ is a scalar.
-
-* $f : \mathbb{R}^n \to \mathbb{R}$ is **affine** if and only if
+  where $a$ is an $n$-vector and $b$ is a scalar
+  * $f : \mathbb{R}^n \to \mathbb{R}$ is **affine** if and only if
   $$f(\alpha x + \beta y) = \alpha f(x) + \beta f(y)$$
-  holds for all $\alpha, \beta$ with $\alpha + \beta = 1$, and all $x, y \in \mathbb{R}^n$.
-
-* *(Sometimes people mistakenly refer to affine functions as linear.)*
+  holds for all $\alpha, \beta$ with $\alpha + \beta = 1$, and all $x, y \in \mathbb{R}^n$
 
 #### Norm
 
-A measure of the "size": $\|x\|_p$
+A measure of the "size" of a vector: $\|x\|$
 
-* $\|x\|_2 = \sqrt{x_1^2 + x_2^2 + ... + x_n^2} = \sqrt{x^{\mathsf{T}} x}$
+* Two-norm (Euclidean Distance)
+$$\|x\|_2 = \sqrt{x_1^2 + x_2^2 + ... + x_n^2} = \sqrt{x^{\mathsf{T}} x}$$
 
-#### Matrices
+#### Taylor Approximation
+
+**Differential calculus** provides an organized way to find an
+**approximate affine model** of a differentiable function.
+
+Suppose $f : \mathbb{R}^n \to \mathbb{R}$ is **differentiable**, meaning all partial
+derivatives exist.
+
+* Let $ z \in \mathbb{R}^n$.  
+  The **first-order Taylor approximation** of $f$ near (or at) the point $z$:
+  $$\hat{f}(x) = f(z)
+  + \frac{\partial f}{\partial x_1}(z)(x_1 - z_1)
+  + \cdots
+  + \frac{\partial f}{\partial x_n}(z)(x_n - z_n)$$
+  where $ \frac{\partial f}{\partial x_i}(z)$ denotes the partial derivative of $f$ with
+  respect to its $i$-th argument, evaluated at $z$.
+* The hat ($\hat{f}$) indicates that this is an **approximation** of $f$.  
+* The approximation $ \hat{f}(x)$ is **accurate when** all $ x_i$ are near the
+corresponding $z_i$.
+* Sometimes we write the approximation as $\hat{f}(x; z)$ to emphasize that it is
+developed at the point $z$.
+* The **first term**, $f(z)$, is a constant.  
+  The **remaining terms** describe how the function changes as $x$ deviates from $z$.
+* The function $\hat{f}$ is **affine in $x$** (sometimes informally called "linear" near $z$).
+
+##### Compact Notation Using the Gradient
+
+Using **inner product notation**, the Taylor approximation can be written as:
+$$\hat{f}(x) = f(z) + \nabla f(z)^{\mathsf{T}} (x - z)$$ where the **gradient** of $f$ at
+$z$ is:
+$$  \nabla f(z) =
+  \begin{bmatrix}
+  \frac{\partial f}{\partial x_1}(z) \\
+  \vdots \\
+  \frac{\partial f}{\partial x_n}(z)
+  \end{bmatrix}$$
+
+* The first term $ f(z)$ is the function value at $ x = z$  
+  * The second term $ \nabla f(z)^{\mathsf{T}} (x - z)$ is the **inner product** between
+  the gradient and the **perturbation** $ x - z$.
+
+##### Equivalent Affine Form
+
+- The Taylor approximation can also be expressed as a **linear function plus a constant**:
+$$\hat{f}(x) = \nabla f(z)^{\mathsf{T}} x + \big(f(z) - \nabla f(z)^{\mathsf{T}} z\big)$$
+
+- However, the compact form
+$$\hat{f}(x) = f(z) + \nabla f(z)^{\mathsf{T}} (x - z)$$
+  is often **easier to interpret** geometrically and conceptually.
+
+---
+
+- The first-order Taylor approximation provides a systematic way to construct an
+**affine approximation** of a differentiable function
+$f : \mathbb{R}^n \to \mathbb{R}$ near a given point $z$.
+
+- For $ n = 1$, this corresponds to the familiar **tangent line approximation**—accurate
+near $z$, but not over large intervals.
+
+### 2. Matrices
 
 * A **matrix** is a rectangular array of numbers, e.g.:
   $$\begin{bmatrix}
@@ -104,10 +163,15 @@ $A\mathbf{x} = \mathbf{b}$ depend on:
 
 | Subspace | Definition/Property | Dimension |
 | :--- | :--- | :--- |
-| **Column Space** $C(A)$ | $\text{span}\{\mathbf{a}_1, ..., \mathbf{a}_n\} = \{A\mathbf{x} \mid \mathbf{x} \in \mathbb{R}^n\}$. Solution exists $\iff \mathbf{b} \in C(A)$. | $r$ |
+| **Column Space** $C(A)$ |
+$\text{span}\{\mathbf{a}_1, ..., \mathbf{a}_n\} =
+\{A\mathbf{x} \mid \mathbf{x} \in \mathbb{R}^n\}$.
+Solution exists $\iff \mathbf{b} \in C(A)$. | $r$ |
 | **Row Space** $C(A^T)$ | $\text{span}\{\text{rows of } A\}$. | $r$ |
-| **Nullspace** $N(A)$ | $\{\mathbf{x} \in \mathbb{R}^n \mid A\mathbf{x} = \mathbf{0}\}$. | $n-r$ |
-| **Left Nullspace** $N(A^T)$ | $\{\mathbf{y} \in \mathbb{R}^m \mid A^T\mathbf{y} = \mathbf{0}\}$. | $m-r$ |
+| **Nullspace** $N(A)$ | $\{\mathbf{x} \in \mathbb{R}^n \mid A\mathbf{x} = \mathbf{0}\}$.
+| $n-r$ |
+| **Left Nullspace** $N(A^T)$ |
+$\{\mathbf{y} \in \mathbb{R}^m \mid A^T\mathbf{y} = \mathbf{0}\}$. | $m-r$ |
 
 * **Orthogonality (Part II):**
 * $C(A^T) \perp N(A) \implies \mathbb{R}^n = C(A^T) \oplus N(A)$
@@ -167,11 +231,23 @@ $\mathbf{\hat{x}} = A^+\mathbf{b}$. If $\text{rank}(A)=n$, $A^+ = (A^T A)^{-1} A
 
 | Factorization | Form | Requirements/Purpose |
 | :--- | :--- | :--- |
-| **Singular Value Decomposition (SVD)** | $A = U\Sigma V^T$ | $A \in \mathbb{R}^{m \times n}$. $U \in \mathbb{R}^{m \times m}, V \in \mathbb{R}^{n \times n}$ are orthogonal. $\Sigma \in \mathbb{R}^{m \times n}$ is diagonal, $\Sigma_{ii} = \sigma_i \ge 0$ (singular values). $\sigma_i = \sqrt{\lambda_i(A^T A)}$. |
-| **QR Decomposition** | $A = QR$ | $A \in \mathbb{R}^{m \times n}$ (full column rank). $Q \in \mathbb{R}^{m \times n}$ ($Q^T Q = I$). $R \in \mathbb{R}^{n \times n}$ (upper triangular). Solves $A\mathbf{x}=\mathbf{b} \to R\mathbf{x} = Q^T\mathbf{b}$. |
-| **LU Decomposition** | $A = LU$ (or $PA=LU$) | $A \in \mathbb{R}^{n \times n}$ (invertible). $L$ (lower $\Delta$, $L_{ii}=1$), $U$ (upper $\Delta$). Solves $A\mathbf{x}=\mathbf{b}$ via $L\mathbf{c}=\mathbf{b}$ then $U\mathbf{x}=\mathbf{c}$. |
-| **Cholesky Decomposition** | $A = R^T R$ (or $LL^T$) | $A$ must be **Symmetric Positive Definite** (SPD). $A = A^T$ and $\mathbf{x}^T A \mathbf{x} > 0$ for $\mathbf{x} \neq \mathbf{0}$. $R$ is upper $\Delta$, $L$ is lower $\Delta$. |
-| **Polar Decomposition** | $A = Q H$ | $A \in \mathbb{R}^{n \times n}$ (invertible). $Q$ is orthogonal ($Q^T Q = I$), $H$ is SPD ($H = \sqrt{A^T A}$). Separates rotation ($Q$) from stretch ($H$). |
+| **Singular Value Decomposition (SVD)** | $A = U\Sigma V^T$ |
+$A \in \mathbb{R}^{m \times n}$. $U \in \mathbb{R}^{m \times m}, V \in
+\mathbb{R}^{n \times n}$
+are orthogonal. $\Sigma \in \mathbb{R}^{m \times n}$ is diagonal, $\Sigma_{ii} =
+\sigma_i \ge 0$ (singular values). $\sigma_i = \sqrt{\lambda_i(A^T A)}$. |
+| **QR Decomposition** | $A = QR$ | $A \in \mathbb{R}^{m \times n}$ (full column rank).
+$Q \in \mathbb{R}^{m \times n}$ ($Q^T Q = I$). $R \in \mathbb{R}^{n \times n}$
+(upper triangular). Solves $A\mathbf{x}=\mathbf{b} \to R\mathbf{x} = Q^T\mathbf{b}$. |
+| **LU Decomposition** | $A = LU$ (or $PA=LU$) | $A \in \mathbb{R}^{n \times n}$
+(invertible). $L$ (lower $\Delta$, $L_{ii}=1$), $U$ (upper $\Delta$). Solves
+$A\mathbf{x}=\mathbf{b}$ via $L\mathbf{c}=\mathbf{b}$ then $U\mathbf{x}=\mathbf{c}$. |
+| **Cholesky Decomposition** | $A = R^T R$ (or $LL^T$) | $A$ must be
+**Symmetric Positive Definite** (SPD). $A = A^T$ and $\mathbf{x}^T A \mathbf{x} > 0$ for
+$\mathbf{x} \neq \mathbf{0}$. $R$ is upper $\Delta$, $L$ is lower $\Delta$. |
+| **Polar Decomposition** | $A = Q H$ | $A \in \mathbb{R}^{n \times n}$ (invertible). $Q$
+is orthogonal ($Q^T Q = I$), $H$ is SPD ($H = \sqrt{A^T A}$). Separates rotation ($Q$)
+from stretch ($H$). |
 
 ## VI. Advanced Topics: Tensors (Multi-linear Algebra)
 
@@ -197,4 +273,4 @@ $\mathcal{A} * \mathcal{X} = \mathcal{B}$ via tensor forward/backward substituti
 
 ## References
 
-@@Boyd2025_IALA
+@@boyd2018introduction
