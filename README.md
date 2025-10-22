@@ -1,6 +1,6 @@
 # Robotics Handbook
 
-![Workflow Status](https://github.com/mitchelldscott/robotics-handbook/actions/workflows/mdbook.yml/badge.svg)
+![Workflow Status](https://github.com/mitchelldscott/robotics-handbook/actions/workflows/CI.yml/badge.svg)
 
 Perception, Navigation and Control Handbook
 
