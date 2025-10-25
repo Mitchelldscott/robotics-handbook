@@ -5,7 +5,7 @@
 
 - [Mathematics & Machine Learning Basics](part1/index.md)
   - [Mathematics Core](part1/mathematics-core.md)
-    - [Linear Algebra](part1/linear-algebra.md)
+    - [Linear Systems](part1/linear-systems.md)
     - [Probability and Information Theory](part1/probability-information.md)
     - [Numerical Computation](part1/numerical-computation.md)
     - [Mechanics](part1/mechanics.md)

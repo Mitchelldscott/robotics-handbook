@@ -1,12 +1,18 @@
-# Linear Algebra
+# Introduction to Applied Linear Algebra and Differential Equations
+
+@@boyd2018introduction
 
 ## I. Foundations and Data Representation
 
 ### 1. Vectors
 
+A vector is an ordered set of values, represented as a bold lowercase $\mathbb{v}$ or
+lowercase with an overhead arrow $\overrightarrow{v}$
+
 #### Vector space
 
-* $(V, +, \cdot)$ over a field $F$ is a set $V$ with operations
+* A vector space is a structure consisting of a set of vectors $V$ that
+provides the following operators
   * **Addition** $V + V \to V$
     1. $a + b = b + a$ (commutative)
     2. $(a + b) + c = a + (b + c)$ (associative)
@@ -14,7 +20,7 @@
   * **Scalar Multiplication** $F \times V \to V$
     1. $(\beta \gamma) a = \beta (\gamma a)$ (associative)
     2. $(\beta + \gamma) a = \beta a + \gamma a$ (left distributive)
-    3. $\beta (a + b) a = \beta a + \beta b$ (right distributive)
+    3. $\beta (a + b) = \beta a + \beta b$ (right distributive)
   * **Inner product** $V \cdot V \to F$
     1. $a^{T} b = b^{T} a$
     2. $(\gamma a)^{T} b = \gamma (a^{T} b)$
@@ -58,7 +64,157 @@ A measure of the "size" of a vector: $\|x\|$
 * Two-norm (Euclidean Distance)
 $$\|x\|_2 = \sqrt{x_1^2 + x_2^2 + ... + x_n^2} = \sqrt{x^{\mathsf{T}} x}$$
 
-#### Taylor Approximation
+### 2. Matrices
+
+* A **matrix** is a rectangular array of numbers, e.g.:
+  $$\begin{bmatrix}
+    a_{11} & a_{12} & a_{13} & a_{14} \\
+    a_{21} & a_{22} & a_{23} & a_{24} \\
+    a_{31} & a_{32} & a_{33} & a_{34} \\
+  \end{bmatrix}$$
+
+* The **size** of a matrix is *(rows, columns)*.  
+  *Example: The matrix above is $3 \times 4$*
+
+* Two matrices are **equal** ($A = B$) if:
+  * They are the same size, and  
+  * All corresponding entries are equal.
+
+#### Matrix Types
+
+* An $m \times n$ matrix $A$ is:
+  * **Tall** if $m > n$
+  * **Wide** if $m < n$
+  * **Square** if $m = n$
+
+#### Special Cases
+
+* An $n \times 1$ matrix is an **$n$-vector** (column vector).  
+* A $1 \times 1$ matrix is a **scalar** (number).  
+* A $1 \times n$ matrix is a **row vector**, e.g.:
+
+#### Span, Basis, and Dimension
+
+* **Linear Combination**: A vector $\mathbf{v}$ is a linear combination of vectors
+$\{\mathbf{v}_1, \dots, \mathbf{v}_k\}$ if it can be written as:
+
+$$\mathbf{v} = c_1 \mathbf{v}_1 + c_2 \mathbf{v}_2 + \cdots + c_k \mathbf{v}_k$$
+
+  for some scalars $c_1, \dots, c_k$.
+
+* **Span**: The span of a set of vectors $S = \{\mathbf{v}_1, \dots, \mathbf{v}_k\}$ is
+the set
+of all possible linear combinations of those vectors. It forms a subspace.
+
+$$\text{span}(S) = \left\{ \sum_{i=1}^k c_i \mathbf{v}_i \mid c_i \in \mathbb{R} \right\}$$
+
+* **Linear Independence**: A set of vectors $S$ is **linearly independent** if the only
+solution to
+the equation
+
+$$c_1 \mathbf{v}_1 + c_2 \mathbf{v}_2 + \cdots + c_k \mathbf{v}_k = \mathbf{0}$$
+
+is the trivial solution $c_1 = c_2 = \cdots = c_k = 0$.
+
+> If any non-zero solution exists, the set is linearly dependent.
+
+* **Basis**: A basis for a vector space $V$ is a set of vectors $B$ that satisfies two conditions:
+
+  * $B$ is **linearly independent**.
+  * The vectors in $B$ span the space $V$ (i.e., $\text{span}(B) = V$).
+
+* **Dimension**: The dimension of a vector space $V$, denoted $\dim(V)$, is the number of
+vectors in any basis for $V$.
+
+* The dimension of the Column Space, $\dim(C(A))$, is the rank ($r$) of the matrix $A$.
+* The dimension of the Nullspace, $\dim(N(A))$, is the nullity ($n-r$) of the matrix $A$.
+
+#### Matrix Operations
+
+* **Addition**: If $A$ and $B$ are both $m \times n$, their sum is element-wise:
+
+$$(A+B)_{ij} = A_{ij} + B_{ij}$$
+
+* **Scalar Multiplication**: The product of a scalar $c$ and a matrix $A$ is element-wise:
+
+$$(cA)_{ij} = c \cdot A_{ij}$$
+
+* **Matrix Multiplication**: If $A$ is $m \times n$ and $B$ is $n \times p$, their product
+$C = AB$ is an $m \times p$ matrix.
+
+* The entry $(C)_{ij}$ is the inner product of the $i$-th row of $A$ and the $j$-th column
+of $B$:
+
+$$(AB)_{ij} = \sum_{k=1}^n A_{ik} B_{kj}$$
+
+> **Note**: Matrix multiplication is not commutative ($AB \neq BA$ in general).
+
+* **Matrix Inverse**: An $n \times n$ square matrix $A$ is invertible (or non-singular) if
+there exists a matrix $A^{-1}$ such that:
+
+  $$A A^{-1} = A^{-1} A = I_n$$
+
+where $I_n$ is the $n \times n$ identity matrix.
+
+* $A$ is invertible if and only if its rank is $n$ (full rank).
+* **Properties**: $(AB)^{-1} = B^{-1} A^{-1}$ and $(A^T)^{-1} = (A^{-1})^T$.
+
+#### Linear Transformations
+
+A **transformation** (or map) $T: V \to W$ from a vector space $V$ to a vector
+space $W$ is linear if it preserves vector addition and scalar multiplication:
+
+1. $T(\mathbf{u} + \mathbf{v}) = T(\mathbf{u}) + T(\mathbf{v})$ *(Additivity)*
+2. $T(c\mathbf{v}) = cT(\mathbf{v})$ *(Homogeneity)*
+
+* These two rules combine to the superposition principle:
+$T(c\mathbf{u} + d\mathbf{v}) = cT(\mathbf{u}) + dT(\mathbf{v})$.
+
+* **Matrix of a Transformation**: Every linear transformation $T: \mathbb{R}^n \to \mathbb{R}^m$
+can be represented by a unique $m \times n$ matrix $A$ such that $T(\mathbf{x}) = A\mathbf{x}$.
+
+  * The columns of $A$ are the images of the standard basis vectors $\mathbf{e}_j$:
+
+  $$A = \begin{bmatrix} | & & | \\ T(\mathbf{e}_1) & \cdots & T(\mathbf{e}_n) \\ | & & | \end{bmatrix}$$
+
+* **Kernel and Image**:
+
+  * **Kernel (Nullspace)**: The set of all vectors in $V$ that map to the zero vector in $W$.
+
+  $$\ker(T) = \{ \mathbf{v} \in V \mid T(\mathbf{v}) = \mathbf{0} \}$$
+
+  > *This is the abstract version of the Nullspace $N(A)$.*
+
+  * **Image (Range)**: The set of all possible outputs in $W$.
+
+  $$\text{Im}(T) = \{ T(\mathbf{v}) \mid \mathbf{v} \in V \}$$
+
+  > *This is the abstract version of the Column Space $C(A)$.*
+
+### Matrix Determinants
+
+The **determinant** is a scalar value $\det(A)$ associated with an $n \times n$
+square matrix $A$.
+
+* For $2 \times 2$: $\det \begin{pmatrix} a & b \\ c & d \end{pmatrix} = ad - bc$.
+* For $n \times n$, it is computed via cofactor expansion.
+* A matrix $A$ is invertible if and only if $\det(A) \neq 0$.
+
+* **Key Properties**:
+
+  * $\det(I) = 1$
+  * $\det(AB) = \det(A) \det(B)$
+  * $\det(A^T) = \det(A)$
+  * $\det(A^{-1}) = 1 / \det(A)$
+  * Swapping two rows multiplies the determinant by $-1$.
+  * For $A \in \mathbb{R}^{n \times n}$, $\det(cA) = c^n \det(A)$.
+
+> **Geometric Meaning**: $|\det(A)|$ is the volume of the $n$-dimensional parallelepiped formed
+> by the column (or row) vectors of $A$.
+
+## II. System Solving and Fundamental Subspaces
+
+### 1. Taylor Approximation
 
 **Differential calculus** provides an organized way to find an
 **approximate affine model** of a differentiable function.
@@ -77,13 +233,13 @@ derivatives exist.
 * The hat ($\hat{f}$) indicates that this is an **approximation** of $f$.  
 * The approximation $ \hat{f}(x)$ is **accurate when** all $ x_i$ are near the
 corresponding $z_i$.
-* Sometimes we write the approximation as $\hat{f}(x; z)$ to emphasize that it is
+* Sometimes we write the approximation as $\hat{f}(x\mid z)$ to emphasize that it is
 developed at the point $z$.
-* The **first term**, $f(z)$, is a constant.  
-  The **remaining terms** describe how the function changes as $x$ deviates from $z$.
+* The **first term**, $f(z)$, is a constant. The **remaining terms** describe how the
+function changes as $x$ deviates from $z$.
 * The function $\hat{f}$ is **affine in $x$** (sometimes informally called "linear" near $z$).
 
-##### Compact Notation Using the Gradient
+#### Compact Notation Using the Gradient
 
 Using **inner product notation**, the Taylor approximation can be written as:
 $$\hat{f}(x) = f(z) + \nabla f(z)^{\mathsf{T}} (x - z)$$ where the **gradient** of $f$ at
@@ -99,7 +255,7 @@ $$  \nabla f(z) =
   * The second term $ \nabla f(z)^{\mathsf{T}} (x - z)$ is the **inner product** between
   the gradient and the **perturbation** $ x - z$.
 
-##### Equivalent Affine Form
+#### Equivalent Affine Form
 
 - The Taylor approximation can also be expressed as a **linear function plus a constant**:
 $$\hat{f}(x) = \nabla f(z)^{\mathsf{T}} x + \big(f(z) - \nabla f(z)^{\mathsf{T}} z\big)$$
@@ -108,45 +264,12 @@ $$\hat{f}(x) = \nabla f(z)^{\mathsf{T}} x + \big(f(z) - \nabla f(z)^{\mathsf{T}}
 $$\hat{f}(x) = f(z) + \nabla f(z)^{\mathsf{T}} (x - z)$$
   is often **easier to interpret** geometrically and conceptually.
 
----
-
 - The first-order Taylor approximation provides a systematic way to construct an
 **affine approximation** of a differentiable function
 $f : \mathbb{R}^n \to \mathbb{R}$ near a given point $z$.
 
 - For $ n = 1$, this corresponds to the familiar **tangent line approximation**—accurate
 near $z$, but not over large intervals.
-
-### 2. Matrices
-
-* A **matrix** is a rectangular array of numbers, e.g.:
-  $$\begin{bmatrix}
-    a_{11} & a_{12} & a_{13} & a_{14} \\
-    a_{21} & a_{22} & a_{23} & a_{24} \\
-    a_{31} & a_{32} & a_{33} & a_{34} \\
-  \end{bmatrix}$$
-
-* The **size** of a matrix is *(rows, columns)*.  
-  *Example: The matrix above is $3 \times 4$*
-
-* Two matrices are **equal** ($A = B$) if:
-  * They are the same size, and  
-  * All corresponding entries are equal.
-
-##### Matrix Types
-
-* An $m \times n$ matrix $A$ is:
-  * **Tall** if $m > n$
-  * **Wide** if $m < n$
-  * **Square** if $m = n$
-
-##### Special Cases
-
-* An $n \times 1$ matrix is an **$n$-vector** (column vector).  
-* A $1 \times 1$ matrix is a **scalar** (number).  
-* A $1 \times n$ matrix is a **row vector**, e.g.:
-
-## II. System Solving and Fundamental Subspaces
 
 ### 2. Solving Linear Equations ($A\mathbf{x}=\mathbf{b}$)
 
@@ -270,7 +393,3 @@ $\mathcal{U}, \mathcal{V}$ are orthogonal tensors, $\mathcal{S}$ is f-diagonal (
 slices are diagonal)
 * **Tensor LU:** $\mathcal{A} = \mathcal{L} * \mathcal{U}$. Solves multi-linear systems
 $\mathcal{A} * \mathcal{X} = \mathcal{B}$ via tensor forward/backward substitution
-
-## References
-
-@@boyd2018introduction
