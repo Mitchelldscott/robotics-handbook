@@ -2,11 +2,11 @@
 
 @@boyd2018introduction
 
-## I. Foundations and Data Representation
+## I. Data Representations
 
 ### 1. Vectors
 
-A vector is an ordered set of values, represented as a bold lowercase $\mathbb{v}$ or
+A vector is an ordered set of values, represented as a bold lowercase $\mathbf{v}$ or
 lowercase with an overhead arrow $\overrightarrow{v}$
 
 #### Vector space
@@ -57,12 +57,40 @@ A function that is **linear plus a constant** is called **affine**
   $$f(\alpha x + \beta y) = \alpha f(x) + \beta f(y)$$
   holds for all $\alpha, \beta$ with $\alpha + \beta = 1$, and all $x, y \in \mathbb{R}^n$
 
-#### Norm
+#### Norms
 
-A measure of the "size" of a vector: $\|x\|$
+A **norm** is a function that measures the “size” or “length” of a vector
+$x \in \mathbb{R}^n$.  
+It assigns a nonnegative scalar to each vector, written $\|x\|$, and must satisfy the
+following properties:
 
-* Two-norm (Euclidean Distance)
-$$\|x\|_2 = \sqrt{x_1^2 + x_2^2 + ... + x_n^2} = \sqrt{x^{\mathsf{T}} x}$$
+1. **Positive definiteness:** $\|x\| \ge 0$, and $\|x\| = 0 \iff x = 0$
+2. **Homogeneity:** $\|\alpha x\| = |\alpha|\,\|x\|$ for any scalar $\alpha$
+3. **Triangle inequality:** $\|x + y\| \le \|x\| + \|y\|$
+
+##### General $L_p$-norm
+
+The family of **$L_p$** norms (for $p \ge 1$) is defined as
+
+$$\|x\|_p = \left( \sum_{i=1}^{n} |x_i|^p \right)^{1/p}$$
+
+This expression measures vector “length” according to the exponent $p$:
+
+* $p = 1$: Manhattan or taxicab norm  
+* $p = 2$: Euclidean norm  
+* $p \to \infty$: Maximum norm, $\|x\|_\infty = \max_i |x_i|$
+
+##### Two-norm (Euclidean Distance)
+
+The most common case is $p = 2$:
+
+$$
+\|x\|_2 = \sqrt{x_1^2 + x_2^2 + \dots + x_n^2}
+        = \sqrt{x^{\mathsf{T}} x}
+$$
+
+This norm corresponds to the **Euclidean distance** from the origin to the point
+represented by $x$ in $n$-dimensional space.
 
 ### 2. Matrices
 
@@ -393,3 +421,115 @@ $\mathcal{U}, \mathcal{V}$ are orthogonal tensors, $\mathcal{S}$ is f-diagonal (
 slices are diagonal)
 * **Tensor LU:** $\mathcal{A} = \mathcal{L} * \mathcal{U}$. Solves multi-linear systems
 $\mathcal{A} * \mathcal{X} = \mathcal{B}$ via tensor forward/backward substitution
+
+```rust
+use nalgebra::{DMatrix, SVD};
+
+/// Implements Dynamic Mode Decomposition with Control (DMDc).
+///
+/// This function discovers the best-fit linear system matrices (A, B) that
+/// approximate the dynamics `x' ≈ Ax + Bu` given a time-series history of
+/// state vectors `x_history` and control vectors `u_history`.
+///
+/// `x_history` is an `n x m` matrix, where `n` is the state dimension and `m` is the
+/// number of snapshots.
+/// `u_history` is a `p x m` matrix, where `p` is the control dimension and `m` is the
+/// number of snapshots.
+///
+/// This is a practical application of the concepts above:
+/// 1.  It solves a linear least-squares problem to find `[A, B]`.
+/// 2.  It uses Singular Value Decomposition (SVD), which is built from
+///     eigenvectors, to find the pseudoinverse robustly.
+/// 3.  The resulting `A` and `B` matrices represent the **Linear Transformations** (Sec III.0)
+///     that govern the system's dynamics.
+fn dmdc(
+    x_history: &DMatrix<f64>,
+    u_history: &DMatrix<f64>,
+) -> Result<(DMatrix<f64>, DMatrix<f64>), &'static str> {
+
+    let n = x_history.nrows(); // State dimension
+    let p = u_history.nrows(); // Control dimension
+    let m = x_history.ncols(); // Number of snapshots
+
+    if m != u_history.ncols() {
+        return Err("x_history and u_history must have the same number of columns.");
+    }
+    if m < 2 {
+        return Err("At least 2 snapshots are required.");
+    }
+
+    // 1. Create snapshot matrices X and X'
+    // X = [x_1, x_2, ..., x_{m-1}]
+    // X' = [x_2, x_3, ..., x_m]
+    let x = x_history.columns(0, m - 1);
+    let x_prime = x_history.columns(1, m - 1);
+
+    // 2. Create control matrix U
+    // U = [u_1, u_2, ..., u_{m-1}]
+    let u = u_history.columns(0, m - 1);
+
+    // 3. Form the augmented matrix Ω = [X; U]
+    // This is a form of **Matrix Addition** (Sec II.I) / concatenation.
+    let mut omega = DMatrix::<f64>::zeros(n + p, m - 1);
+    omega.rows_mut(0, n).copy_from(&x);
+    omega.rows_mut(n, p).copy_from(&u);
+
+    // 4. Solve the least-squares problem X' ≈ G * Ω, where G = [A, B]
+    // We want to find G that minimizes ||X' - GΩ||.
+    // The solution is G = X' * Ω⁺ (where Ω⁺ is the pseudoinverse).
+    // This is solved most stably using SVD.
+
+    // SVD computes the pseudoinverse, which is related to the **Matrix Inverse** (Sec II.I).
+    // The SVD itself finds the principal components, which form a **Basis** (Sec I.V)
+    // for the input space.
+    let svd = omega.transpose().svd(true, true);
+
+    // Solves Ωᵀ * Gᵀ = X'ᵀ for Gᵀ
+    let g_transpose = svd
+        .solve(&x_prime.transpose(), 1e-10) // 1e-10 is a tolerance for singular values
+        .map_err(|_| "SVD solve failed. Matrix may be singular.")?;
+
+    // G = (Gᵀ)ᵀ
+    // This uses the property (Aᵀ)ᵀ = A.
+    let g = g_transpose.transpose();
+
+    // 5. Extract A and B from G = [A, B]
+    // `A` is the first `n` columns, `B` is the next `p` columns.
+    // The `A` and `B` matrices are the **Matrix of a Transformation** (Sec III.0).
+    let a = g.columns(0, n).clone_owned();
+    let b = g.columns(n, p).clone_owned();
+
+    // The next step in a real analysis would be to find the eigenvalues
+    // of `A` (using **Determinants**, Sec III.V) to study the
+    // stability and modes of the system.
+
+    Ok((a, b))
+}
+
+// Example Usage (requires `nalgebra` crate in Cargo.toml):
+fn main() {
+    // n=2 states, p=1 control, m=6 snapshots
+    let x_hist = DMatrix::from_vec(2, 6, vec![
+        1.0, 0.0,  // x1
+        1.0, 0.1,  // x2
+        0.9, 0.2,  // x3
+        0.7, 0.3,  // x4
+        0.4, 0.4,  // x5
+        0.0, 0.5   // x6
+    ]);
+
+    let u_hist = DMatrix::from_vec(1, 6, vec![
+        0.5, 0.5, 0.5, 0.5, 0.5, 0.5 // u1 to u6
+    ]);
+
+    match dmdc(&x_hist, &u_hist) {
+        Ok((a, b)) => {
+            println!("Found A matrix:\n{}", a);
+            println!("Found B matrix:\n{}", b);
+        }
+        Err(e) => {
+            println!("Error: {}", e);
+        }
+    }
+}
+```
