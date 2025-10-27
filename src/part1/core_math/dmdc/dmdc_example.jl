@@ -74,12 +74,12 @@ function dmdc(x_history::AbstractMatrix, u_history::AbstractMatrix)
     return A, B
 end
 
+# ╔═╡ 15909d8b-f039-4902-86dd-7231d85d0179
 # ==============================================================================
 # Example System Dynamics and Data Generation
-# ==============================================================================
-
 # Define a simple 2D linear system with a 1D control input.
 # True system: x(k+1) = A_true * x(k) + B_true * u(k)
+# ==============================================================================
 
 # ╔═╡ ed2f4f7b-1c9f-4a5a-af19-e2a41569c0b2
 const A_true = [0.9 0.1; 0.0 0.85];
@@ -135,11 +135,13 @@ end
 # ╔═╡ 2860253f-bd0a-4d28-a301-3df010e2181e
 u_history[:, end] .= 0.0;
 
-# ╔═╡ 4c894550-e89a-4a47-8bc7-09199129ca2f
+# ╔═╡ ceda5f2d-1536-487d-94f6-a5c4bb61661c
 # ==============================================================================
 # Run DMDc on the Generated Data
 # ==============================================================================
-A_dmdc, B_dmdc = dmdc(x_history, u_history)
+
+# ╔═╡ 4c894550-e89a-4a47-8bc7-09199129ca2f
+A_dmdc, B_dmdc = dmdc(x_history, u_history);
 
 # ╔═╡ e8fe6264-4d32-4f64-b0ea-c5f5bd90b98c
 println("Recovered A Matrix"); display(round.(A_dmdc, digits=4))
@@ -206,6 +208,7 @@ version = "5.11.0+0"
 # ╔═╡ Cell order:
 # ╠═63a93b28-3d59-471c-9564-eb1875fae9b4
 # ╠═f2691025-68f2-4255-bbc3-808efc539dac
+# ╠═15909d8b-f039-4902-86dd-7231d85d0179
 # ╠═ed2f4f7b-1c9f-4a5a-af19-e2a41569c0b2
 # ╠═480654a4-da3a-40ab-891d-dd05aa7a1e26
 # ╠═7b492ed8-7b4e-476a-960c-a97f939aa3b6
@@ -219,6 +222,7 @@ version = "5.11.0+0"
 # ╠═166eadca-a1d1-4531-984e-775a7c85f303
 # ╠═98a33af4-3c85-412d-b550-b252fb1e47a0
 # ╠═2860253f-bd0a-4d28-a301-3df010e2181e
+# ╠═ceda5f2d-1536-487d-94f6-a5c4bb61661c
 # ╠═4c894550-e89a-4a47-8bc7-09199129ca2f
 # ╠═e8fe6264-4d32-4f64-b0ea-c5f5bd90b98c
 # ╠═9072f392-bcdd-4920-a92b-4ec54d905d6f
