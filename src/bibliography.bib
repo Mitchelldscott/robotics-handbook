@@ -38,3 +38,30 @@
   url       = {https://web.stanford.edu/~boyd/vmls/},
   isbn      = {9781108455145}
 }
+
+@article{badoo2023pidmd,
+author = {Baddoo, Peter J.  and Herrmann, Benjamin  and McKeon, Beverley J.  and Nathan Kutz, J.  and Brunton, Steven L. },
+title = {Physics-informed dynamic mode decomposition},
+journal = {Proceedings of the Royal Society A: Mathematical, Physical and Engineering Sciences},
+volume = {479},
+number = {2271},
+pages = {20220576},
+year = {2023},
+doi = {10.1098/rspa.2022.0576},
+
+URL = {https://royalsocietypublishing.org/doi/abs/10.1098/rspa.2022.0576},
+eprint = {https://royalsocietypublishing.org/doi/pdf/10.1098/rspa.2022.0576}
+,
+    abstract = { In this work, we demonstrate how physical principles—such as symmetries, invariances and conservation laws—can be integrated into the dynamic mode decomposition (DMD). DMD is a widely used data analysis technique that extracts low-rank modal structures and dynamics from high-dimensional measurements. However, DMD can produce models that are sensitive to noise, fail to generalize outside the training data and violate basic physical laws. Our physics-informed DMD (piDMD) optimization, which may be formulated as a Procrustes problem, restricts the family of admissible models to a matrix manifold that respects the physical structure of the system. We focus on five fundamental physical principles—conservation, self-adjointness, localization, causality and shift-equivariance—and derive several closed-form solutions and efficient algorithms for the corresponding piDMD optimizations. With fewer degrees of freedom, piDMD models are less prone to overfitting, require less training data, and are often less computationally expensive to build than standard DMD models. We demonstrate piDMD on a range of problems, including energy-preserving fluid flow, the Schrödinger equation, solute advection-diffusion and three-dimensional transitional channel flow. In each case, piDMD outperforms standard DMD algorithms in metrics such as spectral identification, state prediction and estimation of optimal forcings and responses. }
+}
+
+
+@misc{nathan_kutz_dynamic_2018,
+	title = {Dynamic {Mode} {Decomposition} {Code}},
+	url = {https://www.youtube.com/watch?v=KAau5TBU0Sc},
+	abstract = {This lecture provides an overview of the algorithm (exact DMD) for computing DMD modes and eigenvalues.  Several examples are demonstrated where the DMD provides interpretable and low-rank decompositions of the data.},
+	urldate = {2025-10-26},
+	author = {{Nathan Kutz}},
+	month = apr,
+	year = {2018},
+}
