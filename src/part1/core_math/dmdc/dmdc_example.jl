@@ -5,7 +5,6 @@ using Markdown
 using InteractiveUtils
 
 # ╔═╡ 3be82550-22d1-4bcb-9f04-7cb66c13ae1e
-# We use LinearAlgebra for the robust least-squares solve (pseudoinverse)
 using LinearAlgebra
 
 # ╔═╡ f931b5f7-027b-43c6-b22a-42b961325f42
@@ -16,7 +15,8 @@ using Plots
     dare_solver(A, B, Q, R; max_iter=100, tolerance=1e-6) -> P
 
 Solves the Discrete Algebraic Riccati Equation (DARE) iteratively to find 
-the stabilizing solution P. 
+the stabilizing solution P.
+
 P = Aᵀ P A - (Aᵀ P B) (R + Bᵀ P B)⁻¹ (Bᵀ P A) + Q
 """
 function dare_solver(A, B, Q, R; max_iter=100, tolerance=1e-6)
@@ -42,13 +42,15 @@ function dare_solver(A, B, Q, R; max_iter=100, tolerance=1e-6)
         
         # P_next = Aᵀ P A - T2 + Q
         P_next = A' * P * A - T2 + Q
-        
+
+        # Make sure P is symmetric
+        P_next = 0.5 * (P_next + P_next')
+
         # Check for convergence
         if norm(P_next - P) < tolerance
             return P_next
         end
-		# Symmetrize
-        P = 0.5 * (P_next + P_next')
+        P = P_next
     end
     
     @warn "DARE solver did not converge within $max_iter iterations. Returning last P."
@@ -57,7 +59,7 @@ end
 
 # ╔═╡ f2691025-68f2-4255-bbc3-808efc539dac
 """
-    dmdc(x_history::AbstractMatrix, u_history::AbstractMatrix) -> A, B
+    dmdc(x_history::AbstractMatrix, u_history::AbstractMatrix, Q::AbstractMatrix, R::AbstractMatrix) -> A, B, K
 
 Implements Dynamic Mode Decomposition with Control (DMDc).
 
@@ -65,11 +67,15 @@ This function discovers the best-fit linear system matrices (A, B) that
 approximate the dynamics `x' ≈ Ax + Bu` given a time-series history of
 state vectors `x_history` and control vectors `u_history`.
 
+Then the discrete algebraic ricati equation is sovled to find the `P`
+
 Inputs:
 - `x_history`: An `n x m` matrix, where `n` is the state dimension and `m` is the
   number of samples. Contains the sequence x(0), x(1), ..., x(m-1).
 - `u_history`: A `p x m` matrix, where `p` is the control dimension and `m` is the
   number of samples. Contains the sequence u(0), u(1), ..., u(m-1).
+- `Q`: A symmetric `n x n` matrix used to tune the weight of state error during control synthesis.
+- `R`: A  symmetric `p x p` matrix used to tune the weight of actuation during control synthesis.
 
 Outputs:
 - `A`: The `n x n` dynamic matrix (linear operator).
@@ -79,13 +85,10 @@ Outputs:
 
 The method solves the linear least-squares problem:
 X₂ ≈ [A | B] * Ω, where Ω = [X₁; U]
+
+Then uses the result of a dare solver to compute the cost-to-go and then the optimal feedback gain.
 """
 function dmdc(x_history::AbstractMatrix, u_history::AbstractMatrix, Q::AbstractMatrix, R::AbstractMatrix)
-    # 1. Define the data matrices
-    # The current states (X₁) and controls (U) map to the next states (X₂).
-    # We use all time steps except the last for the input side (X₁ and U).
-    # We use all time steps except the first for the output side (X₂).
-
     # X₁: States x(0) to x(m-2)
     X₁ = x_history[:, 1:end-1]
     # X₂: States x(1) to x(m-1)
@@ -93,7 +96,7 @@ function dmdc(x_history::AbstractMatrix, u_history::AbstractMatrix, Q::AbstractM
     # U: Controls u(0) to u(m-2)
     U = u_history[:, 1:end-1]
 
-    # Check for consistent time steps
+    # Check for consistent lengths
     if size(X₁, 2) != size(U, 2) || size(X₁, 2) != size(X₂, 2)
         error(
 			"Input matrices X, U and output matrix X' must have the same number of columns.
@@ -102,16 +105,10 @@ function dmdc(x_history::AbstractMatrix, u_history::AbstractMatrix, Q::AbstractM
 		)
     end
 
-    # 2. Form the concatenated input matrix Ω (Psi in some literature)
     # Ω = [X₁; U] has shape (n + p) x (m - 1)
-    # This matrix contains the full set of inputs to the system at each step.
     Ω = vcat(X₁, U)
 
-    # 3. Solve the least-squares problem: X₂ ≈ G * Ω
     # We want to find G = [A | B].
-    # In Julia, the backslash operator `\` is the robust way to solve linear
-    # least-squares: G = X₂ * pinv(Ω). 
-	# The backslash operator handles this efficiently.
     G = X₂ / Ω  # G is (n) x (n + p)
 
     # 4. Extract A and B
@@ -123,15 +120,15 @@ function dmdc(x_history::AbstractMatrix, u_history::AbstractMatrix, Q::AbstractM
 
 	# --- Part 2: LQR Gain Synthesis ---
     
-    # 1. Solve the DARE using the identified A and B
+    # Solve the DARE using the identified A and B
     P = dare_solver(A, B, Q, R)
 
-    # 2. Compute the optimal gain K
+    # Compute the optimal gain K
     # K = (R + Bᵀ P B)⁻¹ Bᵀ P A
     p = size(R, 1) # Control dimension
     R_plus_BT_P_B = R + B' * P * B
     
-    # K is calculated robustly
+    # K is the optimal gain for the given system and weights
     K = inv(R_plus_BT_P_B) * B' * P * A
     
     return A, B, K
@@ -144,21 +141,23 @@ end
 Generates a plot showing the state variables (x1, x2) and the control
 input (u1) over time steps.
 """
-function plot_simulation_results(x_data, u_data)
+function plot_simulation_results(x_data, u_data, target=[0, 0])
     num_steps = size(x_data, 2)
     time_steps = 0:num_steps-1
     
     # Create the plot for the state trajectories
     p1 = plot(
-        time_steps, 
         x_data[1, :], 
-        label="State x₁", 
+        x_data[2, :],
+        label="(x₁,x₂)", 
         title="LQR Closed-Loop State Response", 
-        xlabel="Time Step (k)",
-        ylabel="State Value",
-        linewidth=2
+        xlabel="x₁",
+        ylabel="x₂",
+        linewidth=2,
+		markershape=:ltriangle,
+	    markersize=4
     )
-    plot!(p1, time_steps, x_data[2, :], label="State x₂", linewidth=2)
+    scatter!(p1, [target[1]], [target[2]], label="reference", marker=:circle, markercolor=:red)
     
     # Create the plot for the control input
     p2 = plot(
@@ -196,18 +195,18 @@ const n_states = size(A_true, 1);
 const n_controls = size(B_true, 2);
 
 # ╔═╡ ec7451c7-cf43-4a88-9c7a-37ab5e5c60fd
-const n_samples = 500; # Number of time steps to simulate
+const n_samples = 200; # Number of time steps to simulate
 
 # ╔═╡ 4db5617c-dc84-464b-90eb-857a7b0a8c82
-const dt = 1.0;         # Time step (DMDc is inherently discrete-time)
+const dt = 1.0;         # Time step (DMDc is discrete-time)
 
 # ╔═╡ 9c1c2072-8c8b-441a-b493-af28e4255e28
 # Q: Weights on the state penalty (n x n)
-const Q_weights = Diagonal([0.1, 0.1]);
+const Q = Diagonal([1000.0, 100.0]);
 
 # ╔═╡ e9a95c65-a8fa-4280-93f2-1f8e06fc00f7
 # R: Weights on the control penalty (p x p)
-const R_weights = Diagonal([0.001]);
+const R = Diagonal([1e-15]);
 
 # ╔═╡ 4ad3582c-7b8e-4b5d-984c-8a1897498d72
 println("True A Matrix"); display(A_true);
@@ -239,10 +238,9 @@ for k in 1:n_samples-1
     noise = randn(n_states) * 0.25;
 
 	# 4. Add constant force
-	force = [0.0; 1.0];
+	force = [0.5; 1.0];
     x_history[:, k+1] = x_k_plus_1 + noise + force;
 end
-
 
 # ╔═╡ 2860253f-bd0a-4d28-a301-3df010e2181e
 plot_simulation_results(x_history, u_history)
@@ -253,7 +251,7 @@ plot_simulation_results(x_history, u_history)
 # ==============================================================================
 
 # ╔═╡ 4c894550-e89a-4a47-8bc7-09199129ca2f
-A_dmdc, B_dmdc, K_dmdc = dmdc(x_history, u_history, Q_weights, R_weights);
+A_dmdc, B_dmdc, K_dmdc = dmdc(x_history, u_history, Q, R);
 
 # ╔═╡ e8fe6264-4d32-4f64-b0ea-c5f5bd90b98c
 println("Recovered A Matrix"); display(round.(A_dmdc, digits=4))
@@ -284,7 +282,7 @@ x_sim = zeros(n_states, n_samples);
 u_sim = zeros(n_controls, n_samples);
 
 # ╔═╡ e62fb6eb-55d9-4c2d-a0ee-10621c2e077a
-x_sim[:, 1] = [10.0; -5.0]; # Initial state
+x_sim[:, 1] = [10.0; 10.0]; # Initial state
 
 # ╔═╡ a31aec9b-4343-4e44-9e0f-77315ffbb0f6
 x_reference = [0; 0]; # Set point
@@ -305,12 +303,12 @@ for k in 1:n_samples-1
     noise = randn(n_states) * 0.25
 
 	# 4. Add constant force
-	force = [0.0; 1.0];
+	force = [0.5; 1.0];
     x_sim[:, k+1] = x_k_plus_1 + noise + force
 end
 
 # ╔═╡ 4b2b24ab-c0db-42ff-8684-d56174862ac7
-plot_simulation_results(x_sim, u_sim)
+plot_simulation_results(x_sim, u_sim, x_reference)
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
