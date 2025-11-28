@@ -3,7 +3,7 @@
 ## Introduction
 
 This book is a consolidation of foundations and algorithms for data-driven
-autonomous system dseign. The material is distilled from key reference texts in
+autonomous system design. The material is distilled from key reference texts in
 Machine Learning and Robotics.
 
 ***
@@ -30,18 +30,18 @@ This part focuses on applying the foundational math to complex robotics and AI
 problems, detailing algorithms used for estimation, mapping, control, and deep
 learning architectures.
 
-#### A. Navigation and Localization @@Thrun2005ProbabilisticRobotics
+#### A. Navigation and Localization
 
 This section focuses on algorithms, typically derived from Bayes filters, for
 position estimation, map acquisition and motion planning.
 
-#### B. Advanced Deep Learning @@Goodfellow2016DeepLearning
+#### B. Advanced Deep Learning
 
 This section covers modern learning paradigms that use hierarchical
 representations, often learned via neural networks with multiple layers,
 to model complex patterns in data.
 
-#### C. Reinforcement Learning @@Sutton2018ReinforcementLearning
+#### C. Reinforcement Learning
 
 This section details methods for learning how an agent should take actions in
 an environment to maximize a cumulative reward signal.

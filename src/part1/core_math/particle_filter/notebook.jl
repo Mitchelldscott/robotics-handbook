@@ -4,311 +4,183 @@
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ 3be82550-22d1-4bcb-9f04-7cb66c13ae1e
-using LinearAlgebra
+# ╔═╡ b38737f9-6757-4cb8-9104-7956c959bb5a
+using Plots;
 
-# ╔═╡ f931b5f7-027b-43c6-b22a-42b961325f42
-using Plots
+# ╔═╡ 2c28847a-6494-4379-ab72-dc92572fe448
+using LinearAlgebra;
 
-# ╔═╡ 4a2f6cb8-bb7a-4fe6-847d-6eec5b598085
+# ╔═╡ c5a058ff-51a8-4054-af9e-0587f6e8a04f
 """
-    dare_solver(A, B, Q, R; max_iter=100, tolerance=1e-6) -> P
+particle_filter(y, X_prior, f, h, Q, R)
 
-Solves the Discrete Algebraic Riccati Equation (DARE) iteratively to find 
-the stabilizing solution P.
+Sequential Monte Carlo (particle filter) state estimator.
 
-P = Aᵀ P A - (Aᵀ P B) (R + Bᵀ P B)⁻¹ (Bᵀ P A) + Q
+# Arguments
+
+  - `y::AbstractVector`: Sequence of measurements, where each element `y[k]` is the observation at time `k`.
+    The vector can contain scalars or vectors, depending on the system being modeled.
+  - `X_prior::AbstractVector`: Initial set of **particles (samples)**.
+    This is typically a `Vector` containing `N` state vectors (e.g., `Vector{<:AbstractVector}`),
+    representing the prior belief `p(x_0)`. The number of particles, `N`, is inferred
+    from the length of this vector.
+  - `f::Function`: State transition (process/update) function,
+    `x_next = f(x, w)` where `w` is process noise drawn from `N(0, Q)`.
+    Should model the system’s dynamics.
+  - `h::Function`: Measurement function,
+    `y_est = h(x, v)` where `v` is measurement noise drawn from `N(0, R)`.
+    Used to predict observations given a state.
+  - `Q::AbstractMatrix`: Process noise covariance matrix.
+  - `R::AbstractMatrix`: Measurement noise covariance matrix.
+
+# Returns
+
+  - `X_history::Vector`: A vector (of length `T+1`, where `T` is the length of `y`)
+    containing the particle sets at each time step.
+      - `X_history[1]` is the initial `X_prior`.
+      - `X_history[k+1]` is the set of `N` particles representing the posterior
+        distribution `p(x_k | y_{1:k})`.
+      - The expected state and covariance at any time `k` can be computed
+        from the particle set `X_history[k+1]`.
+
+# Description
+
+This function implements a **generic particle filter** (Sequential Monte Carlo method)
+to estimate the hidden state of a nonlinear, possibly non-Gaussian system given
+a sequence of measurements.
+
+At each time step `k`:
+
+1.  **Prediction:** Each particle from `X_history[k]` is propagated through the process model `f`
+    with added process noise `w` (from `Q`) to create a new set of *predicted* particles.
+2.  **Measurement Update:** Importance weights are assigned to each predicted particle
+    according to the likelihood `p(y[k] | x[k])`, calculated using the measurement
+    model `h` and noise covariance `R`.
+3.  **Resampling:** A new set of `N` particles is drawn (with replacement) from the
+    predicted particle set, where the probability of drawing each particle is
+    proportional to its normalized weight. This step mitigates particle degeneracy.
+4.  **Storage:** This new, resampled particle set is stored as `X_history[k+1]`.
+
+This algorithm generalizes the Kalman filter and its nonlinear variants (EKF, UKF)
+to arbitrary nonlinear/non-Gaussian systems, at the cost of higher computational demand.
+
 """
-function dare_solver(A, B, Q, R; max_iter=100, tolerance=1e-6)
-    # P_k is the solution matrix at iteration k
-    P = copy(Q) # Initialize P_0 = Q
-    
-    for _ in 1:max_iter
-        # Bᵀ P B term
-        BT_P_B = B' * P * B
-        
-        # M = (R + Bᵀ P B)⁻¹ 
-        M = inv(R + BT_P_B)
-        
-        # L = Bᵀ P A
-        BT_P_A = B' * P * A
-        
-        # The update rule for P:
-        # P_next = Aᵀ P A - (Aᵀ P B) M (Bᵀ P A) + Q
-        # The middle term simplifies to Aᵀ P B M Bᵀ P A
-        
-        # Term 2: Aᵀ P B M Bᵀ P A
-        T2 = A' * P * B * M * BT_P_A
-        
-        # P_next = Aᵀ P A - T2 + Q
-        P_next = A' * P * A - T2 + Q
-
-        # Make sure P is symmetric
-        P_next = 0.5 * (P_next + P_next')
-
-        # Check for convergence
-        if norm(P_next - P) < tolerance
-            return P_next
-        end
-        P = P_next
-    end
-    
-    @warn "DARE solver did not converge within $max_iter iterations. Returning last P."
-    return P
+function particle_filter(y, X_prior, f, h, Q, R)
+	return f(X_prior, 0)
 end
 
-# ╔═╡ f2691025-68f2-4255-bbc3-808efc539dac
-"""
-    dmdc(x_history::AbstractMatrix, u_history::AbstractMatrix, Q::AbstractMatrix, R::AbstractMatrix) -> A, B, K
-
-Implements Dynamic Mode Decomposition with Control (DMDc).
-
-This function discovers the best-fit linear system matrices (A, B) that
-approximate the dynamics `x' ≈ Ax + Bu` given a time-series history of
-state vectors `x_history` and control vectors `u_history`.
-
-Then the discrete algebraic riccati equation is solved to find the `P`
-
-Inputs:
-- `x_history`: An `n x m` matrix, where `n` is the state dimension and `m` is the
-  number of samples. Contains the sequence x(0), x(1), ..., x(m-1).
-- `u_history`: A `p x m` matrix, where `p` is the control dimension and `m` is the
-  number of samples. Contains the sequence u(0), u(1), ..., u(m-1).
-- `Q`: A symmetric `n x n` matrix used to tune the weight of state error during control synthesis.
-- `R`: A  symmetric `p x p` matrix used to tune the weight of actuation during control synthesis.
-
-Outputs:
-- `A`: The `n x n` dynamic matrix (linear operator).
-- `B`: The `n x p` input matrix.
-- `K`: The `p x n` optimal control matrix.
-
-
-The method solves the linear least-squares problem:
-X₂ ≈ [A | B] * Ω, where Ω = [X₁; U]
-
-Then uses the result of a dare solver to compute the cost-to-go and then the optimal feedback gain.
-"""
-function dmdc(x_history::AbstractMatrix, u_history::AbstractMatrix, Q::AbstractMatrix, R::AbstractMatrix)
-    # X₁: States x(0) to x(m-2)
-    X₁ = x_history[:, 1:end-1]
-    # X₂: States x(1) to x(m-1)
-    X₂ = x_history[:, 2:end]
-    # U: Controls u(0) to u(m-2)
-    U = u_history[:, 1:end-1]
-
-    # Check for consistent lengths
-    if size(X₁, 2) != size(U, 2) || size(X₁, 2) != size(X₂, 2)
-        error(
-			"Input matrices X, U and output matrix X' must have the same number of columns.
-			$(size(X₁)), $(size(X₂)), $(size(U))
-			"
-		)
-    end
-
-    # Ω = [X₁; U] has shape (n + p) x (m - 1)
-    Ω = vcat(X₁, U)
-
-    # We want to find G = [A | B].
-    G = X₂ / Ω  # G is (n) x (n + p)
-
-    # 4. Extract A and B
-    n = size(X₁, 1) # State dimension
-    p = size(U, 1)  # Control dimension
-
-    A = G[:, 1:n]      # First 'n' columns of G are the A matrix (n x n)
-    B = G[:, n+1:end]  # Remaining 'p' columns of G are the B matrix (n x p)
-
-	# --- Part 2: LQR Gain Synthesis ---
-    
-    # Solve the DARE using the identified A and B
-    P = dare_solver(A, B, Q, R)
-
-    # Compute the optimal gain K
-    # K = (R + Bᵀ P B)⁻¹ Bᵀ P A
-    p = size(R, 1) # Control dimension
-    R_plus_BT_P_B = R + B' * P * B
-    
-    # K is the optimal gain for the given system and weights
-    K = inv(R_plus_BT_P_B) * B' * P * A
-    
-    return A, B, K
-end
-
-# ╔═╡ 71a3a3ee-fb2e-4c23-a4ec-a6a421a94d8f
-"""
-    plot_simulation_results(x_data, u_data) -> plot
-
-Generates a plot showing the state variables (x1, x2) and the control
-input (u1) over time steps.
-"""
-function plot_simulation_results(x_data, u_data, target=[0, 0])
-    num_steps = size(x_data, 2)
-    time_steps = 0:num_steps-1
-    
-    # Create the plot for the state trajectories
-    p1 = plot(
-        x_data[1, :], 
-        x_data[2, :],
-        label="(x₁,x₂)", 
-        title="LQR Closed-Loop State Response", 
+# ╔═╡ d3b6aa7d-c4d6-444a-8350-97290a171fda
+function draw_pose!(plt, pos; color=:blue, alpha=0.8)
+	plot!(plt, [x[1] for x in pos], [x[2] for x in pos];
+        seriestype=:path,
+        marker=:circle,
+        markersize = 3,
+        color = color,
+        alpha = alpha,
+        label="State (x₁, x₂)",
         xlabel="x₁",
-        ylabel="x₂",
-        linewidth=2,
-		markershape=:ltriangle,
-	    markersize=4
+        ylabel="x₂"
     )
-    scatter!(p1, [target[1]], [target[2]], label="reference", marker=:circle, markercolor=:red)
-    
-    # Create the plot for the control input
-    p2 = plot(
-        time_steps, 
-        u_data[1, :], 
-        label="Control u₁", 
-        title="Control Input Signal", 
-        xlabel="Time Step (k)",
-        ylabel="Control Value",
-        linewidth=2,
-        linecolor=:red
-    )
-    
-    # Combine the plots into a single layout
-    plot(p1, p2, layout=(2, 1), legend=:topright, size=(800, 600))
 end
 
-# ╔═╡ 15909d8b-f039-4902-86dd-7231d85d0179
-# ==============================================================================
-# Example System Dynamics and Data Generation
-# Define a simple 2D linear system with a 1D control input.
-# True system: x(k+1) = A_true * x(k) + B_true * u(k)
-# ==============================================================================
-
-# ╔═╡ ed2f4f7b-1c9f-4a5a-af19-e2a41569c0b2
-const A_true = [0.9 0.1; 0.0 0.85];
-
-# ╔═╡ 480654a4-da3a-40ab-891d-dd05aa7a1e26
-const B_true = [0.5; 0.2];
-
-# ╔═╡ 7b492ed8-7b4e-476a-960c-a97f939aa3b6
-const n_states = size(A_true, 1);
-
-# ╔═╡ bb85321b-f3f5-4cb5-a965-f264e82018fe
-const n_controls = size(B_true, 2);
-
-# ╔═╡ ec7451c7-cf43-4a88-9c7a-37ab5e5c60fd
-const n_samples = 200; # Number of time steps to simulate
-
-# ╔═╡ 4db5617c-dc84-464b-90eb-857a7b0a8c82
-const dt = 1.0;         # Time step (DMDc is discrete-time)
-
-# ╔═╡ 9c1c2072-8c8b-441a-b493-af28e4255e28
-# Q: Weights on the state penalty (n x n)
-const Q = Diagonal([1000.0, 100.0]);
-
-# ╔═╡ e9a95c65-a8fa-4280-93f2-1f8e06fc00f7
-# R: Weights on the control penalty (p x p)
-const R = Diagonal([1e-15]);
-
-# ╔═╡ 4ad3582c-7b8e-4b5d-984c-8a1897498d72
-println("True A Matrix"); display(A_true);
-
-# ╔═╡ 05ce2c35-dc42-4e1a-b688-9c5eded65964
-println("True B Matrix"); display(B_true);
-
-# ╔═╡ 3ec4f805-cef9-4535-bb3e-528ae6caa4eb
-x_history = zeros(n_states, n_samples);
-
-# ╔═╡ 5de66551-8c60-46c2-bcfa-6c342b7f9962
-u_history = zeros(n_controls, n_samples);
-
-# ╔═╡ 166eadca-a1d1-4531-984e-775a7c85f303
-x_history[:, 1] = [0.0; 0.0]; # Initial state
-
-# ╔═╡ 98a33af4-3c85-412d-b550-b252fb1e47a0
-# Simulate the system to generate training data
-for k in 1:n_samples-1
-    # 1. Generate a random control input (u(k) is between -1 and 1)
-    u_k = randn(n_controls)' * 0.25;
-    u_history[:, k] = u_k;
-
-    # 2. Compute the next state x(k+1)
-    x_k = x_history[:, k];
-    x_k_plus_1 = A_true * x_k + B_true * u_k;
-
-    # 3. Add small measurement noise (simulating real-world data)
-    noise = randn(n_states) * 0.25;
-
-	# 4. Add constant force
-	force = [0.5; 1.0];
-    x_history[:, k+1] = x_k_plus_1 + noise + force;
+# ╔═╡ 08aa4e72-59d8-4c4f-b1fa-f50e08c25887
+function draw_measurments!(plt, t, y)
+	scatter!(plt, t, y; marker=:circle, xlabel="Time", ylabel="y")
 end
 
-# ╔═╡ 2860253f-bd0a-4d28-a301-3df010e2181e
-plot_simulation_results(x_history, u_history)
+# ╔═╡ 08067910-2c71-4b2f-b01a-8fd302847e17
+"""
+    plot_particle_tracker(t_sample, true_x, true_y)
 
-# ╔═╡ ceda5f2d-1536-487d-94f6-a5c4bb61661c
-# ==============================================================================
-# Run DMDc on the Generated Data
-# ==============================================================================
+Plot a two-panel figure for a particle filter or dynamic system simulation.
 
-# ╔═╡ 4c894550-e89a-4a47-8bc7-09199129ca2f
-A_dmdc, B_dmdc, K_dmdc = dmdc(x_history, u_history, Q, R);
+# Arguments
+- `t_sample::AbstractVector`: Time samples corresponding to each measurement.
+- `true_x::Vector{<:AbstractVector}`: Sequence of true state vectors (each 2×1 or length-2).
+- `true_y::AbstractVector`: Sequence of scalar measurements.
 
-# ╔═╡ e8fe6264-4d32-4f64-b0ea-c5f5bd90b98c
-println("Recovered A Matrix"); display(round.(A_dmdc, digits=4))
+# Description
+Creates a 1×2 figure:
+1. **Left subplot:** state trajectory in the (x₁, x₂) plane, using lines and small markers.
+2. **Right subplot:** time vs. measurement (t, y), using markers only.
 
-# ╔═╡ 9072f392-bcdd-4920-a92b-4ec54d905d6f
-println("Recovered B Matrix"); display(round.(B_dmdc, digits=4))
+Displays a legend and sets the overall figure title to *"Particle Tracker"*.
+"""
+function plot_particle_tracker(t, states, measurement)
+    plt = plot(layout=(1, 2), size=(900, 400), title="Particle Tracker")
+    draw_pose!(plt[1], states)
+	draw_measurments!(plt[2], t, [y[1] for y in measurement])
 
-# ╔═╡ 7e124a9d-dfac-4065-b42f-b09e82a18702
-println("Calculated K Matrix"); display(round.(K_dmdc, digits=4))
-
-# ╔═╡ baf4369c-6aef-4fe7-b6cd-ec5f14ee8588
-# Calculate the error (norm of the difference)
-A_error = norm(A_true - A_dmdc) / norm(A_true)
-
-# ╔═╡ 2575f59f-e938-4d19-935e-6df22930168a
-B_error = norm(B_true - B_dmdc) / norm(B_true)
-
-# ╔═╡ fb42d9b5-1545-4d03-8d15-763053c658bb
-print("Relative Error in A: "); display(round(A_error, digits=6))
-
-# ╔═╡ 035b7083-b793-45e6-9fac-4d2037e8e7e4
-print("Relative Error in B: "); display(round(B_error, digits=6))
-
-# ╔═╡ 63f2a226-a801-486f-8add-6290c338aa12
-x_sim = zeros(n_states, n_samples);
-
-# ╔═╡ 59772e35-953d-4737-b6d7-61e2bbae0aa0
-u_sim = zeros(n_controls, n_samples);
-
-# ╔═╡ e62fb6eb-55d9-4c2d-a0ee-10621c2e077a
-x_sim[:, 1] = [10.0; 10.0]; # Initial state
-
-# ╔═╡ a31aec9b-4343-4e44-9e0f-77315ffbb0f6
-x_reference = [0; 0]; # Set point
-
-# ╔═╡ cd4b4fab-1dbd-4555-b57c-a4be4a5fa72b
-# Simulate the system to generate training data
-for k in 1:n_samples-1
-	x_k = x_sim[:, k]
-	
-    # 1. Use the optimal gain matrix to compute u
-	u_k = K_dmdc * (x_reference - x_k)
-    u_sim[:, k] = u_k'
-
-    # 2. Compute the next state x(k+1)
-    x_k_plus_1 = A_true * x_k + B_true * u_k'
-
-    # 3. Add small measurement noise (simulating real-world data)
-    noise = randn(n_states) * 0.25
-
-	# 4. Add constant force
-	force = [0.5; 1.0];
-    x_sim[:, k+1] = x_k_plus_1 + noise + force
+    return plt
 end
 
-# ╔═╡ 4b2b24ab-c0db-42ff-8684-d56174862ac7
-plot_simulation_results(x_sim, u_sim, x_reference)
+# ╔═╡ 0102d2e9-e2b4-405b-89ae-761bbc9593f7
+"""
+State transition model supporting both single states and batches.
+
+If x is a 2×1 vector → returns 2×1 vector.
+If x is a 2×N matrix (each column a particle) → returns 2×N matrix.
+"""
+function f(x, w)
+    A = [0.3 1.0; 0.0 -0.4]                   # simple linear decay
+    return A*x .+ w
+end
+
+# ╔═╡ 02460131-d905-4b79-a8c0-a48e8e42e0dc
+"""
+Measurement model supporting vectorized inputs.
+If x is 2×N → returns 1×N matrix of measurements.
+"""
+function h(x, v)
+    C = [1.0 0.0]                             # direct noisy observation
+    return C*x .+ v 
+end
+
+
+# ╔═╡ 4d3f9a68-ba00-46e3-bae6-c3f857907d8d
+P0 = [1.0 0.0; 0.0 1.0];
+
+# ╔═╡ 5090ddcc-60ca-4c29-b036-03655ab404cd
+Q = Diagonal([1e-3, 1e-5]);
+
+# ╔═╡ 8bded526-f65c-45ef-8fe3-798546c17b19
+R = [0.5];
+
+# ╔═╡ b766a2e8-988a-4fcb-8295-bec837f1b612
+t_sample = 1:1:10;
+
+# ╔═╡ e191fbf6-a1ad-4129-9794-1358f6a74ee9
+true_x = [[1.0, 0.0]];
+
+# ╔═╡ 6a1aa5f4-16c7-467b-9b58-1c7301797e80
+true_y = [];
+
+# ╔═╡ f1e5d3e0-94c0-492f-b573-bef29a026cb3
+for k in t_sample
+	w = sqrt.(Q)*randn(size(Q,2), 1)
+	v = sqrt.(R)*randn(size(R,2), 1)
+    push!(true_x, f(true_x[end], w))
+    push!(true_y, h(true_x[end], v))
+end
+
+# ╔═╡ 9f3729a8-3ea4-4493-adf2-cc81e26ac009
+plt = plot_particle_tracker(t_sample, true_x, true_y);
+
+# ╔═╡ 98e85683-23c9-4fbe-95d4-db13adc764cc
+X_prior = [zeros(2,1)];
+
+# ╔═╡ d33dd086-be17-407e-97e0-205a5f291ef0
+for y in true_y
+	push!(X_prior, particle_filter(y, X_prior[end], f, h, Q, R))
+end
+
+# ╔═╡ bf0bb26d-0003-42a2-83a9-ab0519a822e8
+for (t, pred) in zip(t_sample, X_prior)
+	draw_pose!(plt[1], [pred], color=:red, alpha=t/10)
+end
+
+# ╔═╡ 4f6b6ac0-5291-4491-92bb-b6ea31f28d6c
+plt
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1410,41 +1282,25 @@ version = "1.9.2+0"
 """
 
 # ╔═╡ Cell order:
-# ╠═3be82550-22d1-4bcb-9f04-7cb66c13ae1e
-# ╠═f931b5f7-027b-43c6-b22a-42b961325f42
-# ╠═f2691025-68f2-4255-bbc3-808efc539dac
-# ╠═4a2f6cb8-bb7a-4fe6-847d-6eec5b598085
-# ╠═71a3a3ee-fb2e-4c23-a4ec-a6a421a94d8f
-# ╠═15909d8b-f039-4902-86dd-7231d85d0179
-# ╠═ed2f4f7b-1c9f-4a5a-af19-e2a41569c0b2
-# ╠═480654a4-da3a-40ab-891d-dd05aa7a1e26
-# ╠═7b492ed8-7b4e-476a-960c-a97f939aa3b6
-# ╠═bb85321b-f3f5-4cb5-a965-f264e82018fe
-# ╠═ec7451c7-cf43-4a88-9c7a-37ab5e5c60fd
-# ╠═4db5617c-dc84-464b-90eb-857a7b0a8c82
-# ╠═9c1c2072-8c8b-441a-b493-af28e4255e28
-# ╠═e9a95c65-a8fa-4280-93f2-1f8e06fc00f7
-# ╠═4ad3582c-7b8e-4b5d-984c-8a1897498d72
-# ╠═05ce2c35-dc42-4e1a-b688-9c5eded65964
-# ╠═3ec4f805-cef9-4535-bb3e-528ae6caa4eb
-# ╠═5de66551-8c60-46c2-bcfa-6c342b7f9962
-# ╠═166eadca-a1d1-4531-984e-775a7c85f303
-# ╠═98a33af4-3c85-412d-b550-b252fb1e47a0
-# ╠═2860253f-bd0a-4d28-a301-3df010e2181e
-# ╠═ceda5f2d-1536-487d-94f6-a5c4bb61661c
-# ╠═4c894550-e89a-4a47-8bc7-09199129ca2f
-# ╠═e8fe6264-4d32-4f64-b0ea-c5f5bd90b98c
-# ╠═9072f392-bcdd-4920-a92b-4ec54d905d6f
-# ╠═7e124a9d-dfac-4065-b42f-b09e82a18702
-# ╠═baf4369c-6aef-4fe7-b6cd-ec5f14ee8588
-# ╠═2575f59f-e938-4d19-935e-6df22930168a
-# ╠═fb42d9b5-1545-4d03-8d15-763053c658bb
-# ╠═035b7083-b793-45e6-9fac-4d2037e8e7e4
-# ╠═63f2a226-a801-486f-8add-6290c338aa12
-# ╠═59772e35-953d-4737-b6d7-61e2bbae0aa0
-# ╠═e62fb6eb-55d9-4c2d-a0ee-10621c2e077a
-# ╠═a31aec9b-4343-4e44-9e0f-77315ffbb0f6
-# ╠═cd4b4fab-1dbd-4555-b57c-a4be4a5fa72b
-# ╠═4b2b24ab-c0db-42ff-8684-d56174862ac7
+# ╠═b38737f9-6757-4cb8-9104-7956c959bb5a
+# ╠═2c28847a-6494-4379-ab72-dc92572fe448
+# ╠═c5a058ff-51a8-4054-af9e-0587f6e8a04f
+# ╠═08067910-2c71-4b2f-b01a-8fd302847e17
+# ╠═d3b6aa7d-c4d6-444a-8350-97290a171fda
+# ╠═08aa4e72-59d8-4c4f-b1fa-f50e08c25887
+# ╠═0102d2e9-e2b4-405b-89ae-761bbc9593f7
+# ╠═02460131-d905-4b79-a8c0-a48e8e42e0dc
+# ╠═4d3f9a68-ba00-46e3-bae6-c3f857907d8d
+# ╠═5090ddcc-60ca-4c29-b036-03655ab404cd
+# ╠═8bded526-f65c-45ef-8fe3-798546c17b19
+# ╠═b766a2e8-988a-4fcb-8295-bec837f1b612
+# ╠═e191fbf6-a1ad-4129-9794-1358f6a74ee9
+# ╠═6a1aa5f4-16c7-467b-9b58-1c7301797e80
+# ╠═f1e5d3e0-94c0-492f-b573-bef29a026cb3
+# ╠═9f3729a8-3ea4-4493-adf2-cc81e26ac009
+# ╠═98e85683-23c9-4fbe-95d4-db13adc764cc
+# ╠═d33dd086-be17-407e-97e0-205a5f291ef0
+# ╠═bf0bb26d-0003-42a2-83a9-ab0519a822e8
+# ╠═4f6b6ac0-5291-4491-92bb-b6ea31f28d6c
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

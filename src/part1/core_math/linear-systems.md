@@ -92,32 +92,27 @@ represented by $x$ in $n$-dimensional space.
 
 ### 2. Matrices
 
-* A **matrix** is a rectangular array of numbers, e.g.:
+A **matrix** is a rectangular array of numbers, e.g.:
   $$\begin{bmatrix}
     a_{11} & a_{12} & a_{13} & a_{14} \\
     a_{21} & a_{22} & a_{23} & a_{24} \\
     a_{31} & a_{32} & a_{33} & a_{34} \\
   \end{bmatrix}$$
 
-* The **size** of a matrix is *(rows, columns)*.  
-  *Example: The matrix above is $3 \times 4$*
+The **size** of a matrix is *(rows, columns)*. *Example: The matrix above is $3 \times 4$*
 
 * Two matrices are **equal** ($A = B$) if:
   * They are the same size, and  
   * All corresponding entries are equal.
 
-#### Matrix Types
-
-* An $m \times n$ matrix $A$ is:
-  * **Tall** if $m > n$
-  * **Wide** if $m < n$
-  * **Square** if $m = n$
-
-#### Special Cases
-
-* An $n \times 1$ matrix is an **$n$-vector** (column vector).  
-* A $1 \times 1$ matrix is a **scalar** (number).  
-* A $1 \times n$ matrix is a **row vector**, e.g.:
+* Common Matrix Types:
+  * **Tall** $m > n$
+  * **Wide** $m < n$
+  * **Square** $m = n$
+* Special Cases
+  * An $n \times 1$ matrix is an **$n$-vector** (column vector).  
+  * A $1 \times 1$ matrix is a **scalar** (number).  
+  * A $1 \times n$ matrix is a **row vector**, e.g.:
 
 #### Span, Basis, and Dimension
 
@@ -217,26 +212,75 @@ can be represented by a unique $m \times n$ matrix $A$ such that $T(\mathbf{x}) 
 
   > *This is the abstract version of the Column Space $C(A)$.*
 
-### Matrix Determinants
+#### Determinants
 
 The **determinant** is a scalar value $\det(A)$ associated with an $n \times n$
 square matrix $A$.
 
-* For $2 \times 2$: $\det \begin{pmatrix} a & b \\ c & d \end{pmatrix} = ad - bc$.
-* For $n \times n$, it is computed via cofactor expansion.
-* A matrix $A$ is invertible if and only if $\det(A) \neq 0$.
+Let
 
-* **Key Properties**:
+$$
+A =
+\begin{bmatrix}
+a_{11} & a_{12} & \cdots & a_{1n} \\
+a_{21} & a_{22} & \cdots & a_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{n1} & a_{n2} & \cdots & a_{nn}
+\end{bmatrix}
+$$
 
-  * $\det(I) = 1$
-  * $\det(AB) = \det(A) \det(B)$
-  * $\det(A^T) = \det(A)$
-  * $\det(A^{-1}) = 1 / \det(A)$
-  * Swapping two rows multiplies the determinant by $-1$.
-  * For $A \in \mathbb{R}^{n \times n}$, $\det(cA) = c^n \det(A)$.
+The determinant of $A$, denoted $\det(A)$ or $|A|$, is defined by the **Leibniz formula**:
 
-> **Geometric Meaning**: $|\det(A)|$ is the volume of the $n$-dimensional parallelepiped formed
-> by the column (or row) vectors of $A$.
+$$
+\det(A)
+= \sum_{\sigma \in S_n} \operatorname{sgn}(\sigma)
+\prod_{i=1}^{n} a_{i, \sigma(i)}
+$$
+
+where:
+
+* $S_n$ is the set of all permutations of ${1, 2, \dots, n}$,
+* $\operatorname{sgn}(\sigma)$ is $+1$ for even and $-1$ for odd permutations.
+
+Equivalently, it can be computed recursively via **cofactor expansion** along any row or column:
+
+$$
+\det(A)
+= \sum_{j=1}^{n} (-1)^{1+j} a_{1j} \det(A_{1j})
+$$
+
+where ( A_{1j} ) is the ((n-1)\times(n-1)) submatrix obtained by removing the first row and
+$j^{th}$ column.
+
+##### **Properties**
+
+For any $n\times n$ matrices $A, B$ and scalar $c$:
+
+1. $\det(AB) = \det(A)\det(B)$
+2. $\det(A^\top) = \det(A)$
+3. $\det(cA) = c^n \det(A)$
+4. $\det(A) = 0 \iff A \text{ is singular (non-invertible)}$
+
+The determinant is **multilinear** and **alternating** in the rows (or columns):
+
+* Linearity: scaling or adding rows scales/adds determinants accordingly.
+* Alternation: if two rows are identical, $\det(A) = 0$.
+
+### Jacobians
+
+For a function $ \mathbf{f}: \mathbb{R}^n \to \mathbb{R}^m $,
+
+$$
+J_{\mathbf{f}}(\mathbf{x}) =
+\begin{bmatrix}
+\frac{\partial f_1}{\partial x_1} & \cdots & \frac{\partial f_1}{\partial x_n} \\
+\vdots & \ddots & \vdots \\
+\frac{\partial f_m}{\partial x_1} & \cdots & \frac{\partial f_m}{\partial x_n}
+\end{bmatrix}
+$$
+
+Each row is the gradient of one output component $ f_i $;  
+$ J_{\mathbf{f}} $ is the best linear approximation of $ \mathbf{f} $ near $ \mathbf{x} $.
 
 ## II. System Solving and Fundamental Subspaces
 
@@ -307,24 +351,18 @@ $\to [R | \mathbf{d}]$ (Reduced Row Echelon Form, $R = \text{rref}(A)$)
 
 ### 3. The Four Fundamental Subspaces (Fundamental Theorem of Linear Algebra, Part I)
 
-For $A \in \mathbb{R}^{m \times n}$ with $\text{rank}(A) = r$, solutions to
-$A\mathbf{x} = \mathbf{b}$ depend on:
+For $A \in \mathbb{R}^{m \times n}$ with rank $r$:
 
-| Subspace | Definition/Property | Dimension |
-| :--- | :--- | :--- |
-| **Column Space** $C(A)$ |
-$\text{span}\{\mathbf{a}_1, ..., \mathbf{a}_n\} =
-\{A\mathbf{x} \mid \mathbf{x} \in \mathbb{R}^n\}$.
-Solution exists $\iff \mathbf{b} \in C(A)$. | $r$ |
-| **Row Space** $C(A^T)$ | $\text{span}\{\text{rows of } A\}$. | $r$ |
-| **Nullspace** $N(A)$ | $\{\mathbf{x} \in \mathbb{R}^n \mid A\mathbf{x} = \mathbf{0}\}$.
-| $n-r$ |
-| **Left Nullspace** $N(A^T)$ |
-$\{\mathbf{y} \in \mathbb{R}^m \mid A^T\mathbf{y} = \mathbf{0}\}$. | $m-r$ |
+| Subspace | Definition | Dim |
+| :-- | :-- | :--: |
+| **Column Space** $C(A)$ | $\{A\mathbf{x} \mid \mathbf{x} \in \mathbb{R}^n\}$ | $r$ |
+| **Row Space** $C(A^\top)$ | Span of rows of $A$ | $r$ |
+| **Nullspace** $N(A)$ | $\{\mathbf{x} \mid A\mathbf{x}=0\}$ | $n - r$ |
+| **Left Nullspace** $N(A^\top)$ | $\{\mathbf{y} \mid A^\top\mathbf{y}=0\}$ | $m - r$ |
 
-* **Orthogonality (Part II):**
-* $C(A^T) \perp N(A) \implies \mathbb{R}^n = C(A^T) \oplus N(A)$
-* $C(A) \perp N(A^T) \implies \mathbb{R}^m = C(A) \oplus N(A^T)$
+**Orthogonality:**  
+$C(A^\top) \perp N(A)$, $C(A) \perp N(A^\top)$  
+$\Rightarrow \mathbb{R}^n = C(A^\top) \oplus N(A)$, $\mathbb{R}^m = C(A) \oplus N(A^\top)$
 
 ## III. Eigenvalues, Eigenvectors, and Operators
 
@@ -339,86 +377,149 @@ $p(\lambda) = \det(A - \lambda I) = 0$
 * **Diagonalization (EVD):** If $A$ has $n$ linearly independent eigenvectors (columns of
 $S$), then $A = S\Lambda S^{-1}$, where $\Lambda = \text{diag}(\lambda_1, ..., \lambda_n)$
 * **Spectral Theorem:** If $A = A^T$, then $A = Q\Lambda Q^T$, where $Q$ is orthogonal
-($Q^T Q = I$) and $\Lambda$ is real
-* **Properties:**
-* **Trace:** $\text{Tr}(A) = \sum_{i=1}^{n} a_{ii} = \sum_{i=1}^{n} \lambda_i$
-* **Determinant:** $\det(A) = \prod_{i=1}^{n} \lambda_i$
-* **Application (ML):** **PCA** uses eigenvectors of the covariance matrix
-$\Sigma = \frac{1}{N}X^T X$
+($Q^T Q = I$) and $\Lambda$ is real.
 
 ## IV. Orthogonality and Least Squares
 
 ### 5. Concepts of Orthogonality
 
-* **Inner Product:** $\langle \mathbf{x}, \mathbf{y} \rangle = \mathbf{x}^T\mathbf{y}$
-(for $\mathbb{R}^n$). **Orthogonality:**
-$\mathbf{x} \perp \mathbf{y} \iff \mathbf{x}^T\mathbf{y} = 0$
-* **Norm:** $||\mathbf{x}||_2 = \sqrt{\mathbf{x}^T\mathbf{x}} = \sqrt{\sum x_i^2}$
-* **Orthogonal Matrices ($Q$):** $Q \in \mathbb{R}^{n \times n}$ with
-$\mathbf{q}_i^T \mathbf{q}_j = \delta_{ij}$ (orthonormal columns)
-$Q^T Q = I \implies Q^T = Q^{-1}$. Preserves norms: $||Q\mathbf{x}||_2 = ||\mathbf{x}||_2$
-* **Gram-Schmidt:** Converts basis $\{\mathbf{a}_i\}$ to orthonormal basis
-$\{\mathbf{q}_i\}$. Yields $A=QR$
+$$\mathbf{x} \perp \mathbf{y} \iff \mathbf{x}^T\mathbf{y} = 0$$
+
+* **Orthogonal Matrix ($Q$):** (A square $n \times n$ matrix)
+    * **Definition:** Has orthonormal columns ($\mathbf{q}_i^T \mathbf{q}_j = \delta_{ij}$).
+    * **Property:** $Q^T Q = I$
+    * **Consequence:** $Q^T = Q^{-1}$
+    * **Preserves Norms:** $||Q\mathbf{x}||_2 = ||\mathbf{x}||_2$
+* **Gram-Schmidt:** An algorithm that converts a set of linearly independent vectors
+$\{\mathbf{a}_i\}$ into an orthonormal set $\{\mathbf{q}_i\}$. This is the foundation of
+the $A=QR$ decomposition.
 
 ### 6. Least Squares and Projection
 
-* **Motivation:** For $A\mathbf{x}=\mathbf{b}$ with $m > n$ (overdetermined) and
-$\mathbf{b} \notin C(A)$ (no solution)
-* **Goal:** Find $\mathbf{\hat{x}} = \arg \min_{\mathbf{x}} ||A\mathbf{x} - \mathbf{b}||_2^2$.
-* **Normal Equations:** The solution $\mathbf{\hat{x}}$ satisfies
-$A^T A\mathbf{\hat{x}} = A^T\mathbf{b}$
-* **Projection:** $\mathbf{p} = \text{proj}_{C(A)}\mathbf{b} = A\mathbf{\hat{x}}$.
-$\mathbf{p}$ is the closest vector in $C(A)$ to $\mathbf{b}$
-* **Projection Matrix:** $\mathbf{p} = P\mathbf{b}$. If $A$ has full column rank,
-$P = A(A^T A)^{-1} A^T$
-* Error $\mathbf{e} = \mathbf{b} - \mathbf{p}$ satisfies $\mathbf{e} \in N(A^T)$, so
-$A^T\mathbf{e} = \mathbf{0}$
-* **Pseudoinverse ($A^+$):** Minimum-norm least-squares solution is
-$\mathbf{\hat{x}} = A^+\mathbf{b}$. If $\text{rank}(A)=n$, $A^+ = (A^T A)^{-1} A^T$
+This section addresses solving an **overdetermined system** $A\mathbf{x}=\mathbf{b}$
+(where $m > n$ and $\mathbf{b}$ is not in $C(A)$) by finding the "best fit" solution
+$\mathbf{\hat{x}}$ that minimizes the squared error $||A\mathbf{x} - \mathbf{b}||_2^2$.
+
+* **Normal Equations:** The equation to solve for the least-squares solution $\mathbf{\hat{x}}$:
+    $$A^T A\mathbf{\hat{x}} = A^T\mathbf{b}$$
+* **Projection ($\mathbf{p}$):** The vector $\mathbf{p}$ is the projection of
+$\mathbf{b}$ onto the column space $C(A)$. It's the closest vector in $C(A)$ to $\mathbf{b}$.
+    $$\mathbf{p} = A\mathbf{\hat{x}}$$
+
+* **Error Vector ($\mathbf{e}$):** The residual vector, which is orthogonal to $C(A)$.
+    $$\mathbf{e} = \mathbf{b} - \mathbf{p}$$
+    * **Property:** $\mathbf{e} \in N(A^T)$, which means $A^T\mathbf{e} = \mathbf{0}$.
+* **Projection Matrix ($P$):** The matrix that projects any vector onto $C(A)$
+($\mathbf{p} = P\mathbf{b}$).
+    *(if $A$ has full column rank)*: $$P = A(A^T A)^{-1} A^T$$
+* **Pseudoinverse ($A^+$):** Gives the minimum-norm, least-squares solution.
+    $$\mathbf{\hat{x}} = A^+\mathbf{b}$$
+    *(if $A$ has full column rank)*: $$A^+ = (A^T A)^{-1} A^T$$
 
 ## V. Essential Matrix Factorizations
 
-| Factorization | Form | Requirements/Purpose |
-| :--- | :--- | :--- |
-| **Singular Value Decomposition (SVD)** | $A = U\Sigma V^T$ |
-$A \in \mathbb{R}^{m \times n}$. $U \in \mathbb{R}^{m \times m}, V \in
-\mathbb{R}^{n \times n}$
-are orthogonal. $\Sigma \in \mathbb{R}^{m \times n}$ is diagonal, $\Sigma_{ii} =
-\sigma_i \ge 0$ (singular values). $\sigma_i = \sqrt{\lambda_i(A^T A)}$. |
-| **QR Decomposition** | $A = QR$ | $A \in \mathbb{R}^{m \times n}$ (full column rank).
-$Q \in \mathbb{R}^{m \times n}$ ($Q^T Q = I$). $R \in \mathbb{R}^{n \times n}$
-(upper triangular). Solves $A\mathbf{x}=\mathbf{b} \to R\mathbf{x} = Q^T\mathbf{b}$. |
-| **LU Decomposition** | $A = LU$ (or $PA=LU$) | $A \in \mathbb{R}^{n \times n}$
-(invertible). $L$ (lower $\Delta$, $L_{ii}=1$), $U$ (upper $\Delta$). Solves
-$A\mathbf{x}=\mathbf{b}$ via $L\mathbf{c}=\mathbf{b}$ then $U\mathbf{x}=\mathbf{c}$. |
-| **Cholesky Decomposition** | $A = R^T R$ (or $LL^T$) | $A$ must be
-**Symmetric Positive Definite** (SPD). $A = A^T$ and $\mathbf{x}^T A \mathbf{x} > 0$ for
-$\mathbf{x} \neq \mathbf{0}$. $R$ is upper $\Delta$, $L$ is lower $\Delta$. |
-| **Polar Decomposition** | $A = Q H$ | $A \in \mathbb{R}^{n \times n}$ (invertible). $Q$
-is orthogonal ($Q^T Q = I$), $H$ is SPD ($H = \sqrt{A^T A}$). Separates rotation ($Q$)
-from stretch ($H$). |
+### **Singular Value Decomposition (SVD)**
 
-## VI. Advanced Topics: Tensors (Multi-linear Algebra)
+```julia
+function svd(A):
+    // INPUT: A (an m x n matrix)
+    //
+    // REQUIREMENTS: None. Works for any m x n matrix.
+    //
+    // OUTPUTS: U, S, Vt
+    //   U: m x m orthogonal matrix
+    //   S: m x n diagonal matrix with non-negative singular values (sigma_i)
+    //      (Often returned as a 1D vector of singular values)
+    //   Vt: n x n orthogonal matrix (V-transpose)
+    //
+    // FORM: A = U * S * Vt
 
-### 7. Tensors in Engineering (ML/Controls/Robotics)
+    (U, S, Vt) = compute_svd(A)
+    return (U, S, Vt)
+```
 
-* **Definition:** A tensor $\mathcal{A} \in F^{I_1 \times I_2 \times \dots \times I_K}$
-is a multi-way array of order $K$
-* $K=1 \implies \text{vector}$
-* $K=2 \implies \text{matrix}$
-* **Motivation:** Avoids $\text{vec}(\mathcal{A})$ (vectorization), which loses multi-modal
-structure
-* **Multi-linear Extensions:** Generalize LA concepts using tensor products (e.g., Einstein
-product $*_N$, t-product $*$)
-* **Tensor Decompositions:**
-* **Tensor EVD:** $\mathcal{A} * \mathcal{U} = \mathcal{U} * \mathcal{D}$. $\mathcal{D}$
-holds eigenvalues $\lambda_i$, $\mathcal{U}$ holds eigentensors
-$\mathcal{A} \succeq 0 \iff \lambda_i \ge 0$ for all $i$
-* **Tensor SVD (t-SVD):** $\mathcal{A} = \mathcal{U} * \mathcal{S} * \mathcal{V}^T$
-$\mathcal{U}, \mathcal{V}$ are orthogonal tensors, $\mathcal{S}$ is f-diagonal (frontal
-slices are diagonal)
-* **Tensor LU:** $\mathcal{A} = \mathcal{L} * \mathcal{U}$. Solves multi-linear systems
-$\mathcal{A} * \mathcal{X} = \mathcal{B}$ via tensor forward/backward substitution
+### **QR Decomposition**
+
+```julia
+function qr(A):
+    // INPUT: A (an m x n matrix, usually with m >= n)
+    //
+    // REQUIREMENTS: Assumes A has full column rank (linearly independent columns)
+    //               for the "thin" decomposition described.
+    //
+    // OUTPUTS: Q, R
+    //   Q: m x n matrix with orthonormal columns (Q^T * Q = I)
+    //   R: n x n upper triangular matrix
+    //
+    // FORM: A = Q * R
+
+    (Q, R) = compute_qr(A)
+    return (Q, R)
+```
+
+### **LU Decomposition (with Pivoting)**
+
+```julia
+function lu(A):
+    // INPUT: A (an n x n square matrix)
+    //
+    // REQUIREMENTS: A must be invertible (non-singular).
+    //               We use the PA=LU form for numerical stability
+    //               and to handle all invertible cases.
+    //
+    // OUTPUTS: P, L, U
+    //   P: n x n permutation matrix (tracks row swaps)
+    //   L: n x n lower triangular matrix (with 1s on the diagonal)
+    //   U: n x n upper triangular matrix
+    //
+    // FORM: P * A = L * U
+
+    (P, L, U) = compute_lu_with_pivoting(A)
+    return (P, L, U)
+```
+
+### **Cholesky Decomposition**
+
+```julia
+function cholesky(A):
+    // INPUT: A (an n x n square matrix)
+    //
+    // REQUIREMENTS: A MUST be Symmetric Positive Definite (SPD).
+    //   1. Symmetric: A = A^T
+    //   2. Positive Definite: x^T * A * x > 0 for all non-zero vectors x
+    //
+    // OUTPUTS: L (or R)
+    //   L: n x n lower triangular matrix
+    //
+    // FORM: A = L * L^T  (if returning L)
+    //   or
+    //   R: n x n upper triangular matrix
+    // FORM: A = R^T * R  (if returning R)
+
+    if not is_symmetric(A) or not is_positive_definite(A):
+        error "Matrix is not Symmetric Positive Definite."
+
+    L = compute_cholesky(A) // This computes the lower triangular L
+    return L
+```
+
+### **Polar Decomposition**
+
+```julia
+function polar(A):
+    // INPUT: A (an n x n square matrix)
+    //
+    // REQUIREMENTS: A must be invertible (non-singular).
+    //
+    // OUTPUTS: Q, H
+    //   Q: n x n orthogonal matrix (rotation/reflection)
+    //   H: n x n Symmetric Positive Definite (SPD) matrix (stretch)
+    //
+    // FORM: A = Q * H
+
+    (Q, H) = compute_polar(A)
+    return (Q, H)
+```
 
 ## DMD Example
 
@@ -430,7 +531,7 @@ $\mathcal{A} * \mathcal{X} = \mathcal{B}$ via tensor forward/backward substituti
 > matrices $X$ and $Y$ (see (2.1) for details) allows us to phrase the above formally as
 $$\argmin_{\operatorname{rank}(A) \le r} \| Y - AX \|_F\tag{1.1}$$ After approximately
 solving (1.1), the DMD process computes the dominant spectral properties of the learned
-linear operator. @@badoo2023pidmd
+linear operator. @@baddoo_physics-informed_2023
 
 <!-- Start of HTML iframe embed -->
 <iframe
@@ -444,5 +545,5 @@ linear operator. @@badoo2023pidmd
 <!-- End of HTML iframe embed -->
 
 ## Based on notes taken from:
-- @@boyd2018introduction
-- @@nathan_kutz_dynamic_2018
+- @@boyd_introduction_2018
+- @@kutz_dynamic_2018

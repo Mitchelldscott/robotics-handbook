@@ -1,31 +1,21 @@
 [book]
 title = "Robotics Handbook: A Guide to Perception, Navigation, and Control"
-author = "Mitchell Scott"
+authors = ["Mitchell Scott"]
 language = "en"
-multilingual = false
 text-direction = "ltr"
 src = "src"
 
 [build]
 build-dir = "target/book"
 create-missing = true
-use-default-preprocessors = true  # use the default preprocessors
-extra-watch-dirs = []
+use-default-preprocessors = true # use the default preprocessors
 
 [rust]
 edition = "2024"
 
 [output.html]
-# default-theme = "dark"
-# preferred-dark-theme = "ayu"
 default-theme = "ayu"
 preferred-dark-theme = "ayu"
-additional-css = [
-    # "theme/css/textbook-dark.css",
-    "theme/css/code-blocks.css",
-    "theme/css/tables.css"
-]
-
 
 [output.html.playground]
 editable = true
@@ -50,5 +40,5 @@ inline-delimiter = { left = "$", right = "$" }
 pre-render = true
 
 [preprocessor.bib]
-bibliography = "bibliography.bib"
+bibliography = "robotics-handbook.bib"
 csl = "ieee.csl"

@@ -1,12 +1,13 @@
 # Summary
 
-[Introduction](introduction.md)
+[Data-driven Design of Autonomous Systems](index.md)
 [Conventions](conventions.md)
 
 - [Mathematics & Machine Learning Basics](part1/index.md)
   - [Mathematics Core](part1/core_math/index.md)
     - [Linear Systems](part1/core_math/linear-systems.md)
     - [Probability and Information Theory](part1/core_math/probability-information.md)
+    - [Lie Groups and Lie Algebras](part1/core_math/lie-groups.md)
     - [Numerical Computation](part1/core_math/numerical-computation.md)
     - [Mechanics](part1/core_math/mechanics.md)
     - [Machine Learning Basics](part1/core_math/machine-learning-basics.md)
@@ -48,21 +49,19 @@
     - [Markov Decision Processes (MDP)](part2/navigation/mdp.md)
     - [Partially Observable Markov Decision Processes (POMDP)](part2/navigation/pomdp.md)
     - [Approximate POMDP](part2/navigation/approx-pomdp.md)
-    - [Exploration](part2/navigation/exploration.md)
 
   - [Deep Learning](part2/deep-learning/index.md)
-    - [Linear Factor Models](part2/deep-learning/linear-factor-models.md)
     - [Autoencoders](part2/deep-learning/autoencoders.md)
     - [Representation Learning](part2/deep-learning/representation-learning.md)
     - [Structured Probabilistic Models](part2/deep-learning/structured-probabilistic-models.md)
-    - [Monte Carlo Methods](part2/deep-learning/monte-carlo-methods.md)
     - [Deep Generative Models](part2/deep-learning/deep-generative-models.md)
 
   - [Reinforcement Learning](part2/rl/index.md)
     - [On-policy Prediction and Control with Approximation](part2/rl/on-policy.md)
     - [Off-policy Methods with Approximation](part2/rl/off-policy.md)
-    - [Eligibility Traces](part2/rl/eligibility-traces.md)
     - [Policy Gradient Methods](part2/rl/policy-gradient.md)
 
+- [Embedded Systems and Programming](part3/index.md)
+  - [Embedded Rust and MCUs](part3/embedded_rust_mcus.md)
+
 - [Resources](resources.md)
-- [Change-Log](change-log.md)

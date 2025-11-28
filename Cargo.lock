@@ -3,5 +3,5 @@
 version = 4
 
 [[package]]
-name = "robotics-handbook"
+name = "robotics-handbook-generator"
 version = "0.1.0"
