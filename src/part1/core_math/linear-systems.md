@@ -531,7 +531,7 @@ function polar(A):
 > matrices $X$ and $Y$ (see (2.1) for details) allows us to phrase the above formally as
 $$\argmin_{\operatorname{rank}(A) \le r} \| Y - AX \|_F\tag{1.1}$$ After approximately
 solving (1.1), the DMD process computes the dominant spectral properties of the learned
-linear operator. @@badoo2023pidmd
+linear operator. @@baddoo_physics-informed_2023
 
 <!-- Start of HTML iframe embed -->
 <iframe
@@ -545,5 +545,5 @@ linear operator. @@badoo2023pidmd
 <!-- End of HTML iframe embed -->
 
 ## Based on notes taken from:
-- @@boyd2018introduction
-- @@nathan_kutz_dynamic_2018
+- @@boyd_introduction_2018
+- @@kutz_dynamic_2018

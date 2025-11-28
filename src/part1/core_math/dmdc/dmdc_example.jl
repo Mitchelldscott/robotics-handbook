@@ -67,7 +67,7 @@ This function discovers the best-fit linear system matrices (A, B) that
 approximate the dynamics `x' ≈ Ax + Bu` given a time-series history of
 state vectors `x_history` and control vectors `u_history`.
 
-Then the discrete algebraic ricati equation is sovled to find the `P`
+Then the discrete algebraic riccati equation is solved to find the `P`
 
 Inputs:
 - `x_history`: An `n x m` matrix, where `n` is the state dimension and `m` is the

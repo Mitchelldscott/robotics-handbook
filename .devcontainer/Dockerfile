@@ -17,7 +17,8 @@ RUN bash -c "source $NVM_DIR/nvm.sh && nvm install $NODE_VERSION && nvm use $NOD
 
 # install tools
 RUN bash -c "source $NVM_DIR/nvm.sh && npm install -g markdownlint-cli2"
-RUN cargo install mdbook mdbook-katex mdbook-bib
+RUN cargo install mdbook --version 0.4.48 
+RUN cargo install mdbook-katex mdbook-bib
 
 # Simple entrypoint: load NVM
 WORKDIR /workspace
