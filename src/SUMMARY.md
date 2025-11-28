@@ -7,6 +7,7 @@
   - [Mathematics Core](part1/core_math/index.md)
     - [Linear Systems](part1/core_math/linear-systems.md)
     - [Probability and Information Theory](part1/core_math/probability-information.md)
+    - [Lie Groups and Lie Algebras](part1/core_math/lie-groups.md)
     - [Numerical Computation](part1/core_math/numerical-computation.md)
     - [Mechanics](part1/core_math/mechanics.md)
     - [Machine Learning Basics](part1/core_math/machine-learning-basics.md)

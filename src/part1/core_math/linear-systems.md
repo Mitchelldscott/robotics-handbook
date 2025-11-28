@@ -212,12 +212,10 @@ can be represented by a unique $m \times n$ matrix $A$ such that $T(\mathbf{x}) 
 
   > *This is the abstract version of the Column Space $C(A)$.*
 
-### Matrix Determinants
+#### Determinants
 
 The **determinant** is a scalar value $\det(A)$ associated with an $n \times n$
 square matrix $A$.
-
-### Determinants
 
 Let
 
@@ -230,8 +228,6 @@ a_{21} & a_{22} & \cdots & a_{2n} \\
 a_{n1} & a_{n2} & \cdots & a_{nn}
 \end{bmatrix}
 $$
-
-#### **Algebraic Definition**
 
 The determinant of $A$, denoted $\det(A)$ or $|A|$, is defined by the **Leibniz formula**:
 
@@ -256,7 +252,7 @@ $$
 where ( A_{1j} ) is the ((n-1)\times(n-1)) submatrix obtained by removing the first row and
 $j^{th}$ column.
 
-#### **Properties**
+##### **Properties**
 
 For any $n\times n$ matrices $A, B$ and scalar $c$:
 
@@ -269,22 +265,6 @@ The determinant is **multilinear** and **alternating** in the rows (or columns):
 
 * Linearity: scaling or adding rows scales/adds determinants accordingly.
 * Alternation: if two rows are identical, $\det(A) = 0$.
-
-#### **Example $n = 3$**
-
-$$
-A =
-\begin{bmatrix}
-a & b & c \\
-d & e & f \\
-g & h & i
-\end{bmatrix},
-\qquad
-\det(A) = a(ei - fh) - b(di - fg) + c(dh - eg)
-$$
-
-> **Geometric Meaning**: $|\det(A)|$ is the volume of the $n$-dimensional parallelepiped formed
-> by the column (or row) vectors of $A$.
 
 ### Jacobians
 
