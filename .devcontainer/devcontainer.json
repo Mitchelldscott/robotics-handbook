@@ -1,11 +1,5 @@
 {
     "name": "Robotics Handbook Development",
-    // Use the Dockerfile in the 'docker' subdirectory, and set the build context
-    // to the project root (..), which is necessary for the Dockerfile to access 
-    // files like Cargo.lock and the 'src' directory.
-    // Use the Dockerfile in the 'docker' subdirectory, and set the build context
-    // to the project root (..), which is necessary for the Dockerfile to access 
-    // files like Cargo.lock and the 'src' directory.
     "build": {
         "dockerfile": "Dockerfile",
         "context": ".."
@@ -16,8 +10,6 @@
     "forwardPorts": [
         8000
     ],
-    // CRITICAL FIX: Use nohup to run the cargo command in the background, 
-    // protecting it from hang-up signals when the postCreateCommand shell exits.
     "postAttachCommand": "cargo run",
     // Extensions that should be installed inside the container for a better experience.
     "customizations": {
@@ -31,7 +23,15 @@
                 "tamasfe.even-better-toml",
                 "redhat.vscode-yaml",
                 "davidanson.vscode-markdownlint",
-                "shd101wyy.markdown-preview-enhanced"
+                "shd101wyy.markdown-preview-enhanced",
+                "streetsidesoftware.code-spell-checker",
+                "google.gemini-code-assist",
+                "njpwerner.autodocstring",
+                "ms-python.black-formatter",
+                "Compulim.compulim-vscode-closetag",
+                "google.geminicodeassist",
+                "esbenp.prettier-vscode",
+                "streetsidesoftware.code-spell-checker-scientific-terms"
             ]
         }
     },
