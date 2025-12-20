@@ -9,7 +9,7 @@ This section introduces the key mathematical domains every roboticist should mas
 topic builds toward an integrated understanding of how perception, decision-making, and
 control can be formulated and solved rigorously.
 
-## 1. Linear Algebra
+## 1. Linear Systems
 
 Linear algebra is the backbone of modeling, estimation, and learning. Vectors and matrices
 describe system states, coordinate transformations, and sensor models. Eigenvalues and
