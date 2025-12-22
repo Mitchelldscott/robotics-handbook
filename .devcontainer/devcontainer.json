@@ -2,7 +2,7 @@
     "name": "Robotics Handbook Development",
     "build": {
         "dockerfile": "Dockerfile",
-        "context": ".."
+        "context": "../"
     },
     "remoteUser": "root",
     "workspaceFolder": "/workspaces/robotics-handbook",
@@ -16,13 +16,11 @@
                 "editor.formatOnSave": true
             },
             "extensions": [
+                "esbenp.prettier-vscode",
+                "google.geminicodeassist",
                 "rust-lang.rust-analyzer",
                 "tamasfe.even-better-toml",
-                "redhat.vscode-yaml",
                 "google.gemini-code-assist",
-                "ms-python.black-formatter",
-                "google.geminicodeassist",
-                "esbenp.prettier-vscode",
                 "streetsidesoftware.code-spell-checker",
                 "streetsidesoftware.code-spell-checker-scientific-terms"
             ]

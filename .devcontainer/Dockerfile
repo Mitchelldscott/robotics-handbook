@@ -22,5 +22,5 @@ RUN npm install markdownlint-cli2 --global
 # 5. Install mdbook and plugins
 RUN cargo install mdbook mdbook-mermaid
 
-WORKDIR /workspace
+WORKDIR /workspaces/robotics-handbook
 CMD ["/bin/bash"]
