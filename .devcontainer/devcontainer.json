@@ -27,7 +27,6 @@
         }
     },
     "mounts": [
-        "source=mdbook-cargo-cache,target=/root/.cargo/registry,type=volume",
-        "source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind,readonly",
+        "source=mdbook-cargo-cache,target=/root/.cargo/registry,type=volume"
     ]
 }
