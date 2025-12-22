@@ -12,64 +12,32 @@ using LinearAlgebra;
 
 # ╔═╡ c5a058ff-51a8-4054-af9e-0587f6e8a04f
 """
-particle_filter(y, X_prior, f, h, Q, R)
+    particle_filter(y, X_prior, f, h, Q, R)
 
-Sequential Monte Carlo (particle filter) state estimator.
+Sequential Monte Carlo (particle filter) state estimator for nonlinear systems.
 
 # Arguments
-
-  - `y::AbstractVector`: Sequence of measurements, where each element `y[k]` is the observation at time `k`.
-    The vector can contain scalars or vectors, depending on the system being modeled.
-  - `X_prior::AbstractVector`: Initial set of **particles (samples)**.
-    This is typically a `Vector` containing `N` state vectors (e.g., `Vector{<:AbstractVector}`),
-    representing the prior belief `p(x_0)`. The number of particles, `N`, is inferred
-    from the length of this vector.
-  - `f::Function`: State transition (process/update) function,
-    `x_next = f(x, w)` where `w` is process noise drawn from `N(0, Q)`.
-    Should model the system’s dynamics.
-  - `h::Function`: Measurement function,
-    `y_est = h(x, v)` where `v` is measurement noise drawn from `N(0, R)`.
-    Used to predict observations given a state.
-  - `Q::AbstractMatrix`: Process noise covariance matrix.
-  - `R::AbstractMatrix`: Measurement noise covariance matrix.
+- `y::AbstractVector`: Sequence of measurements.
+- `X_prior::AbstractVector`: Initial particle set representing prior belief.
+- `f::Function`: State transition function `x_next = f(x, w)` where `w ~ N(0, Q)`.
+- `h::Function`: Measurement function `y_est = h(x, v)` where `v ~ N(0, R)`.
+- `Q::AbstractMatrix`: Process noise covariance matrix.
+- `R::AbstractMatrix`: Measurement noise covariance matrix.
 
 # Returns
-
-  - `X_history::Vector`: A vector (of length `T+1`, where `T` is the length of `y`)
-    containing the particle sets at each time step.
-      - `X_history[1]` is the initial `X_prior`.
-      - `X_history[k+1]` is the set of `N` particles representing the posterior
-        distribution `p(x_k | y_{1:k})`.
-      - The expected state and covariance at any time `k` can be computed
-        from the particle set `X_history[k+1]`.
-
-# Description
-
-This function implements a **generic particle filter** (Sequential Monte Carlo method)
-to estimate the hidden state of a nonlinear, possibly non-Gaussian system given
-a sequence of measurements.
-
-At each time step `k`:
-
-1.  **Prediction:** Each particle from `X_history[k]` is propagated through the process model `f`
-    with added process noise `w` (from `Q`) to create a new set of *predicted* particles.
-2.  **Measurement Update:** Importance weights are assigned to each predicted particle
-    according to the likelihood `p(y[k] | x[k])`, calculated using the measurement
-    model `h` and noise covariance `R`.
-3.  **Resampling:** A new set of `N` particles is drawn (with replacement) from the
-    predicted particle set, where the probability of drawing each particle is
-    proportional to its normalized weight. This step mitigates particle degeneracy.
-4.  **Storage:** This new, resampled particle set is stored as `X_history[k+1]`.
-
-This algorithm generalizes the Kalman filter and its nonlinear variants (EKF, UKF)
-to arbitrary nonlinear/non-Gaussian systems, at the cost of higher computational demand.
-
+- `X_history::Vector`: Particle sets at each time step, where `X_history[k+1]` represents 
+  the posterior distribution `p(x_k | y_{1:k})`.
 """
 function particle_filter(y, X_prior, f, h, Q, R)
 	return f(X_prior, 0)
 end
 
 # ╔═╡ d3b6aa7d-c4d6-444a-8350-97290a171fda
+"""
+    draw_pose!(plt, pos; color=:blue, alpha=0.8)
+
+Plots pose trajectory on the given plot object.
+"""
 function draw_pose!(plt, pos; color=:blue, alpha=0.8)
 	plot!(plt, [x[1] for x in pos], [x[2] for x in pos];
         seriestype=:path,
@@ -84,7 +52,12 @@ function draw_pose!(plt, pos; color=:blue, alpha=0.8)
 end
 
 # ╔═╡ 08aa4e72-59d8-4c4f-b1fa-f50e08c25887
-function draw_measurments!(plt, t, y)
+"""
+    draw_measurements!(plt, t, y)
+
+Plots measurement data on the given plot object.
+"""
+function draw_measurements!(plt, t, y)
 	scatter!(plt, t, y; marker=:circle, xlabel="Time", ylabel="y")
 end
 
@@ -109,17 +82,16 @@ Displays a legend and sets the overall figure title to *"Particle Tracker"*.
 function plot_particle_tracker(t, states, measurement)
     plt = plot(layout=(1, 2), size=(900, 400), title="Particle Tracker")
     draw_pose!(plt[1], states)
-	draw_measurments!(plt[2], t, [y[1] for y in measurement])
+	draw_measurements!(plt[2], t, [y[1] for y in measurement])
 
     return plt
 end
 
 # ╔═╡ 0102d2e9-e2b4-405b-89ae-761bbc9593f7
 """
-State transition model supporting both single states and batches.
+    f(x, w)
 
-If x is a 2×1 vector → returns 2×1 vector.
-If x is a 2×N matrix (each column a particle) → returns 2×N matrix.
+State transition model supporting both single states and batches.
 """
 function f(x, w)
     A = [0.3 1.0; 0.0 -0.4]                   # simple linear decay
@@ -128,8 +100,9 @@ end
 
 # ╔═╡ 02460131-d905-4b79-a8c0-a48e8e42e0dc
 """
+    h(x, v)
+
 Measurement model supporting vectorized inputs.
-If x is 2×N → returns 1×N matrix of measurements.
 """
 function h(x, v)
     C = [1.0 0.0]                             # direct noisy observation

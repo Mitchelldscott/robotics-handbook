@@ -1,8 +1,57 @@
 {
+  "default": true,
+  "MD003": {
+    "style": "atx"
+  },
+  "MD004": {
+    "style": "dash"
+  },
+  "MD007": {
+    "indent": 4
+  },
+  "MD009": {
+    "br_spaces": 2,
+    "list_item_empty_lines": false
+  },
   "MD013": {
-    "line_length": 90,
-    "heading_line_length": 120,
-    "code_block_line_length": 200,
+    "line_length": 80,
+    "heading_line_length": 80,
+    "code_block_line_length": 120,
     "tables": false
+  },
+  "MD024": {
+    "siblings_only": true
+  },
+  "MD029": {
+    "style": "ordered"
+  },
+  "MD031": {
+    "list_items": false
+  },
+  "MD033": {
+    "allowed_elements": [
+        "br",
+        "details",
+        "summary",
+        "img",
+        "div",
+        "span"
+    ]
+  },
+  "MD035": {
+    "style": "---"
+  },
+  "MD040": true,
+  "MD041": {
+    "front_matter_title": "^\\s*title\\s*[:=]"
+  },
+  "MD046": {
+    "style": "fenced"
+  },
+  "MD049": {
+    "style": "asterisk"
+  },
+  "MD050": {
+    "style": "asterisk"
   }
 }

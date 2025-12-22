@@ -1,26 +1,26 @@
-FROM rust:1.90-slim-bullseye
-ARG NODE_VERSION=20
+FROM node:20-bookworm-slim
 
-# install dependencies
-RUN apt update && apt install -y curl git
-RUN apt-get update && apt-get install -y libssl-dev pkg-config build-essential && rm -rf /var/lib/apt/lists/*
+# 1. Install dependencies required for Rust and mdbook
+RUN apt-get update && apt-get install -y \
+    curl \
+    git \
+    vim \
+    build-essential \
+    pkg-config \
+    libssl-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-# install nvm
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+# 2. Install Rust using rustup (Standard one-line installer)
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
-# set env
-ENV NVM_DIR=/root/.nvm
-ENV PATH=$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+# 3. Add Cargo to the PATH for the rest of the build
+ENV PATH="/root/.cargo/bin:${PATH}"
 
-# install node
-RUN bash -c "source $NVM_DIR/nvm.sh && nvm install $NODE_VERSION && nvm use $NODE_VERSION"
+# 4. Install markdownlint-cli2 (No setup needed, Node is already here)
+RUN npm install markdownlint-cli2 --global
 
-# install tools
-RUN bash -c "source $NVM_DIR/nvm.sh && npm install -g markdownlint-cli2"
-RUN cargo install mdbook --version 0.4.48 
-RUN cargo install mdbook-katex mdbook-bib
+# 5. Install mdbook and plugins
+RUN cargo install mdbook mdbook-mermaid
 
-# Simple entrypoint: load NVM
 WORKDIR /workspace
-ENTRYPOINT ["bash", "-c", "source $NVM_DIR/nvm.sh && exec \"$@\"", "--"]
 CMD ["/bin/bash"]

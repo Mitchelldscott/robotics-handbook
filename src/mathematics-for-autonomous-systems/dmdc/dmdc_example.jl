@@ -20,33 +20,17 @@ the stabilizing solution P.
 P = Aᵀ P A - (Aᵀ P B) (R + Bᵀ P B)⁻¹ (Bᵀ P A) + Q
 """
 function dare_solver(A, B, Q, R; max_iter=100, tolerance=1e-6)
-    # P_k is the solution matrix at iteration k
-    P = copy(Q) # Initialize P_0 = Q
+    P = copy(Q)
     
     for _ in 1:max_iter
-        # Bᵀ P B term
         BT_P_B = B' * P * B
-        
-        # M = (R + Bᵀ P B)⁻¹ 
         M = inv(R + BT_P_B)
-        
-        # L = Bᵀ P A
         BT_P_A = B' * P * A
         
-        # The update rule for P:
-        # P_next = Aᵀ P A - (Aᵀ P B) M (Bᵀ P A) + Q
-        # The middle term simplifies to Aᵀ P B M Bᵀ P A
-        
-        # Term 2: Aᵀ P B M Bᵀ P A
         T2 = A' * P * B * M * BT_P_A
-        
-        # P_next = Aᵀ P A - T2 + Q
         P_next = A' * P * A - T2 + Q
-
-        # Make sure P is symmetric
         P_next = 0.5 * (P_next + P_next')
 
-        # Check for convergence
         if norm(P_next - P) < tolerance
             return P_next
         end
@@ -63,11 +47,9 @@ end
 
 Implements Dynamic Mode Decomposition with Control (DMDc).
 
-This function discovers the best-fit linear system matrices (A, B) that
-approximate the dynamics `x' ≈ Ax + Bu` given a time-series history of
-state vectors `x_history` and control vectors `u_history`.
-
-Then the discrete algebraic riccati equation is solved to find the `P`
+Identifies linear system matrices (A, B) that approximate the dynamics `x' ≈ Ax + Bu` 
+from time-series data, then solves the discrete algebraic Riccati equation to compute 
+the optimal control gain.
 
 Inputs:
 - `x_history`: An `n x m` matrix, where `n` is the state dimension and `m` is the
@@ -89,14 +71,10 @@ X₂ ≈ [A | B] * Ω, where Ω = [X₁; U]
 Then uses the result of a dare solver to compute the cost-to-go and then the optimal feedback gain.
 """
 function dmdc(x_history::AbstractMatrix, u_history::AbstractMatrix, Q::AbstractMatrix, R::AbstractMatrix)
-    # X₁: States x(0) to x(m-2)
     X₁ = x_history[:, 1:end-1]
-    # X₂: States x(1) to x(m-1)
     X₂ = x_history[:, 2:end]
-    # U: Controls u(0) to u(m-2)
     U = u_history[:, 1:end-1]
 
-    # Check for consistent lengths
     if size(X₁, 2) != size(U, 2) || size(X₁, 2) != size(X₂, 2)
         error(
 			"Input matrices X, U and output matrix X' must have the same number of columns.
@@ -105,30 +83,19 @@ function dmdc(x_history::AbstractMatrix, u_history::AbstractMatrix, Q::AbstractM
 		)
     end
 
-    # Ω = [X₁; U] has shape (n + p) x (m - 1)
     Ω = vcat(X₁, U)
+    G = X₂ / Ω
+    n = size(X₁, 1)
+    p = size(U, 1)
 
-    # We want to find G = [A | B].
-    G = X₂ / Ω  # G is (n) x (n + p)
-
-    # 4. Extract A and B
-    n = size(X₁, 1) # State dimension
-    p = size(U, 1)  # Control dimension
-
-    A = G[:, 1:n]      # First 'n' columns of G are the A matrix (n x n)
-    B = G[:, n+1:end]  # Remaining 'p' columns of G are the B matrix (n x p)
+    A = G[:, 1:n]
+    B = G[:, n+1:end]
 
 	# --- Part 2: LQR Gain Synthesis ---
     
-    # Solve the DARE using the identified A and B
     P = dare_solver(A, B, Q, R)
-
-    # Compute the optimal gain K
-    # K = (R + Bᵀ P B)⁻¹ Bᵀ P A
-    p = size(R, 1) # Control dimension
+    p = size(R, 1)
     R_plus_BT_P_B = R + B' * P * B
-    
-    # K is the optimal gain for the given system and weights
     K = inv(R_plus_BT_P_B) * B' * P * A
     
     return A, B, K
@@ -145,7 +112,6 @@ function plot_simulation_results(x_data, u_data, target=[0, 0])
     num_steps = size(x_data, 2)
     time_steps = 0:num_steps-1
     
-    # Create the plot for the state trajectories
     p1 = plot(
         x_data[1, :], 
         x_data[2, :],
@@ -159,7 +125,6 @@ function plot_simulation_results(x_data, u_data, target=[0, 0])
     )
     scatter!(p1, [target[1]], [target[2]], label="reference", marker=:circle, markercolor=:red)
     
-    # Create the plot for the control input
     p2 = plot(
         time_steps, 
         u_data[1, :], 
@@ -171,7 +136,6 @@ function plot_simulation_results(x_data, u_data, target=[0, 0])
         linecolor=:red
     )
     
-    # Combine the plots into a single layout
     plot(p1, p2, layout=(2, 1), legend=:topright, size=(800, 600))
 end
 
@@ -224,20 +188,12 @@ u_history = zeros(n_controls, n_samples);
 x_history[:, 1] = [0.0; 0.0]; # Initial state
 
 # ╔═╡ 98a33af4-3c85-412d-b550-b252fb1e47a0
-# Simulate the system to generate training data
 for k in 1:n_samples-1
-    # 1. Generate a random control input (u(k) is between -1 and 1)
     u_k = randn(n_controls)' * 0.25;
     u_history[:, k] = u_k;
-
-    # 2. Compute the next state x(k+1)
     x_k = x_history[:, k];
     x_k_plus_1 = A_true * x_k + B_true * u_k;
-
-    # 3. Add small measurement noise (simulating real-world data)
     noise = randn(n_states) * 0.25;
-
-	# 4. Add constant force
 	force = [0.5; 1.0];
     x_history[:, k+1] = x_k_plus_1 + noise + force;
 end
@@ -263,7 +219,6 @@ println("Recovered B Matrix"); display(round.(B_dmdc, digits=4))
 println("Calculated K Matrix"); display(round.(K_dmdc, digits=4))
 
 # ╔═╡ baf4369c-6aef-4fe7-b6cd-ec5f14ee8588
-# Calculate the error (norm of the difference)
 A_error = norm(A_true - A_dmdc) / norm(A_true)
 
 # ╔═╡ 2575f59f-e938-4d19-935e-6df22930168a
@@ -288,21 +243,12 @@ x_sim[:, 1] = [10.0; 10.0]; # Initial state
 x_reference = [0; 0]; # Set point
 
 # ╔═╡ cd4b4fab-1dbd-4555-b57c-a4be4a5fa72b
-# Simulate the system to generate training data
 for k in 1:n_samples-1
 	x_k = x_sim[:, k]
-	
-    # 1. Use the optimal gain matrix to compute u
 	u_k = K_dmdc * (x_reference - x_k)
     u_sim[:, k] = u_k'
-
-    # 2. Compute the next state x(k+1)
     x_k_plus_1 = A_true * x_k + B_true * u_k'
-
-    # 3. Add small measurement noise (simulating real-world data)
     noise = randn(n_states) * 0.25
-
-	# 4. Add constant force
 	force = [0.5; 1.0];
     x_sim[:, k+1] = x_k_plus_1 + noise + force
 end
