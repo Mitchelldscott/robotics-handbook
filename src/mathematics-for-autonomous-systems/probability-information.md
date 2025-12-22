@@ -80,7 +80,7 @@ method of choice when dealing with global uncertainty or ambiguous situations.
   MCL has become one of the most popular localization algorithms in robotics, capable of
   solving **global localization** and the **kidnapped robot problem**.
 
-  - **Core MCL Steps (Iterative):**
+    - **Core MCL Steps (Iterative):**
     1. **Motion Prediction:** Shift the particle distribution, allowing it to spread out
        (increases uncertainty) by applying the motion model with added zero-mean noise terms
        (e.g., Gaussian distribution).
@@ -90,7 +90,7 @@ method of choice when dealing with global uncertainty or ambiguous situations.
     3. **Resampling:** Draw new particles from the temporary set with probability
        proportional to their weights. This focuses the particle distribution on high-likelihood
        regions.
-  - **Handling Failures:** Adding **random particles** (e.g., in proportion to the decay of
+    - **Handling Failures:** Adding **random particles** (e.g., in proportion to the decay of
     short-term measurement likelihood relative to the long-term average) allows MCL to recover
     from localization failures (the kidnapped robot problem).
 
@@ -132,15 +132,15 @@ long-term success. This is modeled through decision-making frameworks.
   plan in **belief space** (the space of all possible belief distributions \(b\)).
 - **Definition:** A POMDP framework is defined by the tuple
   \(\langle S, A, T, O, R, \gamma, b_0 \rangle\):
-  - \(S\): Set of states.
-  - \(A\): Set of actions.
-  - \(T(s', a, s)\): **Transition model**, \(P(s'|s, a)\), the probability of reaching state
+    - \(S\): Set of states.
+    - \(A\): Set of actions.
+    - \(T(s', a, s)\): **Transition model**, \(P(s'|s, a)\), the probability of reaching state
     \(s'\) given current state \(s\) and action \(a\).
-  - \(O(o', s', a)\): **Observation model**, \(P(o'|s', a)\), the probability of perceiving
+    - \(O(o', s', a)\): **Observation model**, \(P(o'|s', a)\), the probability of perceiving
     observation \(o'\) if state \(s'\) was reached after action \(a\).
-  - \(R\): Bounded **reward function**.
-  - \(\gamma\): Discount factor.
-  - \(b_0\): Initial probability mass function (pmf) over states.
+    - \(R\): Bounded **reward function**.
+    - \(\gamma\): Discount factor.
+    - \(b_0\): Initial probability mass function (pmf) over states.
 - **Key Advantage:** POMDP planning allows the robot to
   **actively pursue information gathering** (exploration) while maximizing expected utility (exploitation).
 - **Applications:** Localization and navigation, autonomous driving, search and tracking,

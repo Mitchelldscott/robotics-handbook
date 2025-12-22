@@ -1,4 +1,5 @@
 # Project Violation Report
+
 ## Robotics Handbook - Development Instructions Compliance Review
 
 **Date:** 2025-01-XX  
@@ -24,6 +25,7 @@ This report documents all violations of the formatting and language rules define
 ## 1. LaTeX Mathematical Notation Violations
 
 ### Rule Violated: Section 5.1.4 & 5.2.1
+
 **Requirement:** Use `\( expression \)` for inline math and `\[ expression \]` for block math. **Never use dollar signs** (`$` or `$$`).
 
 ### 1.1 File: `src/mathematics-for-autonomous-systems/probability-information.md`
@@ -61,6 +63,7 @@ This report documents all violations of the formatting and language rules define
 All table entries in this file use dollar signs for mathematical notation. Every instance must be converted to `\( \)` format.
 
 **Affected Sections:**
+
 - Lines 27-33: Sets and Spaces table
 - Lines 43-55: Vectors and Matrices table  
 - Lines 65-76: System Dynamics and Signals table
@@ -68,6 +71,7 @@ All table entries in this file use dollar signs for mathematical notation. Every
 - Lines 103-106: Probability and Estimation table
 
 **Example violations:**
+
 - Line 27: `$\mathbb{R}, \mathbb{C}$` → should be `\(\mathbb{R}, \mathbb{C}\)`
 - Line 28: `$\mathbb{R}^n$` → should be `\(\mathbb{R}^n\)`
 - Line 43: `$x, u, y$` → should be `\(x, u, y\)`
@@ -85,6 +89,7 @@ All table entries in this file use dollar signs for mathematical notation. Every
 ## 2. Comments and Docstrings Violations
 
 ### Rule Violated: Section 4.2.2 & 4.2.3
+
 **Requirement:** Comments must only explain code purpose, clarify complex logic, or provide organizational grouping. **Do not comment self-explanatory code.**
 
 ### 2.1 File: `src/main.rs`
@@ -97,6 +102,7 @@ All table entries in this file use dollar signs for mathematical notation. Every
 | 11 | `// Pipe command output directly to console` | Obvious from `.stdout(Stdio::inherit())` |
 
 **Recommended Fix:**
+
 ```rust
 // Remove lines 6-8 entirely, or replace with organizational comment:
 // Server configuration for container access
@@ -157,6 +163,7 @@ All of these comments explain obvious operations that are clear from the code it
 ## 3. Missing Docstrings
 
 ### Rule Violated: Section 4.2.4
+
 **Requirement:** All new functions and classes must have docstrings with concise one-line summary.
 
 ### 3.1 File: `src/mathematics-for-autonomous-systems/particle_filter/notebook.jl`
@@ -171,6 +178,7 @@ All of these comments explain obvious operations that are clear from the code it
 | 134 | `function h(x, v)` | Has brief comment but not proper docstring format |
 
 **Recommended Fix:** Add proper docstrings following Julia conventions:
+
 ```julia
 """
     draw_pose!(plt, pos; color=:blue, alpha=0.8)
@@ -184,6 +192,7 @@ Draw pose trajectory on plot.
 ## 4. Overly Verbose AI-Generated Docstrings
 
 ### Rule Violated: Section 4.2.4
+
 **Requirement:** First line should be a concise one-line summary. Detailed description only if necessary.
 
 ### 4.1 File: `src/mathematics-for-autonomous-systems/particle_filter/notebook.jl`
@@ -193,11 +202,13 @@ Draw pose trajectory on plot.
 The `particle_filter` function has an extremely verbose 52-line docstring that over-explains the algorithm. This is typical of AI-generated documentation.
 
 **Issues:**
+
 - Line 48: Uses AI-generated pattern "This function implements a **generic particle filter**"
 - Lines 14-66: Excessive detail that should be in documentation, not docstring
 - Violates "concise one-line summary" requirement
 
 **Recommended Fix:** Condense to:
+
 ```julia
 """
     particle_filter(y, X_prior, f, h, Q, R)
@@ -224,6 +235,7 @@ Sequential Monte Carlo (particle filter) state estimator.
 Line 66 uses AI-generated docstring pattern: "This function discovers the best-fit linear system matrices..."
 
 **Recommended Fix:** Use more direct language:
+
 ```julia
 """
     dmdc(x_history, u_history, Q, R) -> A, B, K
@@ -239,6 +251,7 @@ Implements Dynamic Mode Decomposition with Control (DMDc) to identify linear sys
 ### 5.1 Typo in Function Name
 
 **File:** `src/mathematics-for-autonomous-systems/particle_filter/notebook.jl`
+
 - Line 87: `draw_measurments!` should be `draw_measurements!` (missing 'e')
 
 ### 5.2 Magic Numbers
@@ -246,6 +259,7 @@ Implements Dynamic Mode Decomposition with Control (DMDc) to identify linear sys
 **File:** `src/mathematics-for-autonomous-systems/dmdc/dmdc_example.jl`
 
 While Julia doesn't have the same constant requirements as Python, these could be better documented:
+
 - Line 198: `const n_samples = 200` - could have comment explaining why 200
 - Line 201: `const dt = 1.0` - acceptable as it's a constant
 - Line 205: `const Q = Diagonal([1000.0, 100.0])` - magic numbers in array
@@ -272,25 +286,28 @@ While Julia doesn't have the same constant requirements as Python, these could b
 ## 7. Recommended Action Plan
 
 ### Phase 1: Critical Fixes (High Priority)
+
 1. **Replace all dollar signs with `\( \)` or `\[ \]`** in:
    - `src/mathematics-for-autonomous-systems/probability-information.md`
    - `src/conventions.md`
    - Verify `src/mathematics-for-autonomous-systems/linear-systems.md`
 
 ### Phase 2: Code Quality (Medium Priority)
-2. **Remove self-explanatory comments** from:
+
+1. **Remove self-explanatory comments** from:
    - `src/main.rs`
    - `src/mathematics-for-autonomous-systems/dmdc/dmdc_example.jl`
 
-3. **Add missing docstrings** to:
+2. **Add missing docstrings** to:
    - `src/mathematics-for-autonomous-systems/particle_filter/notebook.jl` (4 functions)
 
 ### Phase 3: Documentation Polish (Low Priority)
-4. **Condense verbose docstrings** in:
+
+1. **Condense verbose docstrings** in:
    - `src/mathematics-for-autonomous-systems/particle_filter/notebook.jl`
    - `src/mathematics-for-autonomous-systems/dmdc/dmdc_example.jl`
 
-5. **Fix typo:**
+2. **Fix typo:**
    - `draw_measurments!` → `draw_measurements!`
 
 ---
@@ -304,4 +321,3 @@ While Julia doesn't have the same constant requirements as Python, these could b
 ---
 
 **End of Report**
-

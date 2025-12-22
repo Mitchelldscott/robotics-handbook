@@ -80,11 +80,11 @@ Content shall address the following robotics domains with equal rigor and factua
 - **Container Usage:** VS Code must be run inside the Docker container via the Dev Container extension.
 - **Command Execution:** All development commands such as `cargo run` and `mdbook serve` must be executed inside the container shell, not on the host machine.
 - **Host Requirements:**
-  - VS Code installed
-  - Dev Container extension installed
-  - Docker installed
-  - Docker Compose installed
-  - Git installed
+    - VS Code installed
+    - Dev Container extension installed
+    - Docker installed
+    - Docker Compose installed
+    - Git installed
 
 ### 3.2 Build Commands
 
@@ -164,12 +164,12 @@ Comments and docstrings must serve only these purposes:
 - **Update Rule:** Docstrings must be updated whenever the function or class is modified.
 - **Format:** Google style + PEP 257 conventions.
 - **Structure:**
-  - First line: Concise one-line summary ending with a period.
-  - Blank line after summary.
-  - Detailed description (if necessary).
-  - Arguments section (if applicable).
-  - Returns section (if applicable).
-  - Raises section (if applicable).
+    - First line: Concise one-line summary ending with a period.
+    - Blank line after summary.
+    - Detailed description (if necessary).
+    - Arguments section (if applicable).
+    - Returns section (if applicable).
+    - Raises section (if applicable).
 
 ### 4.3 Import Statements
 
@@ -177,10 +177,10 @@ Comments and docstrings must serve only these purposes:
 
 - **All import statements must be at the top of the file only.**
 - **Forbidden locations for imports:**
-  - Inside functions
-  - Inside methods
-  - Inside class bodies (non-top-level)
-  - In any inline or local scope
+    - Inside functions
+    - Inside methods
+    - Inside class bodies (non-top-level)
+    - In any inline or local scope
 
 #### 4.3.2 Import Workflow
 
@@ -212,6 +212,7 @@ Before adding any import statement:
 - **Naming Convention:** Use `UPPER_SNAKE_CASE` for all constant names.
 
 **Example:**
+
 ```python
 # Correct
 ROBOT_MAX_VELOCITY = 1.5  # m/s
@@ -265,10 +266,11 @@ The `tempoutils` package provides standardized utilities for ROS2 development. U
 - **Separator Character:** Use the forward slash `/` character.
 - **Separator Length:** 75 characters.
 - **Usage Locations:**
-  - Between classes and structs in `.h` (header) files.
-  - Between functions in `.cpp` (implementation) files.
+    - Between classes and structs in `.h` (header) files.
+    - Between functions in `.cpp` (implementation) files.
 
 **Example:**
+
 ```cpp
 class RobotController {
 public:
@@ -335,6 +337,7 @@ public:
 - **Never use dollar signs** (`$` or `$$`) for LaTeX formatting.
 
 **Example:**
+
 ```markdown
 The Euclidean distance is calculated as \( d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2} \).
 ```
@@ -360,7 +363,7 @@ The Euclidean distance is calculated as \( d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)
 
 - All mathematical expressions must use LaTeX notation.
 - Inline expressions: `\( f(x) = x^2 + 3x + 2 \)`
-- Block-level equations: 
+- Block-level equations:
   ```
   \[ f(x) = x^2 + 3x + 2 \]
   ```
@@ -385,11 +388,11 @@ The Euclidean distance is calculated as \( d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)
 
 - All ROS2 nodes must implement logging via `rclpy.logging`.
 - Log levels must be used appropriately:
-  - `DEBUG`: Detailed information for diagnosing problems.
-  - `INFO`: General informational messages.
-  - `WARN`: Warning messages for potentially problematic conditions.
-  - `ERROR`: Error messages for serious problems.
-  - `FATAL`: Critical errors that prevent node operation.
+    - `DEBUG`: Detailed information for diagnosing problems.
+    - `INFO`: General informational messages.
+    - `WARN`: Warning messages for potentially problematic conditions.
+    - `ERROR`: Error messages for serious problems.
+    - `FATAL`: Critical errors that prevent node operation.
 
 ---
 

@@ -29,8 +29,8 @@ systems, and their properties.
 | \(\mathbb{R}^{n \times m}\) | The space of \(n \times m\) matrices with real entries. | The system matrix \(A\) is in \(\mathbb{R}^{n \times n}\), written as \(A \in \mathbb{R}^{n \times n}\). |
 | \(s, z\) | The complex variables for the Laplace and Z-transforms. | Transfer function \(G(s)\), pulse transfer function \(G(z)\). |
 | RHP, LHP | Right-Half Plane and Left-Half Plane of the complex plane. | For stability, poles must be in the LHP: \(\Re(s) < 0\). |
-| \(\mathcal{L}_2, \mathcal{L}_\infty\) | Lebesgue spaces. \(\mathcal{L}_2\) is the space of finite-energy signals. \(\mathcal{L}_\infty\) is the space of bounded-amplitude signals. | Signal energy is the \(\mathcal{L}_2\) norm: \(\|u(t)\|_2^2 = \int_0^\infty \|u(t)\|^2 dt < \infty\). |
-| \(\mathcal{H}_2, \mathcal{H}_\infty\) | Hardy spaces. \(\mathcal{H}_2\) and \(\mathcal{H}_\infty\) are spaces of stable, proper transfer functions. | The \(\mathcal{H}_\infty\) norm of a system \(G(s)\) is its maximum gain over all frequencies: \(\|G(s)\|_\infty = \sup_\omega \|G(j\omega)\|\). |
+| \(\mathcal{L}*2, \mathcal{L}*\infty\) | Lebesgue spaces. \(\mathcal{L}*2\) is the space of finite-energy signals. \(\mathcal{L}*\infty\) is the space of bounded-amplitude signals. | Signal energy is the \(\mathcal{L}_2\) norm: \(\|u(t)\|_2^2 = \int_0^\infty \|u(t)\|^2 dt < \infty\). |
+| \(\mathcal{H}*2, \mathcal{H}*\infty\) | Hardy spaces. \(\mathcal{H}*2\) and \(\mathcal{H}*\infty\) are spaces of stable, proper transfer functions. | The \(\mathcal{H}*\infty\) norm of a system \(G(s)\) is its maximum gain over all frequencies: \(\|G(s)\|*\infty = \sup_\omega \|G(j\omega)\|\). |
 
 ---
 
@@ -47,7 +47,7 @@ Notation for linear algebra is central to the state-space representation of syst
 | \(\det(A), \text{tr}(A)\) | Determinant and trace of matrix \(A\). | The characteristic equation is \(\det(sI - A) = 0\). |
 | \(\lambda_i(A)\) | The \(i\)-th eigenvalue of matrix \(A\). | The system poles are the eigenvalues of the state matrix \(A\). |
 | \(\sigma_i(A)\) | The \(i\)-th singular value of matrix \(A\). | Robustness is often analyzed using singular values. |
-| \(\bar{\sigma}(A), \underline{\sigma}(A)\) | Maximum and minimum singular values of \(A\). | The \(H_\infty\) norm is the peak singular value: \(\|G(s)\|_\infty = \sup_\omega \bar{\sigma}(G(j\omega))\). |
+| \(\bar{\sigma}(A), \underline{\sigma}(A)\) | Maximum and minimum singular values of \(A\). | The \(H_\infty\) norm is the peak singular value: \(\|G(s)\|*\infty = \sup*\omega \bar{\sigma}(G(j\omega))\). |
 | \(A \succ 0, A \succeq 0\) | \(A\) is a symmetric positive definite / positive semidefinite matrix. | A Lyapunov function candidate \(V(x)=x^T P x\) requires \(P \succ 0\). |
 | \(I\) | The identity matrix. | Sized according to context, e.g., \(Ix = x\). |
 | \(\|x\|_p\) | The \(p\)-norm of a vector \(x\). | Euclidean norm: \(\|x\|_2 = \sqrt{x^T x}\). |

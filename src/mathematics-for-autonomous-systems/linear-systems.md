@@ -55,7 +55,7 @@ where \\(a_i := f(\mathbf{e}\_i)\\).
 Equivalently: \\(f(\alpha \mathbf{u} + \beta \mathbf{v}) = \alpha f(\mathbf{u}) + \beta
 f(\mathbf{v})\\) whenever \\(\alpha + \beta = 1\\).
 
-_Application_: Robot dynamics after feedback \\(u = -K x + r\\) is affine in state.
+*Application*: Robot dynamics after feedback \\(u = -K x + r\\) is affine in state.
 
 #### Norms: Measuring Vector "Size"
 
@@ -69,7 +69,7 @@ A **norm** \\(\|\cdot\|: V \to \mathbb{R}\_{\geq 0}\\) satisfies:
 
 For \\(p \geq 1\\), the **\\(L_p\\) norm** is:
 
-\\[\|\mathbf{v}\|_p = \sum_{i=1}^{n} \\]
+\\[\|\mathbf{v}\|*p = \sum*{i=1}^{n} \\]
 
 | \\(p\\)      | Name                | Formula                   | Use in Robotics                    |
 | ------------ | ------------------- | ------------------------- | ---------------------------------- |
@@ -112,7 +112,7 @@ a_{m1} & a_{m2} & \cdots & a\_{mn} \end{bmatrix}\\]
 - **Tall matrix**: \\(m > n\\) (more rows than columns; often overdetermined systems)
 - **Wide matrix**: \\(m < n\\) (more columns than rows; underdetermined systems)
 
-_Application_: In sensor fusion, an \\(m \times n\\) Jacobian matrix relates joint
+*Application*: In sensor fusion, an \\(m \times n\\) Jacobian matrix relates joint
 velocities (\\(n\\) DOF) to end-effector velocities (\\(m\\) task dimensions).
 
 #### Linear Transformations
@@ -131,13 +131,13 @@ The columns of \\(A\\) are the images of the standard basis:
 #### Matrix Operations
 
 **Addition** (only for same size):
-\\[(A + B)_{ij} = A_{ij} + B\_{ij}\\]
+\\[(A + B)*{ij} = A*{ij} + B\_{ij}\\]
 
 **Scalar Multiplication**:
-\\[(cA)_{ij} = c \cdot A_{ij}\\]
+\\[(cA)*{ij} = c \cdot A*{ij}\\]
 
 **Matrix Multiplication** (compatible dimensions: \\(A\\) is \\(m \times n\\), \\(B\\) is \\(n \times p\\)):
-\\[(AB)_{ij} = \sum_{k=1}^{n} A*{ik} B*{kj}\\]
+\\[(AB)*{ij} = \sum*{k=1}^{n} A*{ik} B*{kj}\\]
 
 **Critical Note**: Matrix multiplication is **not commutative**: \\(AB \neq BA\\) in general.
 
@@ -162,7 +162,7 @@ Exists if and only if \\(\text{rank}(A) = n\\) (full rank).
 - \\((AB)^T = B^T A^T\\)
 - \\((A^{-1})^T = (A^T)^{-1}\\)
 
-_Application_: In control, the **dual system** \\(\dot{x} = A^T x\\) characterizes observability.
+*Application*: In control, the **dual system** \\(\dot{x} = A^T x\\) characterizes observability.
 
 #### Span, Basis, and Dimension
 
@@ -171,7 +171,7 @@ _Application_: In control, the **dual system** \\(\dot{x} = A^T x\\) characteriz
 for some scalars \\(c_i\\).
 
 **Span**: The set of all linear combinations:
-\\[\text{span}\{\mathbf{v}_1, \ldots, \mathbf{v}\_k\} = \left\{ \sum_{i=1}^k c_i \mathbf{v}\_i : c_i \in \mathbb{R} \right\}\\]
+\\[\text{span}\{\mathbf{v}*1, \ldots, \mathbf{v}\_k\} = \left\{ \sum*{i=1}^k c_i \mathbf{v}\_i : c_i \in \mathbb{R} \right\}\\]
 
 **Linear Independence**: Vectors \\(\{\mathbf{v}\_1, \ldots, \mathbf{v}\_k\}\\) are linearly independent if
 \\[c_1 \mathbf{v}\_1 + \cdots + c_k \mathbf{v}\_k = \mathbf{0} \quad \Rightarrow \quad c_i = 0 \text{ for all } i\\]
@@ -186,7 +186,7 @@ Otherwise, they are **linearly dependent**.
 **Dimension**: The number of vectors in any basis for \\(V\\):
 \\[\dim(V) = |B|\\]
 
-_Application_: In a robot with 6 DOF in \\(\text{SE}(3)\\), any valid configuration space basis has dimension 6.
+*Application*: In a robot with 6 DOF in \\(\text{SE}(3)\\), any valid configuration space basis has dimension 6.
 
 #### Rank and Nullity
 
@@ -198,7 +198,7 @@ For a matrix \\(A \in \mathbb{R}^{m \times n}\\):
 **Rank-Nullity Theorem**:
 \\[\text{rank}(A) + \text{nullity}(A) = n\\]
 
-_Application_: For a robot Jacobian \\(J \in \mathbb{R}^{6 \times n}\\):
+*Application*: For a robot Jacobian \\(J \in \mathbb{R}^{6 \times n}\\):
 
 - \\(\text{rank}(J) = 6\\) everywhere except singularities (full rank = fully controllable end-effector)
 - \\(\text{nullity}(J) > 0\\) at singularities (null space = redundant DOF)
@@ -249,7 +249,7 @@ For any \\(A \in \mathbb{R}^{m \times n}\\) with rank \\(r\\):
 - \\(\mathbb{R}^n = C(A^T) \oplus N(A)\\) (every vector = controllable part + uncontrollable part)
 - \\(\mathbb{R}^m = C(A) \oplus N(A^T)\\)
 
-_Application_: In observability analysis, the left null space of the observability matrix characterizes unobservable modes.
+*Application*: In observability analysis, the left null space of the observability matrix characterizes unobservable modes.
 
 ### Solving \\(A\mathbf{x} = \mathbf{b}\\)
 
@@ -289,7 +289,7 @@ has a non-trivial solution if and only if \\(\det(A - \lambda I) = 0\\).
 - **Degree**: \\(n\\) (an \\(n \times n\\) matrix has \\(n\\) eigenvalues, counting multiplicities and complex values)
 - **Roots**: eigenvalues \\(\lambda_1, \ldots, \lambda_n\\)
 
-_Application_: Stability of continuous-time LTI system \\(\dot{\mathbf{x}} = A\mathbf{x}\\) is determined by Re\\((\lambda_i) < 0\\) for all \\(i\\).
+*Application*: Stability of continuous-time LTI system \\(\dot{\mathbf{x}} = A\mathbf{x}\\) is determined by Re\\((\lambda_i) < 0\\) for all \\(i\\).
 
 #### Diagonalization
 
@@ -306,7 +306,7 @@ where \\(\Lambda = \text{diag}(\lambda_1, \ldots, \lambda_n)\\).
 **Power of \\(A\\)**:
 \\[A^k = S\Lambda^k S^{-1}\\]
 
-_Application_: Discrete-time system \\(\mathbf{x}\_{k+1} = A\mathbf{x}\_k\\) solutions: \\(\mathbf{x}\_k = A^k \mathbf{x}\_0 = S\Lambda^k S^{-1} \mathbf{x}\_0\\).
+*Application*: Discrete-time system \\(\mathbf{x}\_{k+1} = A\mathbf{x}\_k\\) solutions: \\(\mathbf{x}\_k = A^k \mathbf{x}\_0 = S\Lambda^k S^{-1} \mathbf{x}\_0\\).
 
 #### Spectral Theorem (Symmetric Matrices)
 
@@ -318,7 +318,7 @@ If \\(A = A^T\\) (symmetric), then:
 
 **Consequence**: Symmetric matrices are always diagonalizable.
 
-_Application_: Covariance matrices in Kalman filters are symmetric positive semidefinite; eigendecomposition is numerically stable.
+*Application*: Covariance matrices in Kalman filters are symmetric positive semidefinite; eigendecomposition is numerically stable.
 
 #### Spectral Radius
 
@@ -337,7 +337,7 @@ _Application_: Covariance matrices in Kalman filters are symmetric positive semi
 
 **Orthogonal Set**: Vectors \\(\{\mathbf{v}\_1, \ldots, \mathbf{v}\_k\}\\) are mutually orthogonal if \\(\mathbf{v}\_i^T \mathbf{v}\_j = 0\\) for \\(i \neq j\\).
 
-**Orthonormal Set**: Orthogonal + unit norm: \\(\|\mathbf{v}_i\|\_2 = 1\\) and \\(\mathbf{v}\_i^T \mathbf{v}\_j = \delta_{ij}\\).
+**Orthonormal Set**: Orthogonal + unit norm: \\(\|\mathbf{v}*i\|\_2 = 1\\) and \\(\mathbf{v}\_i^T \mathbf{v}\_j = \delta*{ij}\\).
 
 #### Orthogonal Matrices
 
@@ -352,7 +352,7 @@ Equivalently: \\(Q^T = Q^{-1}\\).
 - \\(\det(Q) = \pm 1\\)
 - Numerically stable: no amplification of rounding errors
 
-_Application_: Rotation matrices are orthogonal. Coordinate transformations via \\(\mathbf{x}_{\text{new}} = R\mathbf{x}_{\text{old}}\\) preserve distances.
+*Application*: Rotation matrices are orthogonal. Coordinate transformations via \\(\mathbf{x}*{\text{new}} = R\mathbf{x}*{\text{old}}\\) preserve distances.
 
 #### Gram–Schmidt Orthogonalization
 
@@ -392,7 +392,7 @@ Projects any vector onto \\(C(A)\\):
 
 **Residual Vector**: \\(\mathbf{e} = \mathbf{b} - A\mathbf{\hat{x}}\\) satisfies \\(A^T \mathbf{e} = \mathbf{0}\\) (residual is orthogonal to column space).
 
-_Application_: Robot sensor calibration via least-squares parameter estimation from noisy measurements.
+*Application*: Robot sensor calibration via least-squares parameter estimation from noisy measurements.
 
 #### Pseudo-Inverse
 
@@ -445,7 +445,7 @@ where \\(A = U\Sigma V^T\\) and \\(\Sigma^{\dagger}\\) inverts non-zero singular
 - Rank detection and truncation (data compression)
 - Principal Component Analysis (PCA)
 
-_Application_: In feature-based SLAM, SVD of measurement-to-state Jacobian detects observable directions.
+*Application*: In feature-based SLAM, SVD of measurement-to-state Jacobian detects observable directions.
 
 ### LU Decomposition (with Partial Pivoting)
 
@@ -476,7 +476,7 @@ _Application_: In feature-based SLAM, SVD of measurement-to-state Jacobian detec
 
 **Computational cost**: \\(\sim n^3/6\\) flops.
 
-_Application_: Covariance matrix factorization in Kalman filters. Cholesky is numerically stable and efficient.
+*Application*: Covariance matrix factorization in Kalman filters. Cholesky is numerically stable and efficient.
 
 **Numerical Note**: If Cholesky fails (negative diagonal pivot), matrix is not SPD—check for rounding errors or ill-conditioning.
 
@@ -503,17 +503,17 @@ For a function \\(\mathbf{f}: \mathbb{R}^n \to \mathbb{R}^m\\), the **Jacobian**
 
 **Meaning**: \\(J\_{\mathbf{f}}(\mathbf{x}\_0)\\) is the best **linear approximation** of \\(\mathbf{f}\\) near \\(\mathbf{x}\_0\\).
 
-_Application_: Robot Jacobian \\(J(\mathbf{q})\\) relates joint velocities to end-effector velocities:
+*Application*: Robot Jacobian \\(J(\mathbf{q})\\) relates joint velocities to end-effector velocities:
 \\[\mathbf{v}\_{\text{EE}} = J(\mathbf{q}) \dot{\mathbf{q}}\\]
 
 ### First-Order Taylor Approximation
 
-For \\(\mathbf{f}: \mathbb{R}^n \to \mathbb{R}^m\\) differentiable near \\(\mathbf{x}_0\\):
-\\[\hat{\mathbf{f}}(\mathbf{x}) = \mathbf{f}(\mathbf{x}\_0) + J_{\mathbf{f}}(\mathbf{x}\_0)(\mathbf{x} - \mathbf{x}\_0)\\]
+For \\(\mathbf{f}: \mathbb{R}^n \to \mathbb{R}^m\\) differentiable near \\(\mathbf{x}*0\\):
+\\[\hat{\mathbf{f}}(\mathbf{x}) = \mathbf{f}(\mathbf{x}\_0) + J*{\mathbf{f}}(\mathbf{x}\_0)(\mathbf{x} - \mathbf{x}\_0)\\]
 
 **Accuracy**: Excellent when all \\(x*i - x*{0i}\\) are small.
 
-_Application_: **Linearization** for control design. For nonlinear dynamics \\(\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}, \mathbf{u})\\), linearize around equilibrium to design LTI feedback.
+*Application*: **Linearization** for control design. For nonlinear dynamics \\(\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}, \mathbf{u})\\), linearize around equilibrium to design LTI feedback.
 
 ---
 
@@ -649,7 +649,7 @@ where:
 - \\(P(\theta)\\): **prior** (pre-data belief)
 - \\(P(z) = \int P(z | \theta) P(\theta) d\theta\\): **evidence** (normalizing constant)
 
-_Application_: In robot localization, Bayes' rule updates the belief over robot pose given range measurements.
+*Application*: In robot localization, Bayes' rule updates the belief over robot pose given range measurements.
 
 ### Independence and Conditional Independence
 
@@ -660,7 +660,7 @@ _Application_: In robot localization, Bayes' rule updates the belief over robot 
 **Factorization**: Conditional independence enables decomposing complex joint distributions:
 \\[P(X, Y, Z) = P(X | Y, Z) P(Y | Z) P(Z)\\]
 
-_Application_: Markov assumption in particle filters: current state conditionally independent of history given previous state.
+*Application*: Markov assumption in particle filters: current state conditionally independent of history given previous state.
 
 ---
 
@@ -702,7 +702,7 @@ where \\(\boldsymbol{\mu} = \mathbb{E}[\mathbf{X}]\\). Properties:
 - Symmetric: \\(\Sigma^T = \Sigma\\)
 - Positive semidefinite: \\(\Sigma \succeq 0\\)
 
-_Application_: In Kalman filters, the covariance matrix \\(\Sigma\\) quantifies estimation uncertainty; its eigenvalues reveal principal axes of uncertainty.
+*Application*: In Kalman filters, the covariance matrix \\(\Sigma\\) quantifies estimation uncertainty; its eigenvalues reveal principal axes of uncertainty.
 
 ---
 
@@ -733,7 +733,7 @@ denoted \\(\mathcal{N}(\boldsymbol{\mu}, \Sigma)\\).
 - **Sensor noise**: Often well-modeled as Gaussian
 - **Computational**: Maximum entropy distribution with specified mean and covariance
 
-_Application_: Kalman filter assumes Gaussian distributions; nonlinear systems use Extended Kalman Filter (EKF) with local Gaussian approximations.
+*Application*: Kalman filter assumes Gaussian distributions; nonlinear systems use Extended Kalman Filter (EKF) with local Gaussian approximations.
 
 ### Other Important Distributions
 
@@ -765,7 +765,7 @@ For i.i.d. samples \\(X_i\\) with mean \\(\mu\\) and variance \\(\sigma^2\\),
 (convergence in distribution to standard normal)
 
 **Consequence**: Confidence interval for \\(\mu\\):
-\\[\bar{X}_n \pm z_{\alpha/2} \frac{\sigma}{\sqrt{n}}\\]
+\\[\bar{X}*n \pm z*{\alpha/2} \frac{\sigma}{\sqrt{n}}\\]
 
 where \\(z\_{\alpha/2}\\) is the critical value (e.g., \\(1.96\\) for \\(95\%\\)).
 
@@ -791,7 +791,7 @@ Given observations \\(\mathbf{z} = \{z*1, \ldots, z_n\}\\) and model with unknow
 \\[\hat{\boldsymbol{\theta}}*{\text{MLE}} = \arg\max\_{\boldsymbol{\theta}} P(\mathbf{z} | \boldsymbol{\theta})\\]
 
 or equivalently (log-likelihood):
-\\[\hat{\boldsymbol{\theta}}_{\text{MLE}} = \arg\max_{\boldsymbol{\theta}} \sum\_{i=1}^n \log P(z_i | \boldsymbol{\theta})\\]
+\\[\hat{\boldsymbol{\theta}}*{\text{MLE}} = \arg\max*{\boldsymbol{\theta}} \sum\_{i=1}^n \log P(z_i | \boldsymbol{\theta})\\]
 
 **Properties**:
 
@@ -799,12 +799,12 @@ or equivalently (log-likelihood):
 - No prior information needed
 - Often has closed-form solution (e.g., Gaussian likelihood \\(\Rightarrow\\) least-squares)
 
-_Application_: Sensor calibration (estimate bias, scale).
+*Application*: Sensor calibration (estimate bias, scale).
 
 ### Maximum A Posteriori (MAP) Estimation
 
 Incorporates **prior** belief:
-\\[\hat{\boldsymbol{\theta}}_{\text{MAP}} = \arg\max_{\boldsymbol{\theta}} P(\boldsymbol{\theta} | \mathbf{z}) = \arg\max\_{\boldsymbol{\theta}} P(\mathbf{z} | \boldsymbol{\theta}) P(\boldsymbol{\theta})\\]
+\\[\hat{\boldsymbol{\theta}}*{\text{MAP}} = \arg\max*{\boldsymbol{\theta}} P(\boldsymbol{\theta} | \mathbf{z}) = \arg\max\_{\boldsymbol{\theta}} P(\mathbf{z} | \boldsymbol{\theta}) P(\boldsymbol{\theta})\\]
 
 **Relationship to MLE**: \\(\text{MAP} = \text{MLE}\\) when prior is uniform.
 
@@ -820,7 +820,7 @@ If prior \\(P(\boldsymbol{\theta})\\) and likelihood \\(P(\mathbf{z} | \boldsymb
 - Likelihood: \\(P(z | p) = \text{Binomial}(n, p)\\)
 - Posterior: \\(P(p | z) = \text{Beta}(\alpha + \text{successes}, \beta + \text{failures})\\)
 
-_Application_: Sequential robot learning with minimal re-computation.
+*Application*: Sequential robot learning with minimal re-computation.
 
 ---
 
@@ -854,7 +854,7 @@ or equivalently:
 - \\(I[X; Y] = 0\\): \\(X\\) and \\(Y\\) are independent
 - \\(I[X; Y] > 0\\): learning \\(Y\\) reduces uncertainty about \\(X\\)
 
-_Application_: **Information gain** in active sensing; choose measurements that maximize information about unobserved state.
+*Application*: **Information gain** in active sensing; choose measurements that maximize information about unobserved state.
 
 ### Kullback–Leibler Divergence
 
@@ -867,7 +867,7 @@ _Application_: **Information gain** in active sensing; choose measurements that 
 - Non-negative: \\(D\_{\text{KL}}(P \| Q) \geq 0\\), with equality iff \\(P = Q\\)
 - Not a true distance (fails triangle inequality)
 
-_Application_: Variational inference; approximate intractable posterior \\(P(\boldsymbol{\theta} | \mathbf{z})\\) with tractable \\(Q(\boldsymbol{\theta})\\) by minimizing \\(D\_{\text{KL}}(Q \| P)\\).
+*Application*: Variational inference; approximate intractable posterior \\(P(\boldsymbol{\theta} | \mathbf{z})\\) with tractable \\(Q(\boldsymbol{\theta})\\) by minimizing \\(D\_{\text{KL}}(Q \| P)\\).
 
 ---
 
