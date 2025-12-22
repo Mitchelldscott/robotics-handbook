@@ -6,42 +6,14 @@ This book is a consolidation of foundations and algorithms for data-driven
 autonomous system design. The material is distilled from key reference texts in
 Machine Learning and Robotics.
 
-***
+---
 
 ## Outline
 
-The book is divided into two primary parts: **Foundations** (
-Applied Math and Machine Learning Basics) and **Algorithms** (
-specialized applications in Robotics and AI).
+The content is organized into three sections:
 
-### Part I: Foundations (Applied Mathematics & Machine Learning Basics)
+- [I: Mathematics for Autonomous Systems](./mathematics-for-autonomous-systems/index.md)
 
-This section lays the mathematical groundwork for the rest of the book.
+- [II: Algorithms and Applications](./algorithms-and-applications/index.md)
 
-#### A. Mathematics Core
-
-#### B. System Modeling Core
-
-#### C. Deep Learning Core
-
-### Part II: Algorithms and Specialized Applications
-
-This part focuses on applying the foundational math to complex robotics and AI
-problems, detailing algorithms used for estimation, mapping, control, and deep
-learning architectures.
-
-#### A. Navigation and Localization
-
-This section focuses on algorithms, typically derived from Bayes filters, for
-position estimation, map acquisition and motion planning.
-
-#### B. Advanced Deep Learning
-
-This section covers modern learning paradigms that use hierarchical
-representations, often learned via neural networks with multiple layers,
-to model complex patterns in data.
-
-#### C. Reinforcement Learning
-
-This section details methods for learning how an agent should take actions in
-an environment to maximize a cumulative reward signal.
+- [III: Computer Architecture and Bare-Metal Programming](./computer-architecture/index.md)

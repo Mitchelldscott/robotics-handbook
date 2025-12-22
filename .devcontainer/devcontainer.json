@@ -1,44 +1,31 @@
 {
     "name": "Robotics Handbook Development",
-    // Use the Dockerfile in the 'docker' subdirectory, and set the build context
-    // to the project root (..), which is necessary for the Dockerfile to access 
-    // files like Cargo.lock and the 'src' directory.
-    // Use the Dockerfile in the 'docker' subdirectory, and set the build context
-    // to the project root (..), which is necessary for the Dockerfile to access 
-    // files like Cargo.lock and the 'src' directory.
     "build": {
         "dockerfile": "Dockerfile",
-        "context": ".."
+        "context": "../"
     },
     "remoteUser": "root",
     "workspaceFolder": "/workspaces/robotics-handbook",
-    // REQUIRED: Explicitly define the port to be forwarded.
     "forwardPorts": [
         8000
     ],
-    // CRITICAL FIX: Use nohup to run the cargo command in the background, 
-    // protecting it from hang-up signals when the postCreateCommand shell exits.
     "postAttachCommand": "cargo run",
-    // Extensions that should be installed inside the container for a better experience.
     "customizations": {
         "vscode": {
             "settings": {
-                // Settings specific to the dev container
                 "editor.formatOnSave": true
             },
             "extensions": [
+                "esbenp.prettier-vscode",
+                "google.geminicodeassist",
                 "rust-lang.rust-analyzer",
                 "tamasfe.even-better-toml",
-                "redhat.vscode-yaml",
-                "davidanson.vscode-markdownlint",
-                "shd101wyy.markdown-preview-enhanced"
+                "google.gemini-code-assist",
+                "streetsidesoftware.code-spell-checker",
+                "streetsidesoftware.code-spell-checker-scientific-terms"
             ]
         }
     },
-    "remoteEnv": {
-        "NVM_DIR": "/root/.nvm"
-    },
-    // Set up a volume for the cargo registry to speed up build times.
     "mounts": [
         "source=mdbook-cargo-cache,target=/root/.cargo/registry,type=volume"
     ]

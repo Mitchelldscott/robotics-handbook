@@ -20,7 +20,7 @@ mdbook build
 
 ### Dependencies
 
-* `cargo`
-* `npm`
-* `markdownlint-cli2`
-* `mdbook`, `mdbook-katex`, `mdbook-bib`
+- `cargo`
+- `npm`
+- `markdownlint-cli2`
+- `mdbook`, `mdbook-katex`, `mdbook-bib`

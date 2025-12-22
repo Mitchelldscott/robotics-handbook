@@ -1,26 +1,17 @@
 FROM rust:1.90-slim-bullseye
-ARG NODE_VERSION=20
 
-# install dependencies
-RUN apt update && apt install -y curl git
-RUN apt-get update && apt-get install -y libssl-dev pkg-config build-essential && rm -rf /var/lib/apt/lists/*
+# 1. Install dependencies required for Rust and mdbook
+RUN apt-get update && apt-get install -y \
+    curl \
+    git \
+    vim \
+    build-essential \
+    pkg-config \
+    libssl-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-# install nvm
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+# 2. Install mdbook and plugins
+RUN cargo install mdbook mdbook-mermaid
 
-# set env
-ENV NVM_DIR=/root/.nvm
-ENV PATH=$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
-
-# install node
-RUN bash -c "source $NVM_DIR/nvm.sh && nvm install $NODE_VERSION && nvm use $NODE_VERSION"
-
-# install tools
-RUN bash -c "source $NVM_DIR/nvm.sh && npm install -g markdownlint-cli2"
-RUN cargo install mdbook --version 0.4.48 
-RUN cargo install mdbook-katex mdbook-bib
-
-# Simple entrypoint: load NVM
-WORKDIR /workspace
-ENTRYPOINT ["bash", "-c", "source $NVM_DIR/nvm.sh && exec \"$@\"", "--"]
+WORKDIR /workspaces/robotics-handbook
 CMD ["/bin/bash"]
