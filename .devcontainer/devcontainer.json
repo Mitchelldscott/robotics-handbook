@@ -1,15 +1,19 @@
 {
-    "name": "Robotics Handbook Development",
+    "name": "Robotics Handbook Development Container",
+    "privileged": true,
+    "remoteUser": "mdyson",
     "build": {
         "dockerfile": "Dockerfile",
-        "context": "../"
+        "args": {
+            "USERNAME": "mdyson"
+        }
     },
-    "remoteUser": "root",
     "workspaceFolder": "/workspaces/robotics-handbook",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/robotics-handbook,type=bind",
     "forwardPorts": [
         8000
     ],
-    "postAttachCommand": "cargo run",
+    "postAttachCommand": "mdbook build",
     "customizations": {
         "vscode": {
             "settings": {
@@ -18,15 +22,17 @@
             "extensions": [
                 "esbenp.prettier-vscode",
                 "google.geminicodeassist",
-                "rust-lang.rust-analyzer",
                 "tamasfe.even-better-toml",
                 "google.gemini-code-assist",
+                "davidanson.markdownlint-cli2",
                 "streetsidesoftware.code-spell-checker",
                 "streetsidesoftware.code-spell-checker-scientific-terms"
             ]
         }
     },
-    "mounts": [
-        "source=mdbook-cargo-cache,target=/root/.cargo/registry,type=volume"
+    "runArgs": [
+        "--net=host",
+        "--pid=host",
+        "--ipc=host"
     ]
 }

@@ -21,8 +21,8 @@
     -   [Deep Learning](algorithms-and-applications/deep-learning/index.md)
     -   [Reinforcement Learning](algorithms-and-applications/rl/index.md)
 
--   [Embedded Systems and Programming](embedded-systems/index.md)
+-   [Embedded Systems and Programming](computer_architecture/index.md)
 
-    -   [Embedded Rust and MCUs](embedded-systems/embedded_rust_mcus.md)
+    -   [Embedded Rust and MCUs](computer_architecture/embedded_rust_mcus.md)
 
 -   [Resources](resources.md)
