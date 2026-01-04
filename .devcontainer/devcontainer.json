@@ -1,38 +1,29 @@
 {
-    "name": "Robotics Handbook Development Container",
-    "privileged": true,
-    "remoteUser": "mdyson",
-    "build": {
-        "dockerfile": "Dockerfile",
-        "args": {
-            "USERNAME": "mdyson"
-        }
-    },
-    "workspaceFolder": "/workspaces/robotics-handbook",
-    "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/robotics-handbook,type=bind",
-    "forwardPorts": [
-        8000
-    ],
-    "postAttachCommand": "mdbook build",
-    "customizations": {
-        "vscode": {
-            "settings": {
-                "editor.formatOnSave": true
-            },
-            "extensions": [
-                "esbenp.prettier-vscode",
-                "google.geminicodeassist",
-                "tamasfe.even-better-toml",
-                "google.gemini-code-assist",
-                "davidanson.markdownlint-cli2",
-                "streetsidesoftware.code-spell-checker",
-                "streetsidesoftware.code-spell-checker-scientific-terms"
-            ]
-        }
-    },
-    "runArgs": [
-        "--net=host",
-        "--pid=host",
-        "--ipc=host"
-    ]
+  "name": "Robotics Handbook Development Container",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "remoteUser": "dysedev",
+  "workspaceFolder": "/workspaces/robotics-handbook",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/robotics-handbook,type=bind",
+  "forwardPorts": [8000],
+  "postCreateCommand": "mdbook build",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.isort",
+        "ms-python.flake8",
+        "ms-python.pylance",
+        "esbenp.prettier-vscode",
+        "google.geminicodeassist",
+        "tamasfe.even-better-toml",
+        "ms-python.black-formatter",
+        "google.gemini-code-assist",
+        "davidanson.markdownlint-cli2",
+        "streetsidesoftware.code-spell-checker",
+        "streetsidesoftware.code-spell-checker-scientific-terms"
+      ]
+    }
+  },
+  "runArgs": ["--net=host", "--pid=host", "--ipc=host"]
 }

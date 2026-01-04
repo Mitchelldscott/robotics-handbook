@@ -1,0 +1,30 @@
+{
+  "config": {
+    "default": true, // Enable all rules by default
+    "MD001": true, // Header levels should only increment by one level at a time (Section 5.1.1)
+    "MD003": { "style": "atx" }, // Use ATX style headers (Section 5.1.1)
+    "MD004": { "style": "dash" }, // Use dashes for unordered lists (Section 5.1.5)
+    "MD005": true, // Consistent indentation for list items
+    "MD007": { "indent": 2 }, // Indentation for unordered lists
+    "MD009": true, // No trailing spaces
+    "MD010": true, // No hard tabs
+    "MD012": true, // No multiple consecutive blank lines
+    "MD013": false, // Disable line length check to allow Prettier to handle wrapping and long URLs/LaTeX
+    "MD014": true, // Dollar signs used before commands without showing output
+    "MD018": true, // Space after hash on atx style header
+    "MD019": true, // No multiple spaces after hash on atx style header
+    "MD024": { "siblings_only": true }, // Allow duplicate headers if in different sections
+    "MD025": true, // Single top level header
+    "MD026": true, // No trailing punctuation in header
+    "MD029": { "style": "ordered" }, // Ordered list item prefix
+    "MD030": true, // Spaces after list markers
+    "MD031": true, // Fenced code blocks should be surrounded by blank lines
+    "MD033": false, // Allow inline HTML (flexible for web docs)
+    "MD034": true, // No bare URLs
+    "MD036": false, // Allow emphasis used instead of a header (flexible)
+    "MD040": true, // Fenced code blocks must have a language specified (Section 5.1.3)
+    "MD041": true // First line in file should be a top level header
+  },
+  "globs": ["**/*.md"],
+  "ignores": ["node_modules", "target", "LICENSE"]
+}

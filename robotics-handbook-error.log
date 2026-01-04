@@ -1,0 +1,474 @@
+[2025-12-31T22:22:55.832Z] Dev Containers 0.434.0 in VS Code 1.107.1 (994fd12f8d3a5aa16f17d42c041e5809167e845a).
+[2025-12-31T22:22:55.832Z] Start: Resolving Remote
+[2025-12-31T22:22:56.223Z] Setting up container for folder or workspace: /Users/mdscott/robotics-handbook
+[2025-12-31T22:22:56.228Z] Context: desktop-linux
+[2025-12-31T22:22:56.411Z] Start: Check Docker is running
+[2025-12-31T22:22:56.412Z] Start: Run: docker version
+[2025-12-31T22:22:56.601Z] Client:
+ Version:           27.4.0
+ API version:       1.47
+ Go version:        go1.22.10
+ Git commit:        bde2b89
+ Built:             Sat Dec  7 10:35:43 2024
+ OS/Arch:           darwin/amd64
+ Context:           desktop-linux
+
+Server: Docker Desktop 4.37.2 (179585)
+ Engine:
+  Version:          27.4.0
+  API version:      1.47 (minimum version 1.24)
+  Go version:       go1.22.10
+  Git commit:       92a8393
+  Built:            Sat Dec  7 10:38:57 2024
+  OS/Arch:          linux/amd64
+  Experimental:     false
+ containerd:
+[2025-12-31T22:22:56.604Z]   Version:          1.7.21
+  GitCommit:        472731909fa34bd7bc9c087e4c27943f9835f111
+ runc:
+  Version:          1.1.13
+  GitCommit:        v1.1.13-0-g58aa920
+ docker-init:
+  Version:          0.19.0
+  GitCommit:        de40ad0
+[2025-12-31T22:22:56.613Z] Stop (201 ms): Run: docker version
+[2025-12-31T22:22:56.613Z] Stop (202 ms): Check Docker is running
+[2025-12-31T22:22:56.614Z] Start: Run: docker volume ls -q
+[2025-12-31T22:22:56.772Z] Stop (158 ms): Run: docker volume ls -q
+[2025-12-31T22:22:56.773Z] Start: Run: docker ps -q -a --filter label=vsch.local.folder=/Users/mdscott/robotics-handbook --filter label=vsch.quality=stable
+[2025-12-31T22:22:56.945Z] Stop (172 ms): Run: docker ps -q -a --filter label=vsch.local.folder=/Users/mdscott/robotics-handbook --filter label=vsch.quality=stable
+[2025-12-31T22:22:56.946Z] Start: Run: docker ps -q -a --filter label=devcontainer.local_folder=/Users/mdscott/robotics-handbook --filter label=devcontainer.config_file=/Users/mdscott/robotics-handbook/.devcontainer/devcontainer.json
+[2025-12-31T22:22:57.597Z] Stop (651 ms): Run: docker ps -q -a --filter label=devcontainer.local_folder=/Users/mdscott/robotics-handbook --filter label=devcontainer.config_file=/Users/mdscott/robotics-handbook/.devcontainer/devcontainer.json
+[2025-12-31T22:22:57.598Z] Start: Run: docker inspect --type container 586228f0e65f
+[2025-12-31T22:22:57.747Z] Stop (149 ms): Run: docker inspect --type container 586228f0e65f
+[2025-12-31T22:22:57.749Z] Running Dev Containers CLI:   up --user-data-folder /Users/mdscott/Library/Application Support/Code/User/globalStorage/ms-vscode-remote.remote-containers/data --container-session-data-folder /tmp/devcontainers-a223cfa7-d637-4a9e-a820-a41c356e114a1767219771659 --workspace-folder /Users/mdscott/robotics-handbook --workspace-mount-consistency cached --gpu-availability detect --id-label devcontainer.local_folder=/Users/mdscott/robotics-handbook --id-label devcontainer.config_file=/Users/mdscott/robotics-handbook/.devcontainer/devcontainer.json --log-level debug --log-format json --config /Users/mdscott/robotics-handbook/.devcontainer/devcontainer.json --default-user-env-probe loginInteractiveShell --remove-existing-container --mount type=volume,source=vscode,target=/vscode,external=true --skip-post-create --update-remote-user-uid-default on --mount-workspace-git-root --include-configuration --include-merged-configuration
+[2025-12-31T22:22:57.825Z] ProxyResolver#loadSystemCertificates count (74ms)
+[2025-12-31T22:22:57.826Z] ProxyResolver#loadSystemCertificates count filtered
+[2025-12-31T22:22:57.830Z] Start: Run: /Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin) /Users/mdscott/.vscode/extensions/ms-vscode-remote.remote-containers-0.434.0/dist/spec-node/devContainersSpecCLI.js up --user-data-folder /Users/mdscott/Library/Application Support/Code/User/globalStorage/ms-vscode-remote.remote-containers/data --container-session-data-folder /tmp/devcontainers-a223cfa7-d637-4a9e-a820-a41c356e114a1767219771659 --workspace-folder /Users/mdscott/robotics-handbook --workspace-mount-consistency cached --gpu-availability detect --id-label devcontainer.local_folder=/Users/mdscott/robotics-handbook --id-label devcontainer.config_file=/Users/mdscott/robotics-handbook/.devcontainer/devcontainer.json --log-level debug --log-format json --config /Users/mdscott/robotics-handbook/.devcontainer/devcontainer.json --default-user-env-probe loginInteractiveShell --remove-existing-container --mount type=volume,source=vscode,target=/vscode,external=true --skip-post-create --update-remote-user-uid-default on --mount-workspace-git-root --include-configuration --include-merged-configuration
+[2025-12-31T22:22:58.678Z] @devcontainers/cli 0.80.1. Node.js v22.21.1. darwin 21.6.0 x64.
+[2025-12-31T22:22:58.678Z] Start: Run: docker buildx version
+[2025-12-31T22:22:59.944Z] Stop (1266 ms): Run: docker buildx version
+[2025-12-31T22:22:59.945Z] github.com/docker/buildx v0.19.2-desktop.1 412cbb151f1be3f8a94dc4eb03cd1b67f261dec5
+[2025-12-31T22:22:59.945Z] 
+[2025-12-31T22:22:59.945Z] Start: Run: docker -v
+[2025-12-31T22:23:00.061Z] Stop (116 ms): Run: docker -v
+[2025-12-31T22:23:00.062Z] Start: Resolving Remote
+[2025-12-31T22:23:00.080Z] Loading 7 extra certificates from /var/folders/m9/zqnmjfq137xcp2_rlzmmql9m0000gn/T/vsch/certificates-e912cef5c2b3325b81b00e3598e46f499c48c3b0b5dbcf899e3590bfd5a999a9.pem.
+[2025-12-31T22:23:00.213Z] Start: Run: docker ps -q -a --filter label=devcontainer.local_folder=/Users/mdscott/robotics-handbook --filter label=devcontainer.config_file=/Users/mdscott/robotics-handbook/.devcontainer/devcontainer.json
+[2025-12-31T22:23:00.325Z] Stop (112 ms): Run: docker ps -q -a --filter label=devcontainer.local_folder=/Users/mdscott/robotics-handbook --filter label=devcontainer.config_file=/Users/mdscott/robotics-handbook/.devcontainer/devcontainer.json
+[2025-12-31T22:23:00.326Z] Start: Run: docker inspect --type container 586228f0e65f
+[2025-12-31T22:23:00.397Z] Stop (71 ms): Run: docker inspect --type container 586228f0e65f
+[2025-12-31T22:23:00.397Z] Start: Removing Existing Container
+[2025-12-31T22:23:00.398Z] Start: Run: docker rm -f 586228f0e65f9cc617f0d66d3fa73bc1ec6ff5ff53204fae49f6cdfd185d806f
+[2025-12-31T22:23:00.943Z] Stop (545 ms): Run: docker rm -f 586228f0e65f9cc617f0d66d3fa73bc1ec6ff5ff53204fae49f6cdfd185d806f
+[2025-12-31T22:23:00.943Z] Stop (546 ms): Removing Existing Container
+[2025-12-31T22:23:00.948Z] Start: Run: docker inspect --type image debian:bookworm-slim
+[2025-12-31T22:23:01.080Z] Stop (132 ms): Run: docker inspect --type image debian:bookworm-slim
+[2025-12-31T22:23:01.088Z] Start: Run: docker buildx build --load --build-arg BUILDKIT_INLINE_CACHE=1 -f /var/folders/m9/zqnmjfq137xcp2_rlzmmql9m0000gn/T/devcontainercli/container-features/0.80.1-1767219781081/Dockerfile-with-features -t vsc-robotics-handbook-8b77a7ba8c5b92016b4706c2dfd82c4262463a67a64204a08f8eb40eb23b9544 --target dev_containers_target_stage --build-arg _DEV_CONTAINERS_BASE_IMAGE=dev_container_auto_added_stage_label /Users/mdscott/robotics-handbook/.devcontainer
+[2025-12-31T22:23:01.552Z] 
+[2025-12-31T22:23:01.554Z] [+] Building 0.0s (0/0)  docker:desktop-linux
+[2025-12-31T22:23:01.702Z] [+] Building 0.0s (0/0)  docker:desktop-linux
+[2025-12-31T22:23:01.850Z] [+] Building 0.0s (0/0)  docker:desktop-linux
+[2025-12-31T22:23:02.000Z] [+] Building 0.0s (0/0)  docker:desktop-linux
+[2025-12-31T22:23:02.000Z] 
+[2025-12-31T22:23:02.136Z] [+] Building 0.0s (0/1)                                    docker:desktop-linux
+[2025-12-31T22:23:02.260Z] [+] Building 0.1s (1/1)                                    docker:desktop-linux
+ => [internal] load build definition from Dockerfile-with-features         0.1s
+ => => transferring dockerfile: 2.38kB                                     0.1s
+[2025-12-31T22:23:02.373Z] [+] Building 0.2s (2/2)                                    docker:desktop-linux
+ => [internal] load build definition from Dockerfile-with-features         0.1s
+ => => transferring dockerfile: 2.38kB                                     0.1s
+ => [internal] load metadata for docker.io/library/debian:bookworm-slim    0.1s
+[2025-12-31T22:23:02.622Z] [+] Building 0.5s (3/13)                                   docker:desktop-linux
+ => [internal] load build definition from Dockerfile-with-features         0.1s
+ => => transferring dockerfile: 2.38kB                                     0.1s
+ => [internal] load metadata for docker.io/library/debian:bookworm-slim    0.1s
+ => [internal] load .dockerignore                                          0.0s
+ => => transferring context: 2B                                            0.0s
+ => [dev_container_auto_added_stage_label  1/10] FROM docker.io/library/d  0.2s
+ => => resolve docker.io/library/debian:bookworm-slim@sha256:d5d3f9c23164  0.2s
+[2025-12-31T22:23:02.772Z] [+] Building 0.6s (3/13)                                   docker:desktop-linux
+ => [internal] load build definition from Dockerfile-with-features         0.1s
+ => => transferring dockerfile: 2.38kB                                     0.1s
+ => [internal] load metadata for docker.io/library/debian:bookworm-slim    0.1s
+ => [internal] load .dockerignore                                          0.0s
+ => => transferring context: 2B                                            0.0s
+ => [dev_container_auto_added_stage_label  1/10] FROM docker.io/library/d  0.3s
+ => => resolve docker.io/library/debian:bookworm-slim@sha256:d5d3f9c23164  0.3s
+[2025-12-31T22:23:02.922Z] [+] Building 0.8s (3/13)                                   docker:desktop-linux
+ => [internal] load build definition from Dockerfile-with-features         0.1s
+ => => transferring dockerfile: 2.38kB                                     0.1s
+ => [internal] load metadata for docker.io/library/debian:bookworm-slim    0.1s
+[2025-12-31T22:23:02.922Z]  => [internal] load .dockerignore                                          0.0s
+ => => transferring context: 2B                                            0.0s
+ => [dev_container_auto_added_stage_label  1/10] FROM docker.io/library/d  0.5s
+ => => resolve docker.io/library/debian:bookworm-slim@sha256:d5d3f9c23164  0.5s
+[2025-12-31T22:23:03.072Z] 
+[2025-12-31T22:23:03.073Z] [+] Building 0.9s (3/13)                                   docker:desktop-linux
+ => [internal] load build definition from Dockerfile-with-features         0.1s
+ => => transferring dockerfile: 2.38kB                                     0.1s
+ => [internal] load metadata for docker.io/library/debian:bookworm-slim    0.1s
+ => [internal] load .dockerignore                                          0.0s
+ => => transferring context: 2B                                            0.0s
+ => [dev_container_auto_added_stage_label  1/10] FROM docker.io/library/d  0.6s
+ => => resolve docker.io/library/debian:bookworm-slim@sha256:d5d3f9c23164  0.6s
+[2025-12-31T22:23:03.196Z] [+] Building 1.1s (3/14)                                   docker:desktop-linux
+ => [internal] load build definition from Dockerfile-with-features         0.1s
+ => => transferring dockerfile: 2.38kB                                     0.1s
+ => [internal] load metadata for docker.io/library/debian:bookworm-slim    0.1s
+ => [internal] load .dockerignore                                          0.0s
+ => => transferring context: 2B                                            0.0s
+ => [dev_container_auto_added_stage_label  1/10] FROM docker.io/library/d  0.7s
+ => => resolve docker.io/library/debian:bookworm-slim@sha256:d5d3f9c23164  0.7s
+[2025-12-31T22:23:03.197Z]  => [auth] library/debian:pull token for registry-1.docker.io              0.0s
+[2025-12-31T22:23:03.348Z] [+] Building 1.2s (4/14)                                   docker:desktop-linux
+[2025-12-31T22:23:03.348Z]  => [internal] load build definition from Dockerfile-with-features         0.1s
+ => => transferring dockerfile: 2.38kB                                     0.1s
+ => [internal] load metadata for docker.io/library/debian:bookworm-slim    0.1s
+ => [internal] load .dockerignore                                          0.0s
+ => => transferring context: 2B                                            0.0s
+ => [dev_container_auto_added_stage_label  1/10] FROM docker.io/library/d  0.9s
+ => => resolve docker.io/library/debian:bookworm-slim@sha256:d5d3f9c23164  0.9s
+ => [auth] library/debian:pull token for registry-1.docker.io              0.0s
+[2025-12-31T22:23:03.498Z] [+] Building 1.4s (4/14)                                   docker:desktop-linux
+ => [internal] load build definition from Dockerfile-with-features         0.1s
+ => => transferring dockerfile: 2.38kB                                     0.1s
+[2025-12-31T22:23:03.498Z]  => [internal] load metadata for docker.io/library/debian:bookworm-slim    0.1s
+ => [internal] load .dockerignore                                          0.0s
+ => => transferring context: 2B                                            0.0s
+ => [dev_container_auto_added_stage_label  1/10] FROM docker.io/library/d  1.0s
+ => => resolve docker.io/library/debian:bookworm-slim@sha256:d5d3f9c23164  1.0s
+ => [auth] library/debian:pull token for registry-1.docker.io              0.0s
+[2025-12-31T22:23:03.648Z] [+] Building 1.5s (4/14)                                   docker:desktop-linux
+[2025-12-31T22:23:03.648Z]  => [internal] load build definition from Dockerfile-with-features         0.1s
+ => => transferring dockerfile: 2.38kB                                     0.1s
+ => [internal] load metadata for docker.io/library/debian:bookworm-slim    0.1s
+ => [internal] load .dockerignore                                          0.0s
+ => => transferring context: 2B                                            0.0s
+ => [dev_container_auto_added_stage_label  1/10] FROM docker.io/library/d  1.2s
+ => => resolve docker.io/library/debian:bookworm-slim@sha256:d5d3f9c23164  1.2s
+ => [auth] library/debian:pull token for registry-1.docker.io              0.0s
+[2025-12-31T22:23:03.748Z] [+] Building 1.6s (5/14)                                   docker:desktop-linux
+ => [internal] load build definition from Dockerfile-with-features         0.1s
+ => => transferring dockerfile: 2.38kB                                     0.1s
+ => [internal] load metadata for docker.io/library/debian:bookworm-slim    0.1s
+ => [internal] load .dockerignore                                          0.0s
+ => => transferring context: 2B                                            0.0s
+ => [dev_container_auto_added_stage_label  1/10] FROM docker.io/library/d  1.3s
+ => => resolve docker.io/library/debian:bookworm-slim@sha256:d5d3f9c23164  1.3s
+ => [auth] library/debian:pull token for registry-1.docker.io              0.0s
+[2025-12-31T22:23:03.849Z] [+] Building 1.7s (14/15)                                  docker:desktop-linux
+ => [internal] load build definition from Dockerfile-with-features         0.1s
+ => => transferring dockerfile: 2.38kB                                     0.1s
+ => [internal] load metadata for docker.io/library/debian:bookworm-slim    0.1s
+ => [internal] load .dockerignore                                          0.0s
+ => => transferring context: 2B                                            0.0s
+ => [dev_container_auto_added_stage_label  1/10] FROM docker.io/library/d  1.3s
+ => => resolve docker.io/library/debian:bookworm-slim@sha256:d5d3f9c23164  1.3s
+ => [auth] library/debian:pull token for registry-1.docker.io              0.0s
+ => CACHED [dev_container_auto_added_stage_label  2/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_added_stage_label  3/10] RUN apt-get updat  0.0s
+
+[2025-12-31T22:23:03.849Z] [0m => CACHED [dev_container_auto_added_stage_label  4/10] RUN curl --proto   0.0s
+ => CACHED [dev_container_auto_added_stage_label  5/10] RUN rustup update  0.0s
+ => CACHED [dev_container_auto_added_stage_label  6/10] RUN cargo install  0.0s
+ => CACHED [dev_container_auto_added_stage_label  7/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_added_stage_label  8/10] RUN wget https://  0.0s
+ => CACHED [dev_container_auto_added_stage_label  9/10] RUN apt-get insta  0.0s
+ => CACHED [dev_container_auto_added_stage_label 10/10] WORKDIR /workspac  0.0s
+[2025-12-31T22:23:03.849Z]  => exporting to image                                                     0.0s
+ => => exporting layers                                                    0.0s
+ => => preparing layers for inline cache                                   0.0s
+[2025-12-31T22:23:04.000Z] [+] Building 1.9s (14/15)                                  docker:desktop-linux
+ => [internal] load build definition from Dockerfile-with-features         0.1s
+ => => transferring dockerfile: 2.38kB                                     0.1s
+ => [internal] load metadata for docker.io/library/debian:bookworm-slim    0.1s
+ => [internal] load .dockerignore                                          0.0s
+ => => transferring context: 2B                                            0.0s
+ => [dev_container_auto_added_stage_label  1/10] FROM docker.io/library/d  1.3s
+ => => resolve docker.io/library/debian:bookworm-slim@sha256:d5d3f9c23164  1.3s
+ => [auth] library/debian:pull token for registry-1.docker.io              0.0s
+ => CACHED [dev_container_auto_added_stage_label  2/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_add
+[2025-12-31T22:23:04.000Z] ed_stage_label  3/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_added_stage_label  4/10] RUN curl --proto   0.0s
+ => CACHED [dev_container_auto_added_stage_label  5/10] RUN rustup update  0.0s
+ => CACHED [dev_container_auto_added_stage_label  6/10] RUN cargo install  0.0s
+ => CACHED [dev_container_auto_added_stage_label  7/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_added_stage_label  8/10] RUN wget https://  0.0s
+ => CACHED [dev_container_auto_added_stage_label  9/10] RUN apt-get insta  0.0s
+[2025-12-31T22:23:04.001Z]  => CACHED [dev_container_auto_added_stage_label 10/10] WORKDIR /workspac  0.0s
+ => exporting to image                                                     0.2s
+ => => exporting layers                                                    0.0s
+ => => preparing layers for inline cache                                   0.1s
+[2025-12-31T22:23:04.150Z] [+] Building 2.0s (14/15)                                  docker:desktop-linux
+ => [internal] load build definition from Dockerfile-with-features         0.1s
+ => => transferring dockerfile: 2.38kB                                     0.1s
+ => [internal] load metadata for docker.io/library/debian:bookworm-slim    0.1s
+ => [internal] load .dockerignore                                          0.0s
+ => => transferring context: 2B                                            0.0s
+ => [dev_container_auto_added_stage_label  1/10] FROM docker.io/library/d  1.3s
+ => => resolve docker.io/library/debian:bookworm-slim@sha256:d5d3f9c23164  1.3s
+ => [auth] library/debian:pull token for registry-1.docker.io              0.0s
+ => CACHED [dev_container_auto_added_stage_label  2/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_add
+[2025-12-31T22:23:04.151Z] ed_stage_label  3/10] RUN apt-get updat  0.0s
+[2025-12-31T22:23:04.152Z]  => CACHED [dev_container_auto_added_stage_label  4/10] RUN curl --proto   0.0s
+ => CACHED [dev_container_auto_added_stage_label  5/10] RUN rustup update  0.0s
+ => CACHED [dev_container_auto_added_stage_label  6/10] RUN cargo install  0.0s
+ => CACHED [dev_container_auto_added_stage_label  7/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_added_stage_label  8/10] RUN wget https://  0.0s
+ => CACHED [dev_container_auto_added_stage_label  9/10] RUN apt-get insta  0.0s
+ => CACHED [dev_container_auto_added_stage_label 10/10] WORKDIR /workspac  0.0s
+ => exporting to image                                                     0.3s
+ => => exporting layers                                                    0.0s
+ => => preparing layers for inline cache                                   0.3s
+[2025-12-31T22:23:04.300Z] [+] Building 2.2s (14/15)                                  docker:desktop-linux
+ => [internal] load build definition from Dockerfile-with-features         0.1s
+ => => transferring dockerfile: 2.38kB                                     0.1s
+ => [internal] load metadata for docker.io/library/debian:bookworm-slim    0.1s
+ => [internal] load .dockerignore                                          0.0s
+ => => transferring context: 2B                                            0.0s
+ => [dev_container_auto_added_stage_label  1/10] FROM docker.io/library/d  1.3s
+ => => resolve docker.io/library/debian:bookworm-slim@sha256:d5d3f9c23164  1.3s
+ => [auth] library/debian:pull token for registry-1.docker.io              0.0s
+ => CACHED [dev_container_auto_added_stage_label  2/10] RUN apt-get updat  0.0s
+[2025-12-31T22:23:04.300Z]  => CACHED [dev_container_auto_added_stage_label  3/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_added_stage_label  4/10] RUN curl --proto   0.0s
+ => CACHED [dev_container_auto_added_stage_label  5/10] RUN rustup update  0.0s
+ => CACHED [dev_container_auto_added_stage_label  6/10] RUN cargo install  0.0s
+ => CACHED [dev_container_auto_added_stage_label  7/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_added_stage_label  8/10] RUN wget https://  0.0s
+ => CACHED [dev_container_auto_added_stage_label  9/10] RUN apt-get insta  0.0s
+ => CACHED [dev_container_auto_added_stage_label 10/10] WORKDIR /workspac  0.0s
+ => exporting to image                                                     0.5s
+ => => exporting layers                                                    0.0s
+ => => preparing layers for inline cache                                   0.4s
+[2025-12-31T22:23:04.363Z] [+] Building 2.2s (14/15)                                  docker:desktop-linux
+[2025-12-31T22:23:04.363Z]  => [internal] load build definition from Dockerfile-with-features         0.1s
+ => => transferring dockerfile: 2.38kB                                     0.1s
+ => [internal] load metadata for docker.io/library/debian:bookworm-slim    0.1s
+ => [internal] load .dockerignore                                          0.0s
+ => => transferring context: 2B                                            0.0s
+ => [dev_container_auto_added_stage_label  1/10] FROM docker.io/library/d  1.3s
+ => => resolve docker.io/library/debian:bookworm-slim@sha256:d5d3f9c23164  1.3s
+ => [auth] library/debian:pull token for registry-1.docker.io              0.0s
+ => CACHED [dev_container_auto_added_stage_label  2/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_added_stage_label  3/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_added_stage_label  4/10] RUN curl --proto   0.0s
+ => CACHED [dev_container_aut
+[2025-12-31T22:23:04.364Z] o_added_stage_label  5/10] RUN rustup update  0.0s
+ => CACHED [dev_container_auto_added_stage_label  6/10] RUN cargo install  0.0s
+ => CACHED [dev_container_auto_added_stage_label  7/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_added_stage_label  8/10] RUN wget https://  0.0s
+ => CACHED [dev_container_auto_added_stage_label  9/10] RUN apt-get insta  0.0s
+ => CACHED [dev_container_auto_added_stage_label 10/10] WORKDIR /workspac  0.0s
+ => exporting to image                                                     0.5s
+ => => exporting layers                                                    0.0s
+ => => preparing layers for inline cache                                   0.5s
+[2025-12-31T22:23:04.502Z] [+] Building 2.4s (14/15)                                  docker:desktop-linux
+ => [internal] load build definition from Dockerfile-with-features         0.1s
+ => => transferring dockerfile: 2.38kB                                     0.1s
+ => [internal] load metadata for docker.io/library/debian:bookworm-slim    0.1s
+ => [internal] load .dockerignore                                          0.0s
+ => => transferring context: 2B                                            0.0s
+ => [dev_container_auto_added_stage_label  1/10] FROM docker.io/library/d  1.3s
+ => => resolve docker.io/library/debian:bookworm-slim@sha256:d5d3f9c23164  1.3s
+ => [auth] library/debian:pull token for registry-1.docker.io              0.0s
+ => CACHED [dev_container_auto_added_stage_label  2/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_add
+[2025-12-31T22:23:04.504Z] ed_stage_label  3/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_added_stage_label  4/10] RUN curl --proto   0.0s
+ => CACHED [dev_container_auto_added_stage_label  5/10] RUN rustup update  0.0s
+ => CACHED [dev_container_auto_added_stage_label  6/10] RUN cargo install  0.0s
+ => CACHED [dev_container_auto_added_stage_label  7/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_added_stage_label  8/10] RUN wget https://  0.0s
+ => CACHED [dev_container_auto_added_stage_label  9/10] RUN apt-get insta  0.0s
+ => CACHED [dev_container_auto_added_stage_label 10/10] WORKDIR /workspac  0.0s
+ => exporting to image                                                     0.7s
+ => => exporting layers                                                    0.0s
+ => => preparing layers for inline cache                                   0.5s
+ => => exporting manifest sha256:224caaa8b3b92094c9eed1cabd91feda34785fc7  0.
+[2025-12-31T22:23:04.505Z] 1s
+ => => exporting config sha256:ae63ffc71f7bf4498b11cffabf31849e5a5706a66e  0.0s
+[2025-12-31T22:23:04.624Z] [+] Building 2.5s (14/15)                                  docker:desktop-linux
+ => [internal] load metadata for docker.io/library/debian:bookworm-slim    0.1s
+ => [internal] load .dockerignore                                          0.0s
+ => => transferring context: 2B                                            0.0s
+ => [dev_container_auto_added_stage_label  1/10] FROM docker.io/library/d  1.3s
+ => => resolve docker.io/library/debian:bookworm-slim@sha256:d5d3f9c23164  1.3s
+ => [auth] library/debian:pull token for registry-1.docker.io              0.0s
+ => CACHED [dev_container_auto_added_stage_label  2/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_added_stage_label  3/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_added_stage_label  4/10] RUN curl --proto   0.0s
+ => CACHED [dev_container_
+[2025-12-31T22:23:04.625Z] auto_added_stage_label  5/10] RUN rustup update  0.0s
+ => CACHED [dev_container_auto_added_stage_label  6/10] RUN cargo install  0.0s
+ => CACHED [dev_container_auto_added_stage_label  7/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_added_stage_label  8/10] RUN wget https://  0.0s
+ => CACHED [dev_container_auto_added_stage_label  9/10] RUN apt-get insta  0.0s
+ => CACHED [dev_container_auto_added_stage_label 10/10] WORKDIR /workspac  0.0s
+ => exporting to image                                                     0.8s
+ => => exporting layers                                                    0.0s
+ => => preparing layers for inline cache                                   0.5s
+ => => exporting manifest sha256:224caaa8b3b92094c9eed1cabd91feda34785fc7  0.1s
+ => => exporting config sha256:ae63ffc71f7bf4498b11cffabf31849e5a5706a66e  0.0s
+ => => exporting attestation manifest sha256:ff3675c1f845a04630c7a563
+[2025-12-31T22:23:04.625Z] 14db  0.1s
+ => => exporting manifest list sha256:0c956a639b82896b8fe1a8c5a7ef129407f  0.0s
+[2025-12-31T22:23:04.764Z] [+] Building 2.6s (15/15)                                  docker:desktop-linux
+ => => transferring context: 2B                                            0.0s
+ => [dev_container_auto_added_stage_label  1/10] FROM docker.io/library/d  1.3s
+ => => resolve docker.io/library/debian:bookworm-slim@sha256:d5d3f9c23164  1.3s
+ => [auth] library/debian:pull token for registry-1.docker.io              0.0s
+ => CACHED [dev_container_auto_added_stage_label  2/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_added_stage_label  3/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_added_stage_label  4/10] RUN curl --proto   0.0s
+ => CACHED [dev_container_auto_added_stage_label  5/10] RUN rustup update  0.0s
+ => CACHED [dev_container_auto_added_stage_label  6/10] RUN cargo install  0.0s
+ => CACHED [dev_container_
+[2025-12-31T22:23:04.764Z] auto_added_stage_label  7/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_added_stage_label  8/10] RUN wget https://  0.0s
+ => CACHED [dev_container_auto_added_stage_label  9/10] RUN apt-get insta  0.0s
+ => CACHED [dev_container_auto_added_stage_label 10/10] WORKDIR /workspac  0.0s
+ => exporting to image                                                     0.9s
+ => => exporting layers                                                    0.0s
+ => => preparing layers for inline cache                                   0.5s
+ => => exporting manifest sha256:224caaa8b3b92094c9eed1cabd91feda34785fc7  0.1s
+ => => exporting config sha256:ae63ffc71f7bf4498b11cffabf31849e5a5706a66e  0.0s
+ => => exporting attestation manifest sha256:ff3675c1f845a04630c7a56314db  0.1s
+ => => exporting manifest list sha256:0c956a639b82896b8fe1a8c5a7ef129407f  0.0s
+ => => naming to docker.io/library/vsc-robotics-handbook-8b7
+[2025-12-31T22:23:04.765Z] 7a7ba8c5b9201  0.0s
+ => => unpacking to docker.io/library/vsc-robotics-handbook-8b77a7ba8c5b9  0.0s
+[2025-12-31T22:23:04.765Z] 
+[2025-12-31T22:23:04.917Z] [+] Building 2.8s (15/15)                                  docker:desktop-linux
+ => => transferring context: 2B                                            0.0s
+ => [dev_container_auto_added_stage_label  1/10] FROM docker.io/library/d  1.3s
+ => => resolve docker.io/library/debian:bookworm-slim@sha256:d5d3f9c23164  1.3s
+ => [auth] library/debian:pull token for registry-1.docker.io              0.0s
+ => CACHED [dev_container_auto_added_stage_label  2/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_added_stage_label  3/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_added_stage_label  4/10] RUN curl --proto   0.0s
+ => CACHED [dev_container_auto_added_stage_label  5/10] RUN rustup update  0.0s
+ => CACHED [dev_container_auto_added_stage_label  6/10] RUN cargo install  0.0s
+ => CACHED [dev_container_
+[2025-12-31T22:23:04.918Z] auto_added_stage_label  7/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_added_stage_label  8/10] RUN wget https://  0.0s
+ => CACHED [dev_container_auto_added_stage_label  9/10] RUN apt-get insta  0.0s
+ => CACHED [dev_container_auto_added_stage_label 10/10] WORKDIR /workspac  0.0s
+ => exporting to image                                                     0.9s
+ => => exporting layers                                                    0.0s
+ => => preparing layers for inline cache                                   0.5s
+[2025-12-31T22:23:04.921Z]  => => exporting manifest sha256:224caaa8b3b92094c9eed1cabd91feda34785fc7  0.1s
+ => => exporting config sha256:ae63ffc71f7bf4498b11cffabf31849e5a5706a66e  0.0s
+ => => exporting attestation manifest sha256:ff3675c1f845a04630c7a56314db  0.1s
+ => => exporting manifest list sha256:0c956a639b82896b8fe1a8c5a7ef129407f  0.0s
+ => => naming to docker.io/library/vsc-robotics-handbook-8b77a7ba8c5b9201  0.0s
+[2025-12-31T22:23:04.922Z]  => => unpacking to docker.io/library/vsc-robotics-handbook-8b77a7ba8c5b9  0.0s
+[2025-12-31T22:23:05.066Z] [+] Building 2.9s (15/15)                                  docker:desktop-linux
+ => => transferring context: 2B                                            0.0s
+ => [dev_container_auto_added_stage_label  1/10] FROM docker.io/library/d  1.3s
+ => => resolve docker.io/library/debian:bookworm-slim@sha256:d5d3f9c23164  1.3s
+ => [auth] library/debian:pull token for registry-1.docker.io              0.0s
+ => CACHED [dev_container_auto_added_stage_label  2/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_added_stage_label  3/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_added_stage_label  4/10] RUN curl --proto   0.0s
+ => CACHED [dev_container_auto_added_stage_label  5/10] RUN rustup update  0.0s
+ => CACHED [dev_container_auto_added_stage_label  6/10] RUN cargo install  0.0s
+ => CACHED [dev_container_
+[2025-12-31T22:23:05.068Z] auto_added_stage_label  7/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_added_stage_label  8/10] RUN wget https://  0.0s
+ => CACHED [dev_container_auto_added_stage_label  9/10] RUN apt-get insta  0.0s
+ => CACHED [dev_container_auto_added_stage_label 10/10] WORKDIR /workspac  0.0s
+ => exporting to image                                                     0.9s
+ => => exporting layers                                                    0.0s
+ => => preparing layers for inline cache                                   0.5s
+ => => exporting manifest sha256:224caaa8b3b92094c9eed1cabd91feda34785fc7  0.1s
+ => => exporting config sha256:ae63ffc71f7bf4498b11cffabf31849e5a5706a66e  0.0s
+ => => exporting attestation manifest sha256:ff3675c1f845a04630c7a56314db  0.1s
+ => => exporting manifest list sha256:0c956a639b82896b8fe1a8c5a7ef129407f  0.0s
+ => => naming to docker.io/library/vsc-robotics-handbook-8b7
+[2025-12-31T22:23:05.069Z] 7a7ba8c5b9201  0.0s
+ => => unpacking to docker.io/library/vsc-robotics-handbook-8b77a7ba8c5b9  0.0s
+[2025-12-31T22:23:05.216Z] [+] Building 3.1s (15/15)                                  docker:desktop-linux
+ => => transferring context: 2B                                            0.0s
+ => [dev_container_auto_added_stage_label  1/10] FROM docker.io/library/d  1.3s
+ => => resolve docker.io/library/debian:bookworm-slim@sha256:d5d3f9c23164  1.3s
+ => [auth] library/debian:pull token for registry-1.docker.io              0.0s
+[2025-12-31T22:23:05.216Z]  => CACHED [dev_container_auto_added_stage_label  2/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_added_stage_label  3/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_added_stage_label  4/10] RUN curl --proto   0.0s
+ => CACHED [dev_container_auto_added_stage_label  5/10] RUN rustup update  0.0s
+ => CACHED [dev_container_auto_added_stage_label  6/10] RUN cargo install  0.0s
+ => CACHED [dev_container_auto_added_stage_label  7/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_added_stage_label  8/10] RUN wget https://  0.0s
+ => CACHED [dev_container_auto_added_stage_label  9/10] RUN apt-get insta  0.0s
+ => CACHED [dev_container_auto_added_stage_label 10/10] WORKDIR /workspac  0.0s
+ => exporting to image                                                     0.9s
+ => => exporting layers                                                    0.0s
+ => => preparing layers for i
+[2025-12-31T22:23:05.217Z] nline cache                                   0.5s
+ => => exporting manifest sha256:224caaa8b3b92094c9eed1cabd91feda34785fc7  0.1s
+ => => exporting config sha256:ae63ffc71f7bf4498b11cffabf31849e5a5706a66e  0.0s
+ => => exporting attestation manifest sha256:ff3675c1f845a04630c7a56314db  0.1s
+ => => exporting manifest list sha256:0c956a639b82896b8fe1a8c5a7ef129407f  0.0s
+ => => naming to docker.io/library/vsc-robotics-handbook-8b77a7ba8c5b9201  0.0s
+ => => unpacking to docker.io/library/vsc-robotics-handbook-8b77a7ba8c5b9  0.0s
+[2025-12-31T22:23:05.234Z] [+] Building 3.1s (15/15) FINISHED                         docker:desktop-linux
+ => [internal] load build definition from Dockerfile-with-features         0.1s
+ => => transferring dockerfile: 2.38kB                                     0.1s
+[2025-12-31T22:23:05.234Z]  => [internal] load metadata for docker.io/library/debian:bookworm-slim    0.1s
+ => [internal] load .dockerignore                                          0.0s
+ => => transferring context: 2B                                            0.0s
+ => [dev_container_auto_added_stage_label  1/10] FROM docker.io/library/d  1.3s
+ => => resolve docker.io/library/debian:bookworm-slim@sha256:d5d3f9c23164  1.3s
+ => [auth] library/debian:pull token for registry-1.docker.io              0.0s
+ => CACHED [dev_container_auto_added_stage_label  2/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_added_stage_label  3/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_added_stage_label  4/10] RUN curl --proto   0.0s
+ => CACHED [dev_container_auto_added_stage_label  5/10] RUN rustup update  0.0s
+ => CACHED [dev_container_auto_added_stage_label  6/10] RUN cargo install  0.0s
+ => CACHED [dev_container_aut
+[2025-12-31T22:23:05.235Z] o_added_stage_label  7/10] RUN apt-get updat  0.0s
+ => CACHED [dev_container_auto_added_stage_label  8/10] RUN wget https://  0.0s
+ => CACHED [dev_container_auto_added_stage_label  9/10] RUN apt-get insta  0.0s
+ => CACHED [dev_container_auto_added_stage_label 10/10] WORKDIR /workspac  0.0s
+ => exporting to image                                                     0.9s
+ => => exporting layers                                                    0.0s
+ => => preparing layers for inline cache                                   0.5s
+ => => exporting manifest sha256:224caaa8b3b92094c9eed1cabd91feda34785fc7  0.1s
+ => => exporting config sha256:ae63ffc71f7bf4498b11cffabf31849e5a5706a66e  0.0s
+ => => exporting attestation manifest sha256:ff3675c1f845a04630c7a56314db  0.1s
+ => => exporting manifest list sha256:0c956a639b82896b8fe1a8c5a7ef129407f  0.0s
+ => => naming to docker.io/library/vsc-robotics-handbook-8b77a7
+[2025-12-31T22:23:05.238Z] ba8c5b9201  0.0s
+ => => unpacking to docker.io/library/vsc-robotics-handbook-8b77a7ba8c5b9  0.0s
+
+View build details: ]8;;docker-desktop://dashboard/build/desktop-linux/desktop-linux/9puzotqkfyhefg3kyxzo7kiyn\docker-desktop://dashboard/build/desktop-linux/desktop-linux/9puzotqkfyhefg3kyxzo7kiyn]8;;\
+[2025-12-31T22:23:05.282Z] Stop (4194 ms): Run: docker buildx build --load --build-arg BUILDKIT_INLINE_CACHE=1 -f /var/folders/m9/zqnmjfq137xcp2_rlzmmql9m0000gn/T/devcontainercli/container-features/0.80.1-1767219781081/Dockerfile-with-features -t vsc-robotics-handbook-8b77a7ba8c5b92016b4706c2dfd82c4262463a67a64204a08f8eb40eb23b9544 --target dev_containers_target_stage --build-arg _DEV_CONTAINERS_BASE_IMAGE=dev_container_auto_added_stage_label /Users/mdscott/robotics-handbook/.devcontainer
+[2025-12-31T22:23:05.285Z] Start: Run: docker events --format {{json .}} --filter event=start
+[2025-12-31T22:23:05.289Z] Start: Starting container
+[2025-12-31T22:23:05.289Z] Start: Run: docker run --sig-proxy=false -a STDOUT -a STDERR --mount source=/Users/mdscott/robotics-handbook,target=/workspaces/robotics-handbook,type=bind --mount type=volume,src=vscode,dst=/vscode -l devcontainer.local_folder=/Users/mdscott/robotics-handbook -l devcontainer.config_file=/Users/mdscott/robotics-handbook/.devcontainer/devcontainer.json --net=host --pid=host --ipc=host --entrypoint /bin/sh vsc-robotics-handbook-8b77a7ba8c5b92016b4706c2dfd82c4262463a67a64204a08f8eb40eb23b9544 -c echo Container started
+[2025-12-31T22:23:06.783Z] docker: Error response from daemon: unable to find user mdyson: no matching entries in passwd file.
+[2025-12-31T22:23:06.796Z] Stop (1507 ms): Run: docker run --sig-proxy=false -a STDOUT -a STDERR --mount source=/Users/mdscott/robotics-handbook,target=/workspaces/robotics-handbook,type=bind --mount type=volume,src=vscode,dst=/vscode -l devcontainer.local_folder=/Users/mdscott/robotics-handbook -l devcontainer.config_file=/Users/mdscott/robotics-handbook/.devcontainer/devcontainer.json --net=host --pid=host --ipc=host --entrypoint /bin/sh vsc-robotics-handbook-8b77a7ba8c5b92016b4706c2dfd82c4262463a67a64204a08f8eb40eb23b9544 -c echo Container started
+[2025-12-31T22:23:06.796Z] Start: Run: docker ps -q -a --filter label=devcontainer.local_folder=/Users/mdscott/robotics-handbook --filter label=devcontainer.config_file=/Users/mdscott/robotics-handbook/.devcontainer/devcontainer.json
+[2025-12-31T22:23:06.800Z] Stop (1515 ms): Run: docker events --format {{json .}} --filter event=start
+[2025-12-31T22:23:06.896Z] Stop (100 ms): Run: docker ps -q -a --filter label=devcontainer.local_folder=/Users/mdscott/robotics-handbook --filter label=devcontainer.config_file=/Users/mdscott/robotics-handbook/.devcontainer/devcontainer.json
+[2025-12-31T22:23:06.897Z] Start: Run: docker inspect --type container 94aec9d7ddd3
+[2025-12-31T22:23:06.963Z] Stop (66 ms): Run: docker inspect --type container 94aec9d7ddd3
+[2025-12-31T22:23:06.964Z] Error: Command failed: docker run --sig-proxy=false -a STDOUT -a STDERR --mount source=/Users/mdscott/robotics-handbook,target=/workspaces/robotics-handbook,type=bind --mount type=volume,src=vscode,dst=/vscode -l devcontainer.local_folder=/Users/mdscott/robotics-handbook -l devcontainer.config_file=/Users/mdscott/robotics-handbook/.devcontainer/devcontainer.json --net=host --pid=host --ipc=host --entrypoint /bin/sh vsc-robotics-handbook-8b77a7ba8c5b92016b4706c2dfd82c4262463a67a64204a08f8eb40eb23b9544 -c echo Container started
+[2025-12-31T22:23:06.964Z] trap "exit 0" 15
+[2025-12-31T22:23:06.964Z] exec "$@"
+[2025-12-31T22:23:06.964Z] while sleep 1 & wait $!; do :; done -
+[2025-12-31T22:23:06.964Z]     at w6 (/Users/mdscott/.vscode/extensions/ms-vscode-remote.remote-containers-0.434.0/dist/spec-node/devContainersSpecCLI.js:467:1253)
+[2025-12-31T22:23:06.965Z]     at ax (/Users/mdscott/.vscode/extensions/ms-vscode-remote.remote-containers-0.434.0/dist/spec-node/devContainersSpecCLI.js:467:997)
+[2025-12-31T22:23:06.965Z]     at async Y6 (/Users/mdscott/.vscode/extensions/ms-vscode-remote.remote-containers-0.434.0/dist/spec-node/devContainersSpecCLI.js:484:3842)
+[2025-12-31T22:23:06.965Z]     at async BC (/Users/mdscott/.vscode/extensions/ms-vscode-remote.remote-containers-0.434.0/dist/spec-node/devContainersSpecCLI.js:484:4957)
+[2025-12-31T22:23:06.965Z]     at async p7 (/Users/mdscott/.vscode/extensions/ms-vscode-remote.remote-containers-0.434.0/dist/spec-node/devContainersSpecCLI.js:665:202)
+[2025-12-31T22:23:06.965Z]     at async d7 (/Users/mdscott/.vscode/extensions/ms-vscode-remote.remote-containers-0.434.0/dist/spec-node/devContainersSpecCLI.js:664:14804)
+[2025-12-31T22:23:06.965Z]     at async /Users/mdscott/.vscode/extensions/ms-vscode-remote.remote-containers-0.434.0/dist/spec-node/devContainersSpecCLI.js:484:1188
+[2025-12-31T22:23:06.978Z] Stop (9148 ms): Run: /Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin) /Users/mdscott/.vscode/extensions/ms-vscode-remote.remote-containers-0.434.0/dist/spec-node/devContainersSpecCLI.js up --user-data-folder /Users/mdscott/Library/Application Support/Code/User/globalStorage/ms-vscode-remote.remote-containers/data --container-session-data-folder /tmp/devcontainers-a223cfa7-d637-4a9e-a820-a41c356e114a1767219771659 --workspace-folder /Users/mdscott/robotics-handbook --workspace-mount-consistency cached --gpu-availability detect --id-label devcontainer.local_folder=/Users/mdscott/robotics-handbook --id-label devcontainer.config_file=/Users/mdscott/robotics-handbook/.devcontainer/devcontainer.json --log-level debug --log-format json --config /Users/mdscott/robotics-handbook/.devcontainer/devcontainer.json --default-user-env-probe loginInteractiveShell --remove-existing-container --mount type=volume,source=vscode,target=/vscode,external=true --skip-post-create --update-remote-user-uid-default on --mount-workspace-git-root --include-configuration --include-merged-configuration
+[2025-12-31T22:23:06.979Z] Exit code 1
+[2025-12-31T22:23:06.984Z] Command failed: /Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin) /Users/mdscott/.vscode/extensions/ms-vscode-remote.remote-containers-0.434.0/dist/spec-node/devContainersSpecCLI.js up --user-data-folder /Users/mdscott/Library/Application Support/Code/User/globalStorage/ms-vscode-remote.remote-containers/data --container-session-data-folder /tmp/devcontainers-a223cfa7-d637-4a9e-a820-a41c356e114a1767219771659 --workspace-folder /Users/mdscott/robotics-handbook --workspace-mount-consistency cached --gpu-availability detect --id-label devcontainer.local_folder=/Users/mdscott/robotics-handbook --id-label devcontainer.config_file=/Users/mdscott/robotics-handbook/.devcontainer/devcontainer.json --log-level debug --log-format json --config /Users/mdscott/robotics-handbook/.devcontainer/devcontainer.json --default-user-env-probe loginInteractiveShell --remove-existing-container --mount type=volume,source=vscode,target=/vscode,external=true --skip-post-create --update-remote-user-uid-default on --mount-workspace-git-root --include-configuration --include-merged-configuration
+[2025-12-31T22:23:06.985Z] Exit code 1
