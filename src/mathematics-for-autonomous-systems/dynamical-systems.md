@@ -1,32 +1,29 @@
 # Dynamical Systems
 
-> _"In short, a system is any process or entity that has one or more
+> &emsp;&emsp;_"In short, a system is any process or entity that has one or more
 > well-defined inputs and one or more well-defined outputs. Examples of systems
 > include a simple physical object obeying Newtonian mechanics, and the US
 > economy! Systems can be physical, or we may talk about a mathematical
 > description of a system. The point of modeling is to capture in a mathematical
 > representation the behavior of a physical system. As we will see, such
 > representation lends itself to analysis and design, and certain restrictions
-> such as linearity and time-invariance open a huge set of available
-> tools."_[hover_system_2022]
+> such as linearity and time-invariance open a huge set of available tools."_ >
+> [hover_system_2022]
 
-Dynamical systems theory concerns the evolution of systems in time, where the
-state of a system can be described by a finite number of parameters. This
-framework applies to both continuous-time systems modeled by ordinary
+&emsp;&emsp;Dynamical systems theory concerns the evolution of systems in time,
+where the state of a system can be described by a finite number of parameters.
+This framework applies to both continuous-time systems modeled by ordinary
 differential equations (ODEs) and discrete-time systems modeled by state
 machines or difference equations.
 
-The focus of dynamical systems is to answer central questions: What are the
-equilibrium or time-periodic solutions? Are these solutions stable? What is the
-long-time asymptotic behavior of general solutions? Do solutions behave
-chaotically? What kinds of statistical regularities do solutions possess? These
-questions become increasingly complex in nonlinear systems, where solutions can
-exhibit behaviors not found in linear systems, including chaos and strange
-attractors.
+The focus of dynamical systems is to answer these central questions: What are
+the equilibrium or time-periodic solutions of the dynamics? Are these solutions
+stable controllable or observable? What is the long-time asymptotic behavior of
+the solutions?
 
 ## 1. Modeling Fundamentals
 
-**System State** \\(\mathbf{x}(t) \in \mathbb{R}^n\\):
+**System State**: \\(\mathbf{x}(t) \in \mathbb{R}^n\\)
 
 - Minimal set of independent variables fully characterizing the system at time
   \\(t\\).
@@ -41,7 +38,7 @@ attractors.
 
 #### Linear ODEs
 
-A linear system has the form: \\[ \dot{\mathbf{x}} = A\mathbf{x} \\]
+\\[ \dot{\mathbf{x}} = A\mathbf{x} \\]
 
 where \\(A \in \mathbb{R}^{n \times n}\\) is the system matrix and \\(\mathbf{x}
 \in \mathbb{R}^n\\) is the state vector.
@@ -52,25 +49,23 @@ f(x_1 + x_2) \\] \\[ \alpha \cdot f(x) = f(\alpha \cdot x) \\]
 ##### Representing Higher-Order ODEs as First-Order Systems
 
 Any higher-order ODE can be reformulated as a system of first-order ODEs by
-introducing additional state variables. For the second-order equation: \\[
-\ddot{y} + 5\dot{y} + 6y = u(t) \\]
+introducing additional state variables. For the second-order equation: \\(
+\ddot{y} + 5\dot{y} + 6y = u(t) \\) introduce state variables \\(x_1 = y\\) and
+\\(x_2 = \dot{y}\\), yielding: \\[ \begin{bmatrix} \dot{x}_1 \\\\ \dot{x}_2
+\end{bmatrix} = \begin{bmatrix} 0 & 1 \\\\ -6 & -5 \end{bmatrix} \begin{bmatrix}
+x_1 \\\\ x_2 \end{bmatrix} + \begin{bmatrix} 0 \\\\ 1 \end{bmatrix} u(t) \\]
 
-introduce state variables \\(x_1 = y\\) and \\(x_2 = \dot{y}\\), yielding: \\[
-\begin{bmatrix} \dot{x}_1 \\\\ \dot{x}_2 \end{bmatrix} = \begin{bmatrix} 0 & 1
-\\\\ -6 & -5 \end{bmatrix} \begin{bmatrix} x_1 \\\\ x_2 \end{bmatrix} +
-\begin{bmatrix} 0 \\\\ 1 \end{bmatrix} u(t) \\]
-
-> Note that \\(x_2=\dot{x_1}\\)
+_Note that \\(x_2=\dot{x_1}\\)_
 
 #### Nonlinear ODEs
 
-A nonlinear system has the form: \\[\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x})\\]
+\\[\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x})\\]
 
 where \\(\mathbf{f}: \mathbb{R}^n \to \mathbb{R}^n\\) is a nonlinear function.
 
 ### Equilibrium Points: Static Operating Modes
 
-\\[ \mathbf{x}^* \in \mathbb{R}^n \\] \\[ \dot{\mathbf{x}} =
+\\[ \mathbf{x}^* \in \mathbb{R}^n \\] \\[ \dot{\mathbf{x}}^* =
 \mathbf{f}(\mathbf{x}^\*) = \mathbf{0} \\]
 
 Linear systems have only the origin as equilibrium when \\(\det(A) \neq 0\\).
@@ -89,6 +84,10 @@ the Jacobian matrix at that point. The classification is:
 | Focus/Spiral  | Complex \\(\lambda_i = \alpha \pm j\beta\\) with \\(\text{Re}(\lambda) < 0\\) | Spiral convergence with oscillation          |
 | Center        | Purely imaginary \\(\lambda_i = \pm j\omega\\)                                | Closed orbits (conservative systems)         |
 
+> # TODO
+>
+> Add time response vs pole zero map.
+
 ### Phase Portraits: Visual Analysis of System Trajectories
 
 A **phase portrait** is a geometric representation of all possible trajectories
@@ -103,17 +102,9 @@ velocity of the trajectory. By plotting these velocity vectors at a grid of
 points, we obtain the **vector field**. The integral curves (solution
 trajectories) are curves that follow the vector field everywhere tangentially.
 
-#### Visible Features in Phase Portraits
-
-1. **Equilibrium Points**: Where the vector field vanishes (\\(\dot{\mathbf{x}}
-   = \mathbf{0}\\)).
-2. **Limit Cycles**: Closed orbits corresponding to periodic oscillations.
-3. **Separatrix**: Special curves that separate regions of different qualitative
-   behavior.
-4. **Basins of Attraction**: Regions where all initial conditions converge to a
-   particular equilibrium.
-5. **Stable and Unstable Manifolds**: Curves along which trajectories approach
-   or leave saddle points.
+> # TODO
+>
+> add plot showing example phase portrait of a system.
 
 ## 2. Representations
 
@@ -122,11 +113,11 @@ trajectories) are curves that follow the vector field everywhere tangentially.
 The **state-space representation** is the standard form for modern control
 systems. It consists of two equations:
 
-**State Equation (Dynamics):** \\[ \dot{\mathbf{x}} = A\mathbf{x} + B\mathbf{u}
-\\]
+**State Equation (Dynamics):** \\( \dot{\mathbf{x}} = A\mathbf{x} + B\mathbf{u}
+\\)
 
-**Output Equation (Measurement):** \\[ \mathbf{y} = C\mathbf{x} + D\mathbf{u}
-\\]
+**Output Equation (Measurement):** \\( \mathbf{y} = C\mathbf{x} + D\mathbf{u}
+\\)
 
 - \\(\mathbf{x} \in \mathbb{R}^n\\): state vector
 - \\(\mathbf{u} \in \mathbb{R}^m\\): input vector (\\(m\\) inputs)
@@ -147,18 +138,13 @@ systems. It consists of two equations:
    functions require transfer function matrices.
 3. **State Feedback Control**: Enables direct state feedback design:
    \\(\mathbf{u} = -K\mathbf{x}\\).
-4. **Nonlinear Extensions**: Foundational for nonlinear control and observer
-   design.
-5. **Digital Implementation**: Amenable to discrete-time realization and
-   real-time computation.
 
 ### Transfer Functions (Frequency Domain)
 
-The **transfer function** is the fundamental representation for frequency-domain
-analysis. It relates the output to the input through the Laplace transform,
-assuming zero initial conditions:
+The **transfer function** relates a system's output to the input through the
+Laplace transform, assuming zero initial conditions:
 
-\\[ G(s) = \frac{Y(s)}{U(s)} = \mathcal{L}\{y(t)\} / \mathcal{L}\{u(t)\} \\]
+\\[ G(s) = \frac{Y(s)}{U(s)} = \mathcal{L}\\{y(t)\\} / \mathcal{L}\\{u(t)\\} \\]
 
 where \\(s \in \mathbb{C}\\) is the complex frequency variable.
 
@@ -168,37 +154,59 @@ Transfer functions are typically expressed as ratios of polynomials: \\[ G(s) =
 \frac{b_m s^m + b_{m-1} s^{m-1} + \cdots + b_1 s + b_0}{a_n s^n + a_{n-1}
 s^{n-1} + \cdots + a_1 s + a_0} \\]
 
-where typically \\(n \geq m\\) (proper transfer function). The degree of the
-denominator \\(n\\) is the system order.
+| Relationship | Classification      | Limit \\(\omega \to \infty\\) | Physical Realizability                                                                                       |
+| :----------- | :------------------ | :---------------------------- | :----------------------------------------------------------------------------------------------------------- |
+| \\(n > m\\)  | **Strictly Proper** | Decay to 0                    | **Realizable.** Most physical systems fall here (inertial damping prevents instantaneous change).            |
+| \\(n = m\\)  | **proper**          | Constant \\(k \neq 0\\)       | **Realizable.** Indicates a direct feed-through from input to output (e.g., a resistor network).             |
+| \\(n < m\\)  | **Improper**        | Growth to \\(\infty\\)        | **Not Realizable.** Requires differentiation, which is non-causal in theory and amplifies noise in practice. |
+
+> **Note on "Proper":** In general control theory, a system is considered
+> **Proper** if \\(n \geq m\\) (covering both the first two rows). This is the
+> condition required for a system to have a valid State-Space representation.
 
 ### Poles and Zeros: Frequency Domain Structure
 
-**Poles** and **zeros** are the roots of the denominator and numerator
-polynomials, respectively. They completely determine the frequency response and
-transient behavior of the system.
+\[ G(s) = \frac{N(s)}{D(s)} = K \frac{\prod*{i=1}^m (s - z_i)}{\prod*{j=1}^n
+(s - p_j)} \]
 
-#### Poles - Denominator Roots
+\[ \mathcal{Z} = \{ s \in \mathbb{C} \mid N(s) = 0 \} \implies \forall z \in
+\mathcal{Z}, G(z) = 0 \]
 
-Poles are values of \\(s\\) where \\(G(s) \to \infty\\). For example: \\[ G(s) =
-\frac{2s + 1}{(s+3)(s+2)} \\]
+\[ \mathcal{P} = \{ s \in \mathbb{C} \mid D(s) = 0 \} \implies \forall p \in
+\mathcal{P}, \lim\_{s \to p} |G(s)| = \infty \]
 
-has poles at \\(s = -3\\) and \\(s = -2\\).
+### Example
 
-#### Zeros - Numerator Roots
+\[ G(s) = \frac{2s + 1}{(s+3)(s+2)} = \frac{2(s + 0.5)}{(s+3)(s+2)} \]
 
-Zeros are values of \\(s\\) where \\(G(s) = 0\\). In the above example, the zero
-is at \\(s = -1/2\\).
+\[ \mathcal{P} = \{ -3, -2 \} \]
 
-#### Effects on System Behavior
+\[ \mathcal{Z} = \{ -0.5 \} \]
 
-- **Real poles** at \\(s = -\sigma\\) contribute exponential decay with time
-  constant \\(\tau = 1/\sigma\\)
-- **Complex conjugate poles** at \\(s = -\alpha \pm j\omega_d\\) produce damped
-  oscillations with frequency \\(\omega_d\\) and damping \\(\alpha\\)
-- **Zeros** affect the transient response shape and introduce phase lead,
-  especially near the zero frequency
-- **Right-half-plane (RHP) zeros** produce non-minimum-phase behavior: the
-  system initially responds in the opposite direction before reversing course
+### Time Domain Response Mappings (\(\mathcal{L}^{-1}\))
+
+**1. Real Pole (\(p_i = -\sigma, \sigma > 0\)):** \[ G(s) = \frac{1}{s + \sigma}
+\xrightarrow{\mathcal{L}^{-1}} g(t) = e^{-\sigma t}u(t) \] \[ \tau =
+\frac{1}{\sigma} \]
+
+**2. Complex Conjugate Poles (\(p\_{1,2} = -\alpha \pm j\omega_d\)):** \[ G(s) =
+\frac{\omega_d}{(s + \alpha)^2 + \omega_d^2} \xrightarrow{\mathcal{L}^{-1}} g(t)
+= e^{-\alpha t} \sin(\omega_d t)u(t) \]
+
+**3. Zeros and Derivative Action:** Let \(H(s) = \frac{1}{D(s)}\) and \(G(s) =
+(s - z)H(s)\). \[ \mathcal{L}^{-1}\{G(s)\} = \frac{d}{dt}h(t) - z \cdot h(t) \]
+
+**4. RHP Zero (Non-Minimum Phase) (\(z > 0\)):** Step response \(Y(s) =
+\frac{1}{s} \frac{K(s-z)}{D(s)}\) \[ \dot{y}(0^+) = \lim\_{s \to \infty} s
+[sY(s) - y(0^+)] \propto -K \quad (\text{Initial undershoot}) \]
+
+### Stability Criteria
+
+\[ \text{BIBO Stable} \iff \forall p_j \in \mathcal{P}, \quad \text{Re}(p_j) < 0
+\]
+
+\[ \text{Unstable} \iff \exists p_j \in \mathcal{P}, \quad \text{Re}(p_j) \geq 0
+\]
 
 #### Pole-Zero Plots
 

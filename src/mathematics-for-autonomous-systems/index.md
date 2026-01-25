@@ -47,8 +47,8 @@ end
 
 > Linear and nonlinear ordinary differential equations; initial value problems
 > and numerical integration; phase portraits and equilibrium points; Laplace and
-> Z-transforms; transfer functions; poles, zeros, and stability analysis; common
-> electro-mechanical models.
+> Z-transforms; transfer functions; effects of poles and zeros on frequency, and
+> stability analysis.
 
 Systems theory provides the mathematical infrastructure for modeling and
 analyzing systems.
